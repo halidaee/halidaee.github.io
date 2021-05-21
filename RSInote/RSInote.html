@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="US">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>RSInote</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style id="mkstylesheet">
+body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;margin:30px 0 0;padding:0;background:#fff;color:#303030;font-size:14px;line-height:1.45}#wrapper{padding:20px}li{font-size:110%}li li{font-size:100%}li p{font-size:100%;margin:.5em 0}h1{color:#000}h2{color:#111}h3{color:#111}h4{color:#111}h5{color:#111}h6{color:#111;font-style:italic}p,td,div{color:#111;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;word-wrap:break-word}a{color:#0d6ea1;text-decoration:none;-webkit-transition:color .2s ease-in-out;-moz-transition:color .2s ease-in-out;-o-transition:color .2s ease-in-out;-ms-transition:color .2s ease-in-out;transition:color .2s ease-in-out}a:hover{color:#3593d9}h1,h2,h3,h4,h5{margin:2.75rem 0 1rem;font-weight:600;line-height:1.15}h1{margin-top:0;font-size:3.052em}h2{font-size:2.441em}h3{font-size:1.953em}h4{font-size:1.563em}h5{font-size:1.25em}ul,ol,pre,table,blockquote{margin-top:.625em;margin-bottom:.625em}hr{border:1px solid;margin:-1px 0}ul ul,ol ol,ul ol,ol ul{margin-top:0;margin-bottom:0}b,strong,em,small,code{line-height:1}.footnote{color:#0d6ea1;font-size:.8em;vertical-align:super}abbr,acronym{border-bottom:1px dotted #aaa}#wrapper img{max-width:100%;height:auto}dd{font-size:1em;margin-bottom:1em}li>p:first-of-type{margin:0}li p+p{margin-top:16px}ul,ol{padding-left:2.5rem}#wrapper ol{list-style-position:outside}ul ul,ul ol{margin-bottom:.4em}caption,col,colgroup,table,tbody,td,tfoot,th,thead,tr{border-spacing:0}table{border:1px solid rgba(0,0,0,0.25);border-collapse:collapse;display:table;empty-cells:hide;margin:-1px 0 1.3125em;padding:0;table-layout:fixed}caption{display:table-caption;font-weight:700}col{display:table-column}colgroup{display:table-column-group}tbody{display:table-row-group}tfoot{display:table-footer-group}thead{display:table-header-group}td,th{display:table-cell}tr{display:table-row}table th,table td{font-size:1.1em;line-height:1.3;padding:.5em 1em 0}table thead{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-bottom:1px solid rgba(0,0,0,0.2)}table tbody{background:rgba(0,0,0,0.05)}table tfoot{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-top:1px solid rgba(0,0,0,0.2)}figure{display:inline-block;overflow:hidden;position:relative;margin:1em 0 2em}figcaption{font-style:italic;text-align:center;background:white;color:#666}.poetry pre{display:block;font-family:Georgia,Garamond,serif !important;font-size:110% !important;font-style:italic;line-height:1.6em;margin-left:1em}.poetry pre code{font-family:Georgia,Garamond,serif !important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}blockquote p{font-size:110%;font-style:italic;line-height:1.6em}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;position:relative;vertical-align:super}sub{vertical-align:sub;top:-1px}p{font-size:1.1429em;line-height:1.3125em;margin:1.3125em 0}dt,th{font-weight:700}table tr:nth-child(odd),table th:nth-child(odd),table td:nth-child(odd){background:rgba(255,255,255,0.06)}table tr:nth-child(even),table td:nth-child(even){background:rgba(200,200,200,0.25)}@media print{img,table,figure{page-break-inside:avoid}#wrapper{background:#fff;color:#303030;padding:10px;position:relative;text-indent:0}}@media screen{.inverted{background:#252a2a}.inverted #wrapper{background:#252a2a;color:#eee}.inverted hr{border-color:#333f40 !important}.inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dt,.inverted dd{color:#eee}.inverted pre{background:#ccc;color:#111}.inverted table{background:none}.inverted table tr:nth-child(odd),.inverted table td:nth-child(odd){background:none}.inverted a{color:#acd1d5}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eee}code span::selection{background-color:rgba(0,0,0,0.7) !important;color:#eee !important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}}.mkstyle--swiss #wrapper aside.blurb:before{margin-top:.7em}
+#mkreplaced-toc{list-style-position:inside;padding:0;margin:0 0 0 1rem;list-style-type:none}#mkreplaced-toc li::before{content:''}#mkreplaced-toc li{font-size:1rem;line-height:1.25;font-weight:normal}#mkreplaced-toc li ul{font-size:1.3rem;font-weight:300;padding:.5rem 0;margin:0 0 0 1rem}#mkreplaced-toc li.missing{list-style-type:none !important}#mkreplaced-toc.max-1 ul,#mkreplaced-toc.max1 ul{display:none}#mkreplaced-toc.max-2 ul ul,#mkreplaced-toc.max2 ul ul{display:none}#mkreplaced-toc.max-3 ul ul ul,#mkreplaced-toc.max3 ul ul ul{display:none}#mkreplaced-toc.max-4 ul ul ul ul,#mkreplaced-toc.max4 ul ul ul ul{display:none}#mkreplaced-toc.max-5 ul ul ul ul ul,#mkreplaced-toc.max5 ul ul ul ul ul{display:none}.mk-rtl{direction:rtl;text-align:right}body.mkkatex-number-equations{counter-reset:eqnum}body.mkkatex-number-equations .katex-display{position:relative}body.mkkatex-number-equations .katex-display::after{counter-increment:eqnum;content:"(" counter(eqnum) ")";position:absolute;left:0;top:25%}body.mkkatex-number-equations.mkkatex-number-equations-right .katex-display::after{right:0;left:auto}.mkprinting,.mkprinting #wrapper{height:auto;margin-bottom:0;padding-bottom:0}.hideProgress #generated-toc,.hideProgress #firstdiff,.hideProgress #toc-title,.hideProgress #mkdocumentprogress,.hideProgress #mkincludechart,.hideProgress #mkprogressbar1,.hideProgress #mkprogressbar2,.hideProgress b.bookmark,.hideProgress .mkscrollmeter,.hideProgress #alllinks,.hideProgress #criticnav,.hideProgress .popup,.hideProgress #progressindicator,.hideProgress #mkautoscroll,.mkprinting #generated-toc,.mkprinting #firstdiff,.mkprinting #toc-title,.mkprinting #mkdocumentprogress,.mkprinting #mkincludechart,.mkprinting #mkprogressbar1,.mkprinting #mkprogressbar2,.mkprinting b.bookmark,.mkprinting .mkscrollmeter,.mkprinting #alllinks,.mkprinting #criticnav,.mkprinting .popup,.mkprinting #progressindicator,.mkprinting #mkautoscroll{display:none !important}.hideProgress .mkstyledtag,.mkprinting .mkstyledtag{display:none}.mkcolor-grammar-error,.mkcolor-spell-error{background:none;border-bottom:none}.mkprinting.mkshowcomments .mkstyledtag{display:inline;background:#ccc;padding:3px 9px;border-radius:20px;font-size:1}@media print{body{background:white;line-height:1.4}html,body,#wrapper{-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;-webkit-perspective:none !important;-webkit-text-size-adjust:none;border:0;box-sizing:border-box;float:none;margin:0;max-width:100%;padding:0;margin-top:0;width:auto}.critic #wrapper mark.crit{background-color:#fffd38 !important;text-decoration:none;color:#000}h1,h2,h3,h4,h5,h6{page-break-after:avoid}p,h2,h3{orphans:3;widows:3}section{page-break-before:avoid}pre>code{white-space:pre;word-break:break-word}#generated-toc,#firstdiff,#toc-title,#mkdocumentprogress,#mkincludechart,#mkprogressbar1,#mkprogressbar2,.mkscrollmeter,#alllinks,.popup{display:none !important}.suppressprintlinks a{border-bottom:none !important;color:inherit !important;cursor:default !important;text-decoration:none !important}.hrefafterlinktext #wrapper a:link:after,.hrefafterlinktext #wrapper a:visited:after{content:" (" attr(href) ") ";font-size:90%;opacity:.9}.nocodebreak pre{page-break-inside:avoid}img,table,figure{page-break-inside:avoid}.breakfootnotes .footnotes{page-break-before:always}.breakfootnotes .footnotes hr{display:none}#mktoctitle{display:block}#print-title{border-bottom:solid 1px #666;display:block}#wrapper pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word}#wrapper #generated-toc-clone,#wrapper #mkreplaced-toc{display:block}.task-list .task-list-item{list-style-type:none !important}.task-list .gh-complete.task-list-item .task-list-item-checkbox:before{background:#838387;content:'\2713'}.task-list .task-list-item-checkbox{-webkit-appearance:none;position:relative}.task-list .task-list-item-checkbox:before{border:solid 1px #aaa;border-radius:2px;color:white;content:' ';display:block;font-weight:bold;height:1em;left:-20px;line-height:1;position:absolute;text-align:center;top:-.75em;width:1em}}
+#wrapper #generated-toc-clone,#wrapper #mkreplaced-toc,#wrapper #generated-toc-clone ul,#wrapper #mkreplaced-toc ul{list-style-position:inside}#wrapper #generated-toc-clone li.missing,#wrapper #mkreplaced-toc li.missing{list-style-type: none!important}#wrapper #generated-toc-clone ul,#wrapper #mkreplaced-toc ul{list-style-type: upper-roman}#wrapper #generated-toc-clone>ul>li>ul,#wrapper #mkreplaced-toc>li>ul {list-style-type: decimal}#wrapper #generated-toc-clone>ul>li>ul>li>ul,#wrapper #mkreplaced-toc>li>ul>li>ul{list-style-type: decimal-leading-zero}#wrapper #generated-toc-clone>ul>li>ul>li>ul>li>ul,#wrapper #mkreplaced-toc>li>ul>li>ul>li>ul{list-style-type: lower-greek}#wrapper #generated-toc-clone>ul>li>ul>li>ul>li>ul>li>ul,#wrapper #mkreplaced-toc>li>ul>li>ul>li>ul>li>ul{list-style-type: disc}#wrapper #generated-toc-clone>ul>li>ul>li>ul>li>ul>li>ul>li>ul,#wrapper #mkreplaced-toc>li>ul>li>ul>li>ul>li>ul>li>ul{list-style-type: square}#wrapper #generated-toc-clone,#wrapper #mkreplaced-toc{}
+</style>
+
+<style id="mkprintstyles">@media print{#wrapper #generated-toc-clone,#generated-toc{display:none!important}
+html,body,#wrapper{font-size:10pt!important}
+}
+</style>
+
+
+  </head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116284508-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116284508-1');
+</script>
+
+
+<body class="normal firstload">
+  <div id="wrapper">
+<h1 id="rsigithubnote">RSI Github Note</h1>
+
+<p>I’ve had a long journey with repetitive strain injury (RSI). Over the years, this has involved experimenting with lots of different medicines, exercises, and technologies (both hardware and software).</p>
+
+<p>Unfortunately for the world, attention to RSI has increased over the years. Fortunately for those who suffer from it, this has greatly increased the number of tools available.</p>
+
+<p>Economists are often a step removed from the engineering community where these tools are more commonly visible. This post—<em>which is not a substitute for medical advice</em>—is a collection of what I’ve learned over the years about what works best and why for others in our community. I hope it helps!</p>
+<!-- MarkdownTOC autolink="true" -->
+
+<ul>
+<li><a href="#medical">Medical</a></li>
+<li><a href="#exercises">Exercises</a>
+
+<ul>
+<li><a href="#equipment">Equipment</a></li>
+<li><a href="#do-exercises-between-breaks">Do exercises between breaks!</a></li>
+<li><a href="#find-compound-exercises">Find compound exercises</a></li>
+</ul></li>
+<li><a href="#hardware">Hardware</a>
+
+<ul>
+<li><a href="#keyboard-trays">Keyboard Trays</a></li>
+<li><a href="#keyboards">Keyboards</a>
+
+<ul>
+<li><a href="#key-travel">Key travel</a></li>
+<li><a href="#keyboard-actuation-force-and-switch-types">Keyboard Actuation Force and Switch Types</a></li>
+<li><a href="#split-keyboards">Split Keyboards</a></li>
+<li><a href="#tilting-and-concavity">Tilting and Concavity</a></li>
+<li><a href="#tenting">Tenting</a></li>
+<li><a href="#ortholinearity">Ortholinearity</a></li>
+<li><a href="#thumb-clusters">Thumb Clusters</a></li>
+<li><a href="#firmware">Firmware</a></li>
+<li><a href="#backlighting">Backlighting</a></li>
+<li><a href="#diy-vs-consumer-grade">DIY vs Consumer-grade</a></li>
+<li><a href="#recommendations">Recommendations</a></li>
+<li><a href="#re-learning-to-type">Re-learning to Type</a></li>
+</ul></li>
+<li><a href="#mice">Mice</a>
+
+<ul>
+<li><a href="#vertical-mice">Vertical Mice</a></li>
+<li><a href="#multiple-mice">Multiple Mice</a></li>
+</ul></li>
+<li><a href="#monitors">Monitors</a></li>
+</ul></li>
+<li><a href="#software">Software</a>
+
+<ul>
+<li><a href="#source-code-editor">Source Code Editor</a></li>
+<li><a href="#text-expansion">Text Expansion</a></li>
+<li><a href="#accessibility-software">Accessibility Software</a></li>
+</ul></li>
+<li><a href="#final-advice">Final Advice</a></li>
+</ul>
+<!-- /MarkdownTOC -->
+
+<h2 id="medical">Medical</h2>
+
+<p>This section is brief, as you should really see a physician. The main point emphasized here is that there are multiple forms of RSI. Identifying your type of pain and its source is important, both for treatment and saving you years of frustration.</p>
+
+<p>Particularly common forms of RSI pertaining to typing include:</p>
+
+<ul>
+<li>Carpal Tunnel Syndrome - Numbness and tingling in the hand/arm caused by nerve compression <em>in the wrist</em>. This is often tested using an electromyogram.</li>
+<li>Thoracic Outlet Syndrome - Can resemble carpal tunnel. However, it is caused by nerve or vein compression near the collarbone. As a result, your recommended treatment will be different and less focused on your wrists themselves.</li>
+<li>De Quervain’s Tenosynovitis - Pain and swelling near the base of your thumb. Symptoms are a consequence of inflammation of the tendon sheath around your tendon. Caused by thumb and wrist overuse.</li>
+<li>Trigger Finger - Another form of tenosynovitis.</li>
+<li>Tendonitis - Inflammation of the tendon itself. Similar treatment and timeline as with tenosynovitis, which is focused primarily on rest and NSAIDs to bring down inflammation.</li>
+<li>Tendinosis - Non-inflammatory degeneration of the tendon’s collagen due to overuse. NSAIDs are less useful here, and recovery time is much longer. You need to encourage collagen formation through physical therapy and exercise instead of focusing on rest.</li>
+</ul>
+
+<p>Some helpful links for understanding these differences include:<br/>
+- <a href="https://health.clevelandclinic.org/tendinitis-tendinosis-difference-important-treatments-help/">Tendinitis or Tendinosis? Why the Difference Is Important, What Treatments Help – Health Essentials from Cleveland Clinic</a><br/>
+- <a href="https://www.sports-health.com/sports-injuries/general-injuries/what-difference-between-tendonitis-tendinosis-and-tendinopathy">What Is the Difference Between Tendonitis, Tendinosis, and Tendinopathy?</a><br/>
+- <a href="https://theprehabguys.com/tendinitis-versus-tendinosis-important-differences-for-rehab-and-treatment/">Tendinitis Versus Tendinosis: Important Differences For Rehab And Treatment – 𝗣𝗥𝗲𝗵𝗮𝗯</a></p>
+
+<p>A rarer issue to be aware of for those who suffer from RSI in many locations throughout the body is a variety of genetic disorders that impact collagen production. These diseases, like Stickler’s Syndrome or Ehlers-Danlos Syndrome, still benefit from treatments, but there’s a much lower chance you’ll get back to feeling 100% and there is no specific treatment for them so the focus is on pain management.</p>
+
+<h2 id="exercises">Exercises</h2>
+
+<p>The most important point I can iterate in this section is to go to physical or occupational therapist at the beginning. They’ll be able to start you off at an exercise difficulty level appropriate to your injury.</p>
+
+<p>What do I have to add to this? A few points.</p>
+
+<h3 id="equipment">Equipment</h3>
+
+<p><strong>Buy OT and PT equipment for your home</strong> </p>
+
+<p>Great equipment that takes up minimal space includes:</p>
+
+<ul>
+<li>Latex resistance bands</li>
+<li>Roped resistance bands</li>
+<li>A suspension trainer. (While a TRX is overpriced generally compared to competitors, its handles are much more friendly for those with hand pain.)</li>
+<li>Therapy putty</li>
+<li>Guasha scraping massager</li>
+<li><a href="https://www.amazon.com/gp/product/B003XWXRYS/ref=ox_sc_saved_title_5?smid=ATVPDKIKX0DER&amp;psc=1">A flexbar</a></li>
+</ul>
+
+<p>Physical therapists will often give you substitute exercises for home that avoid the need for specific tools. However, I’ve found that these exercises aren’t that effective by themselves. While buying home equipment isn’t cheap, it will save you the money and emotional defeat of going back to PT/OT in the long run.</p>
+
+<h3 id="doexercisesbetweenbreaks">Do exercises between breaks!</h3>
+
+<p>Whether you are a theorist or empiricist, economists have lots of down time even when they are in front of a computer. We could be thinking through how to clean up a proof or waiting for an R file to finish running. Use these small blocks of time to squeeze in a set of exercises. This is especially easy if you keep tools like theraputty near your desk!</p>
+
+<h3 id="findcompoundexercises">Find compound exercises</h3>
+
+<p>Time pressure in academia is real. PTs and OTs will often start you off with isometric exercises to isolate and develop particular muscles. This is great at the beginning of therapy. However, to make your therapy regimen sustainable in the long run, and keep you from returning to PT/OT, ask them (or the internet) for compound exercises once you are further along. This way you can work on multiple muscle groups at the same time and not feel like your RSI is a second full time job.</p>
+
+<h2 id="hardware">Hardware</h2>
+
+<h3 id="keyboardtrays">Keyboard Trays</h3>
+
+<h3 id="keyboards">Keyboards</h3>
+
+<p>Keyboards are likely how you got here. Before I recommend any particular keyboards, let’s get into features that can make a keyboard good versus bad for RSI.</p>
+
+<h4 id="keytravel">Key travel</h4>
+
+<p>Thin keyboards are terrible for you. This is one reason why typing on a laptop is particularly bad. Why? Thin keyboards have limited ‘key travel’ and force you to “bottom out.” In other words, you have to press a key down all the way and have your finger feel the impact in order for a key to register. You know the feeling of when you jam your finger in basketball? It’s like you’re doing a very mild version of that to yourself thousands of times a day!</p>
+
+<p>Unfortunately, even many ‘ergonomic’ keyboards from major brands, like the Logitech Ergo K860 or Microsoft Sculpt, have limited key travel.</p>
+
+<p>Older desktops used to include mechanical keyboards. They were loud and clanky, but had lots of key travel. Get a mechanical keyboard.</p>
+
+<p>Luckily for us, the mechanical keyboard market is currently having a bit of a renaissance. However, the mechanical keyboard market doesn’t just exist for RSI sufferers. Some even consider the keyboards a hobby! While this means there are a lot of options in the space, it means you need to carefully choose the right keyboard for you.</p>
+
+<h4 id="keyboardactuationforceandswitchtypes">Keyboard Actuation Force and Switch Types</h4>
+
+<p>One dimension in selecting your mechanical keyboard is picking the type of switch, which is the hardware under the keycap that your finger is exerting pressure onto. Mechanical keyboards have more key travel, and you don’t have to press them down all the way before they register a keypress. However, the type of switch you buy will dictate how the key feels when you press it.</p>
+
+<p>There are 3 dimensions to picking a switch:</p>
+
+<ul>
+<li><strong>Linear versus Tactile</strong> — Tactile keys feature a notable &#8216;bump&#8217; as you press down on them. By contrast, linear key switches feel consistent throughout the downpress.</li>
+<li><strong>Actuation Force</strong> — This is a physical measure of how much pressure you must apply to the key for it to generate a keypress.</li>
+<li><strong>Clicky versus non-clicky</strong> — Whether or not your key switch generates a &#8216;click&#8217; sound and feeling when the keypress is registered. This feature has less to do with ergonomics and more to do with the psychology of how you process if you pressed a key correctly.</li>
+</ul>
+
+<p>Many on the internet consider Cherry MX Brown switches to be the best for those just getting into mechanical keyboards. They’re tactile but need a low actuation force, and they don’t make a loud click sound with key. <a href="#fn:1" id="fnref:1" title="see footnote" class="footnote">[1]</a> </p>
+
+<p><img src="https://media.kingston.com/hyperx/content/Cherry%20MX%20Red%20Switch%20-%20Animated%20GIF_MXBlue_v001%20(1).gif"
+     alt="Cherry MX Red Switch" width="100" height="100"
+     style="float: left; margin: 0 auto;" /></p>
+
+<p>I personally prefer Cherry Red keys, as they feel very light on your fingers. However, the lack of tactile feedback can be off-putting at first.</p>
+
+<p>Note: Some mechanical keyboards are <strong>hot-swappable</strong>. This means that you can easily remove the switches and replace them with new ones. For example, you can switch from Cherry Brown to Cherry Red switches without buying a whole new keyboard.</p>
+
+<h4 id="splitkeyboards">Split Keyboards</h4>
+
+<p><img src="https://m.media-amazon.com/images/S/aplus-seller-content-images-us-east-1/ATVPDKIKX0DER/A3VQYLNIH6ARI7/5c145eff-763a-4608-818c-a464fcdfc80a._CR0,0,4709,4709_PT0_SX300__.jpg"
+     alt="Split Keyboard" width="150" height="50"
+     style="float: left; margin-right: 10px;" /></p>
+
+<p>Hold your arms straight out, then bend your elbows to 90 degrees. Notice how far apart your hands are from each other? Now think about how narrow your keyboard is by comparison!</p>
+
+<p>Bunching up your body to type on a narrow keyboard can cause a variety of problems. Which issue arises depends on which part of your body you bunch up to compensate for the narrowness.</p>
+
+<p>The solution to this problem is using a split keyboard. These keyboards create distance between the keys typically typed by your left hand and those typed by your right hand.</p>
+
+<p>There are two forms of split keyboards:<br/>
+- Adjustable split keyboards - These keyboards come in the form of two pieces, typically connected by cord. This format allows you to adjust the keyboard halves to be the right distance for you.<br/>
+- Fixed split keyboards - This keyboard still comes in a single piece but left versus right hand keys are separated by a gap. </p>
+
+<p><img src="https://www.ergonomicsnow.com.au/image/cache/data/keyboards/kinesis-advantage2-3-600x600.jpg"
+     alt="Fixed Split Keyboard" width="400" height="100"
+     style="align: center; margin: 300 auto;"/></p>
+
+<p>Keeping your two halves shoulder width apart is ideal, which is why I prefer adjustable split keyboards. When you’re using your mouse a lot, this can be problematic because now your mouse is in a suboptimal location. I typically put an Apple Magic Trackpad between my two keyboard halves when programming and thus not using my keyboard heavily. When using my mouse more heavily, such as during internet browsing, I switch my right keyboard half and mouse back around so that my mouse is straight ahead of my right hand.</p>
+
+<h4 id="tiltingandconcavity">Tilting and Concavity</h4>
+
+<p><img src="https://www.daskeyboard.com/blog/wp-content/uploads/2011/11/keyboard_posture.jpg"
+     alt="Wrist Positioning" width="700" height="400"
+     style="align: center; margin: 0 auto;" /></p>
+
+<p>Ever notice those legs at the back of standard keyboards, which put your keyboard at an angle? Those are terrible for you.</p>
+
+<p>Why? Remember that we want our wrists straight during typing, instead of being hunched. But, when typing, your fingers are curved downwards. This means that, ideally, your wrist rest is <em>higher</em> than where your keys are located. Thus, we actually prefer a negative tilt, where the side of the keyboard that is closer to you is higher than the back.</p>
+
+<p>High end keyboard arm manufacturers offer arms that allow you to put your keyboard at a negative tilt. Examples include <a href="https://www.humanscale.com/products/keyboard-systems/keyboard-systems">Humanscale</a>, <a href="https://www.imovr.com/">iMovR</a>, Ergotron, and ESI. Many of these come in options compatible with adjustable height desks!</p>
+
+<p>We can take considering key height to the extreme. Your home row keys should be the lowest keys for typing. However, due to how our fingers curve, the keys above and below can be taller. Some keyboard designs take this into account and use <em>concave key wells</em> to optimally raise each key.</p>
+
+<p><img src="https://ergocanada.com/products/keyboards/advantage_images/kinesis_advantage_concave_keywell_696x390.jpg"
+     alt="Concave key well" width="300" height="300"
+     style="align: center; margin-right: 10px;" /></p>
+
+<h4 id="tenting">Tenting</h4>
+
+<p>Ever notice that your hand is less tense in a ‘handshake’ position than it is laying flat? Keeping your palm vertically is considered a more neutral position.</p>
+
+<p>(This is the same concept behind vertical mice, which we’ll get into later. We’re talking about keyboards!)</p>
+
+<p><img src="https://kinesis-ergo.com/wp-content/uploads/kb820-landscape-1400x525.jpg"
+     alt="Freestyle2 with VIP3 tenting accessory" width="200" height="70"
+     style="float: left; margin-right: 10px;" /></p>
+
+<p>Keyboard <em>tenting</em> is when a keyboard is designed or adjusted so that the middle keys (think T, Y, G, and H) are located higher than the edge keys (like Tab or Shift). This is far from a vertical position, but the idea is that every little bit helps.</p>
+
+<p>Some keyboards have a fixed amount of tenting, while others have legs or tenting kits that allow you to adjust the angle.</p>
+
+<h4 id="ortholinearity">Ortholinearity</h4>
+
+<p>Notice how the keys on your keyboard aren’t vertically aligned? This staggering is to avoid jams, but in the post-typewriter era, that’s not necessary.</p>
+
+<p>Further, it isn’t ergonomic. Your fingers would rather move straight up and down rather than diagonally, so let them. Ortholinear keyboards are based around this concept. They are designed so that keys are directly above and below one another, reducing the distance your finger must travel during typing. Ortholinearity is one of the more common features across ergonomic mechanical keyboards.</p>
+
+<p>￼<img src="http://www.lps-it.fr/pub/DasMatrix/DasMatrix_v03.png"
+     alt="Ortholinear Keyboard" width="400" height="400"
+     style="align: center; margin: 0 auto;" /></p>
+
+<h4 id="thumbclusters">Thumb Clusters</h4>
+
+<p>Your thumb is one of your strongest fingers. Your pinky is one of your weakest. Yet, on a standard keyboard, we only assign thumbs to the space bar, thereby using our thumbs inefficiently. By contrast, we make our weak pinkies do lots of work, giving them the reigns to many symbols and modifier keys (i.e. Shift, Ctrl). This makes our pinkies work hard and our hands frequently stretch in unnatural ways. To make matters worse, this becomes a bigger issue if we make use of keyboard shortcuts to reduce typing as a way of coping with RSI!</p>
+
+<p>￼<img src="https://s.yimg.com/ny/api/res/1.2/w2ZGxN680vRiWhcfpTaknw--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAwO2lsPXBsYW5l/http://media.zenfs.com/en_SG/News/hardwarezone.com.sg/IMG_1149.jpg"
+     alt="Thumb Cluster Keyboard" width="200" height="200"
+     style="float: left; margin-right: 10px;" /><br/>
+To address this issue, some keyboard designs include thumb clusters, so that the thumb can be assigned more keys and be in charge of a greater share of typing duties. Sometimes these keys are pre-assigned to keys like Return or Enter. Sometimes they are empty so that you can assign your own command to them.</p>
+
+<p>Thumb clusters are brilliant and one of the keyboard changes I most strongly recommend, especially to anyone doing lots of programming, whether its just making slides in Beamer or estimating a large structural model in R. Programming involves lots of keys like brackets [] , slashes \, and symbols = that non-programmers don’t use nearly as often. Moving these keys to your thumb will do wonders for the health of your hands.</p>
+
+<h4 id="firmware">Firmware</h4>
+
+<p>Like most people, I imagine you never tap your shift key. If you use it, you hold it while tapping another button. This is a waste of a key!</p>
+
+<p>Luckily, many mechanical keyboards also have advanced software built into them so you can re-map keys. For example, when I tap but don’t hold my left shift key, my keyboard types a left parenthesis (; the right shift key produces a right parenthesis ) to match!</p>
+
+<p>The fun goes on from there. My page down key that I never use? My keyboard translates that keypress into a dplyr pipe operator %&gt;%, which makes R programming much easier.</p>
+
+<p>You can even get more extreme! Many keyboards even allow the use ‘layers’. Imagine assigning an unused key on your keyboard (perhaps CapsLock if you’re me) as your ‘toggle’ key. This toggle key will take you to another layer, where every key means something else. Consider my keyboard layout which includes both a base QWERTY layer and a special layer for LaTeX where a different greek letter is assigned to each key. This drastically cuts down on my slash \ typing!</p>
+
+<p><img src="layer1.png"
+     alt="Keyboard Layer 1" width="700" height="300"
+     style="align: center; margin: 0 auto;" /></p>
+
+<p><img src="layer2.png"
+     alt="Keyboard Layer 2" width="700" height="300"
+     style="align: center; margin: 0 auto;" /></p>
+
+<h4 id="backlighting">Backlighting</h4>
+
+<p>You may have seen pictures of keyboards like this by gamers where the lighting is purely for aesthetics:<br/>
+<img src="https://c1.neweggimages.com/ProductImageCompressAll1280/23-816-083-V07.jpg"
+     alt="Gamer Keyboard" width="400" height="200"
+     style="align: center; margin: 0 auto" /></p>
+
+<p>However, this lighting underneath the keys can serve a practical purpose too! Many of the same keyboards that allow extensive firmware customization also allow you to program the lighting underneath each key, which can serve as a reminder of what each key is doing.</p>
+
+<p>For example, in my LaTeX layer featured above, I have greek letters used for variables backlit by one color (blue) while math operators are backlit by another (orange).</p>
+
+<h4 id="diyvsconsumer-grade">DIY vs Consumer-grade</h4>
+
+<p>As I mentioned, mechanical keyboards have largely come back into fashion as a hobby. Thus, while there are an overwhelming number of mechanical keyboard layouts available these days, the vast majority can only be acquired by you if you order individual parts and solder the keyboard together yourself. Some even require you to 3D print certain parts! Beyond being a large time investment, it also means they don’t come with customer support in case something goes wrong.</p>
+
+<p>While DIYing can be fine as a hobby, you may want something more dependable when using a keyboard for work. This is especially true when a deadline is looming! Luckily, some of the most popular ergonomic designs are available by companies that back their products with a warranty. Some even provide GUI frontends to keyboard firmware to make reconfiguring your keyboard more user-friendly.</p>
+
+<h4 id="recommendations">Recommendations</h4>
+
+<p>That was a lot of material! Maybe you read it all and don’t know where to start. Maybe you’re just trying to skip to suggestions. Regardless, here is a table of the keyboards I recommend most to other economists. This list is based on ergonomics, our usage patterns, and ease of customer support.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:center;"/>
+<col style="text-align:center;"/>
+<col style="text-align:center;"/>
+<col style="text-align:center;"/>
+<col style="text-align:center;"/>
+<col style="text-align:center;"/>
+<col style="text-align:center;"/>
+<col style="text-align:center;"/>
+<col style="text-align:center;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Keyboard</th>
+	<th style="text-align:center;">Hot-Swappable</th>
+	<th style="text-align:center;">Split</th>
+	<th style="text-align:center;">Concave</th>
+	<th style="text-align:center;">Tenting</th>
+	<th style="text-align:center;">Ortholinear</th>
+	<th style="text-align:center;">Thumb Clusters</th>
+	<th style="text-align:center;">Programmable</th>
+	<th style="text-align:center;">Backlighting</th>
+	<th style="text-align:center;">Warranty</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Kinesis Advantage2</td>
+	<td style="text-align:center;">    &#10060;</td>
+	<td style="text-align:center;">&#11093; <br> Fixed</td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">&#11093; <br> Fixed</td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">&#11093; <br>Limited</td>
+	<td style="text-align:center;">    &#10060;</td>
+	<td style="text-align:center;">3 years</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Moonlander</td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10060;</td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">2 years</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Dactyl (DIY)</td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">    &#10004; </td>
+	<td style="text-align:center;">None</td>
+</tr>
+</tbody>
+</table>
+
+<p>For development economists in particular, I strongly recommend getting the Moonlander as a travel keyboard. It is compact, making it an easy keyboard to bring with you on a trip to the field. Other economists may want to do the same if they travel frequently, such as for seminar visits. </p>
+
+<p>For daily typing, I often prefer the Kinesis due to its concave keywells, which I find to be a huge improvement in my ergonomics. Both the Kinesis and Moonlander are supported by great customer service and intuitive GUIs. The Moonlander is my preferred keyboard when working in LaTeX because it allows for keyboard layers, which the Kinesis does not.<a href="#fn:2" id="fnref:2" title="see footnote" class="footnote">[2]</a> </p>
+
+<p>An important caveat: none of these keyboards are wireless. Unfortunately, wireless mechanical keyboards are still in a nascent stage, and involve a significant amount of DIYing. That said, new developments happen all the time, so feel free to take a look and see if things have changed. Better yet, let me know so I can get one too!</p>
+
+<h4 id="re-learningtotype">Re-learning to Type</h4>
+
+<p>If you notice yourself getting much slower at typing after adopting a keyboard with one or more of these features, that is totally normal! The learning curve can be steep, but that isn&#8217;t a reason to abandon ship. </p>
+
+<p>Luckily, there are a plethora of tools out there for re-teaching you to touch type on your new keyboard. Many of them are free! These tools will likely catch you up to speed in 1&#8211;2 weeks of consistent practice. In the meantime, no one is banning you from keeping your old, normal keyboard nearby!</p>
+
+<p>The biggest barrier for adoption of a new keyboard to those of us who program is that our typing patterns can be a bit unique. While a non-programmer needs to focus on typing patterns for regular words, programmers care much more about special keys like punctuation that are used extensively by programming languages. </p>
+
+<p>To train yourself for programming specifically, I recommend <a href="http://typing.io">typing.io</a>. Their premium service, while not free, allows you to upload your own old code and practice re-creating your own software. This is as personalized as teaching gets! Further, the subscription is cheap and most users will only need 1 month of premium before they&#8217;re back on track. </p>
+
+<h3 id="mice">Mice</h3>
+
+<h4 id="verticalmice">Vertical Mice</h4>
+
+<p>Remember how we discussed how the hand prefers being vertical or in &#8216;handshake mode&#8217; when discussing keyboard tenting? Similar advice goes for mice! This is the idea behind vertical mice; they allow your hand to be in a more neutral position. </p>
+
+<p>Unfortunately, a lot of vertical mice have a really cheap hand feel, which can make them harder to use. I recommend the <a href="https://smile.amazon.com/Logitech-Vertical-Wireless-Mouse-Rechargeable/dp/B07FNJB8TT/">Logitech MX Vertical</a>. As a bonus, it features several programmable buttons that you can customize to save you extra keypresses. </p>
+
+<h4 id="multiplemice">Multiple Mice</h4>
+
+<p>As the &#8216;R&#8217; in RSI indicates, the symptoms arise from doing the same motion over and over again. One way to temper this is by having multiple, different types of mice that you switch between. I personally use a combination of:</p>
+
+<ul>
+<li>Apple Magic Trackpad</li>
+<li>Logitech MX Master 3</li>
+<li>Logitech MX Vertical</li>
+<li>An iPad and iPad Pencil for anything that can be conveniently done via tablet</li>
+</ul>
+
+<p>I personally avoid trackballs because I don&#8217;t like the lack of precision in controls. However, if you do decide to use a trackball, a common recommendation is to use a finger trackball like the <a href="https://smile.amazon.com/dp/B01936N73I/">Kensington Expert</a>. Finger trackballs are less prone to causing De Quervain’s Tenosynovitis than thumb trackballs, and their larger balls are also better suited towards modern high resolution screens. If you do use a thumb trackball, the <a href="https://smile.amazon.com/Logitech-Ergo-Wireless-Trackball-Mouse/dp/B0753P1GTS">Logitech MX Ergo</a> allows you to optionally angle the mouse. While this angle isn&#8217;t as extreme as a vertical mouse, it is a more neutral position than other trackballs provide. </p>
+
+<p>Overall, for most cases, I recommend minimizing mouse use as much as possible. A keyboard has a broader diversity of hand movement it requires. There&#8217;s only so many ways to diversify using a mouse to avoid repetition. </p>
+
+<h3 id="monitors">Monitors</h3>
+
+<p>If you are a dual monitor user, get an ultra-wide monitor instead. It increases the amount of screen real estate directly in front of you, reducing the amount of neck swivelling you&#8217;ll be doing all day. </p>
+
+<h2 id="software">Software</h2>
+
+<h3 id="sourcecodeeditor">Source Code Editor</h3>
+
+<p>If you know how to use Emacs or Vim well, skip this section. These are great pieces of software, but often hard for new users to pick up.</p>
+
+<p>For the rest of us, a source code editor is a major upgrade from the built in editors for our tools of the trade such as R, Stata, or LaTeX. A good source code editor will have RSI-friendly features like:</p>
+
+<ul>
+<li><p>Syntax highlighting: This is a common feature that many built in editors also have. </p></li>
+<li><p>Autocomplete: A good editor will not only autocomplete base language commands, but also commands from packages you&#8217;ve loaded in and functions you&#8217;ve defined earlier in your file. This can save you lots of typing in the long run. If you use a keyboard with a thumb cluster, moving the tab key to your thumb is a great pairing! </p></li>
+<li><p>Multiple Cursor support: Ever find yourself typing/editing the same thing on multiple lines of code? Many great source code editors will allow you to have &#8216;multiple cursors&#8217; so that you can edit your file in multiple locations at once. This saves you the hassle of copy and pasting! It is also well paired with &#8216;Find All&#8217;, so you can select all instances of a string of text at once.<img src="https://thume.ca/assets/postassets/editors/sublime_vim.gif" alt="Multiple cursors" /> </p></li>
+<li><p>Regex Find and Relace: If you&#8217;ve ever used fuzzy strings, you may be familiar with regular expressions. Great editors will allow you to enter regular expressions in the find and replace bar. When paired with multiple cursor support, this is a large time saver when you have many instances of similar but not duplicate code that you need to edit. </p></li>
+<li><p>Snippet manager: Personally, I have many snippets of code that frequently arise throughout my projects. One example is doing a logit in R via </p>
+<pre><code>mylogit &lt;- glm(y ~ x, data = mydata, family = &apos;binomial&apos;)</code></pre>
+
+<p>With a snippet manager, I can just type <code>logit</code>, press Tab, and the editor will write the line for me, and even let me tab through the variable names that I need to change. This is a boon for both my fingers and my memory. </p></li>
+</ul>
+
+<p>They&#8217;ll also have many other features that aren&#8217;t RSI related but very useful for your workflow. These topics are covered extensively elsewhere, so I won&#8217;t get into them here. </p>
+
+<h3 id="textexpansion">Text Expansion</h3>
+
+<p>Text expansion software encompasses two forms of software. The first is more general automation software that also does text expansion. Examples include <a href="https://www.keyboardmaestro.com/main/">Keyboard Maestro</a> on Mac and <a href="https://www.imovr.com/">AutoHotKey</a> for Windows. The second group is software dedicated to text expansion specifically, such as <a href="https://www.witt-software.com/rockettypist/">RocketTypist</a> or <a href="https://textexpander.com">TextExpander</a>. The latter is often more user-friendly, owing to its simplicity, while the former allows for a great deal of automation on your computer that can save you time once you master their steep learning curve. </p>
+
+<p>Regardless of which route you pursue, text expansion apps are useful because they allow you to avoid typing long, routine strings of text. This may sound familiar: I said the same of text editors that have built-in snippet managers! However, while those snippet managers will only expand text within your text editor, text expansion software will work in all apps across your computer, from your text editor for programming or your web browser for filling out forms. </p>
+
+<h3 id="accessibilitysoftware">Accessibility Software</h3>
+
+<p>Accessibility software, particularly voice recognition software, has come a long way. <a href="https://www.nuance.com/dragon/business-solutions/dragon-professional-individual.html">Nuance Dragon</a> is the most popular tool in this category, and is used widely in a variety of industries. While there have been <a href="https://www.youtube.com/watch?v=8SkdfdXWYaI">creative attempts to adapt Dragon for programming</a>, they can feel unnatural because Dragon wasn&#8217;t designed for a programming setting. The software is also only available on Windows.</p>
+
+<p>My preferred tool for those with a bit of technical know-how is <a href="https://talonvoice.com">Talon</a>. It works for macOS, Linux, and Windows operating systems, is free, and can be customized via Python. The latter is an incredibly useful tool for easily creating verbal shortcuts for your common commands. I even combine these features with my text expansion software so that a few easy to say words can quickly replicate many keys worth of typing.</p>
+
+<p>Talon also allows the use of eye tracking hardware as a substitute for using a mouse. I have not tried this feature, but users state that it works best on smaller screens of 24&quot; or less. For those interested in trying out a similar feature, macOS has its own internal head tracking option within the accessibility settings. It works reasonably well as an alternative, especially in situations where precision isn&#8217;t required, like web browsing. </p>
+
+<h2 id="finaladvice">Final Advice</h2>
+
+<p>Don&#8217;t do too much at once or it will be hard to pick up. You&#8217;re undoing years of habits and muscle memory. Fortunately, adjusting to most of these tools can happen in the course of mere days to at most a month. Introduce new tools one step at a time to reduce frustration and avoid feeling like your RSI is dictating your life. And, if you&#8217;re reading this in the first place, the lesson you need to internalize the most is to go easy on yourself! </p>
+
+<div class="footnotes">
+<hr />
+<ol>
+
+<li id="fn:1">
+<p>Cherry is the brand name for the keyboard switches. MX is the product line, used for most consumer purposes. Brown is the specific switch type. Other manufacturers make brown switches, but Cherry has the best reputation and widest adoption.  <a href="#fnref:1" title="return to article" class="reversefootnote">&#160;&#8617;</a></p>
+</li>
+
+<li id="fn:2">
+<p>The Kinesis can be modified to use the same QMK firmware that is behind the Moonlander. This enables the Kinesis to be fully programmable. However, this requires some hardware modification and will void your warranty. It also won&#8217;t allow GUI access, so re-programming your keys will have to be done through editing the QMK firmware&#8217;s source files. I don&#8217;t recommend this to beginners.  <a href="#fnref:2" title="return to article" class="reversefootnote">&#160;&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+
+<!-- ##END MARKED WRAPPER## -->
+    </div>
+
+
+
+<div style="display:none" markdown="0">
+<!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</div>
+
+</body>
+</html>
