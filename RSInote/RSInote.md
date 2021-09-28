@@ -12,32 +12,33 @@ Economists are often a step removed from the engineering community where these t
 
 - [Medical](#medical)
 - [Exercises](#exercises)
-    - [Equipment](#equipment)
-    - [Do exercises between breaks!](#do-exercises-between-breaks)
-    - [Find compound exercises](#find-compound-exercises)
+     - [Equipment](#equipment)
+     - [Do exercises between breaks!](#do-exercises-between-breaks)
+     - [Find compound exercises](#find-compound-exercises)
 - [Hardware](#hardware)
-    - [Keyboard Trays](#keyboard-trays)
-    - [Keyboards](#keyboards)
-        - [Key travel](#key-travel)
-        - [Keyboard Actuation Force and Switch Types](#keyboard-actuation-force-and-switch-types)
-        - [Split Keyboards](#split-keyboards)
-        - [Tilting and Concavity](#tilting-and-concavity)
-        - [Tenting](#tenting)
-        - [Ortholinearity](#ortholinearity)
-        - [Thumb Clusters](#thumb-clusters)
-        - [Firmware](#firmware)
-        - [Backlighting](#backlighting)
-        - [DIY vs Consumer-grade](#diy-vs-consumer-grade)
-        - [Recommendations](#recommendations)
-        - [Re-learning to Type](#re-learning-to-type)
-    - [Mice](#mice)
-        - [Vertical Mice](#vertical-mice)
-        - [Multiple Mice](#multiple-mice)
-    - [Monitors](#monitors)
+     - [Keyboard Trays](#keyboard-trays)
+     - [Keyboards](#keyboards)
+          - [Key travel](#key-travel)
+          - [Keyboard Actuation Force and Switch Types](#keyboard-actuation-force-and-switch-types)
+          - [Split Keyboards](#split-keyboards)
+          - [Tilting and Concavity](#tilting-and-concavity)
+          - [Tenting](#tenting)
+          - [Ortholinearity](#ortholinearity)
+          - [Thumb Clusters](#thumb-clusters)
+          - [Firmware](#firmware)
+          - [Backlighting](#backlighting)
+          - [DIY vs Consumer-grade](#diy-vs-consumer-grade)
+          - [Recommendations](#recommendations)
+          - [Re-learning to Type](#re-learning-to-type)
+     - [Mice](#mice)
+          - [Vertical Mice](#vertical-mice)
+          - [Multiple Mice](#multiple-mice)
+     - [Monitors](#monitors)
 - [Software](#software)
-    - [Source Code Editor](#source-code-editor)
-    - [Text Expansion](#text-expansion)
-    - [Accessibility Software](#accessibility-software)
+     - [Source Code Editor](#source-code-editor)
+     - [Text Expansion](#text-expansion)
+     - [Accessibility Software](#accessibility-software)
+     - [Break Reminders](#break-reminders)
 - [Final Advice](#final-advice)
 
 <!-- /MarkdownTOC -->
@@ -90,7 +91,7 @@ Time pressure in academia is real. PTs and OTs will often start you off with iso
 
 ## Hardware
 
-### Keyboard Trays 
+### Keyboard Trays
 
 ### Keyboards
 
@@ -275,7 +276,7 @@ For daily typing, I often prefer the Kinesis due to its concave keywells, which 
 
 An important caveat: none of these keyboards are wireless. Unfortunately, wireless mechanical keyboards are still in a nascent stage, and involve a significant amount of DIYing. That said, new developments happen all the time, so feel free to take a look and see if things have changed. Better yet, let me know so I can get one too!
 
-#### Re-learning to Type 
+#### Re-learning to Type
 
 If you notice yourself getting much slower at typing after adopting a keyboard with one or more of these features, that is totally normal! The learning curve can be steep, but that isn't a reason to abandon ship. 
 
@@ -311,7 +312,7 @@ Overall, for most cases, I recommend minimizing mouse use as much as possible. A
 
 If you are a dual monitor user, get an ultra-wide monitor instead. It increases the amount of screen real estate directly in front of you, reducing the amount of neck swivelling you'll be doing all day. 
 
-## Software 
+## Software
 
 ### Source Code Editor
 
@@ -347,6 +348,14 @@ My preferred tool for those with a bit of technical know-how is [Talon](https://
 
 Talon also allows the use of eye tracking hardware as a substitute for using a mouse. I have not tried this feature, but users state that it works best on smaller screens of 24" or less. For those interested in trying out a similar feature, macOS has its own internal head tracking option within the accessibility settings. It works reasonably well as an alternative, especially in situations where precision isn't required, like web browsing. 
 
+
+### Break Reminders
+
+Forcing yourself to pace your workload is hard. This is doubly true if you're type A enough to have gotten through a PhD! Further, even when we try to devote ourselves to taking breaks, getting lost in our work can make us lose track of time until our body starts aching again. 
+
+One way around this is to use software that forces you to take a break! I use a software called[Time Out](https://www.dejal.com/timeout/) that enforces "micro breaks" throughout the hour, and ten minute breaks every hour. You can even customize this schedule to your heart's delight! Two new cross platform apps, [BreakTimer](https://breaktimer.app) and  [Stretchly](https://hovancik.net/stretchly/), have recently been developed. However, I've yet to try either. 
+
+These enforced breaks are a great time to force yourself to look away from the screen and do your exercises, rehydrate, and walk around. 
 
 ## Final Advice
 
