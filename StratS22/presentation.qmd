@@ -518,15 +518,14 @@ ggplot(data = data.frame(x1 = x_vals, y1 = c(0,0,0)), aes(x=x1, y=y1) ) +
 
 ## Context - Data Trade-off
 
-<font size=6>
-A risk averse agent is estimating $$\theta_i = \underbrace{\theta \vphantom{\gamma_i}  }_{\text{average return}} + \underbrace{\gamma_i}_{\text{context adjustment}}.$$
+<font size=6> A risk averse agent is estimating $$\theta_i = \underbrace{\theta \vphantom{\gamma_i}  }_{\text{average return}} + \underbrace{\gamma_i}_{\text{context adjustment}}.$$
 
-::: {.fragment}
+::: fragment
 They can choose among many signals $s_j = \widehat{\theta}_j = \widehat{\operatorname{E}}\left[\theta + \gamma_j\right]$.
 :::
 
-::: {.fragment}
-Minimizing MSE forces a bias-variance trade-off: 
+::: fragment
+Minimizing MSE forces a bias-variance trade-off:
 
 ```{=tex}
 \begin{aligned}
@@ -588,7 +587,7 @@ $\sigma_j^\gamma$ is the **context uncertainty**.
 <font size=6>
 
 |                      |                   Extension Agent                   |                   Friends                    |
-|:----------------|:----------------------------:|:------------------------:|
+|:---------------------|:---------------------------------------------------:|:--------------------------------------------:|
 | Uninformative Prior? |                        True                         |                     True                     |
 | \# of Signals        |                         $M$                         |          1 each <br> ($N$ friends)           |
 | Signal Structure     | $\mathbf{s}_E = \theta_E + \boldsymbol{\epsilon}_M$ |   $s_j = \theta_j + \epsilon_j \forall j$    |
