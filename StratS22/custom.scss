@@ -1,0 +1,137 @@
+/*-- scss:defaults --*/
+
+/* $body-bg: #4F2582;
+$body-color: #EAEAEA;
+$link-color: #CACACA; 
+$presentation-heading-color: $body-color; */
+$content-padding-top: 0;
+$presentation-block-margin: 0px;
+$callout-margin-top: 0;
+$enable-negative-margins: true;
+/* $presentation-font-smaller: 5;
+*/
+/*-- scss:rules --*/
+
+.reveal .slide blockquote {
+  border-left: 3px solid $text-muted;
+  padding-left: 0.5em;
+}
+
+.reveal .slides section .fragment {
+   transition-duration: 2s;
+}
+
+.reveal .slide p { 
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+  /*border-color: coral;
+  border-style: solid;*/
+}
+
+.reveal .slide div.cell-output-display {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+}
+
+.reveal .slide div.cell {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+    /* border : 2px;
+    border-color: coral;
+  border-style: solid; */
+}
+
+.reveal .quarto-figure {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border: 0px;
+}
+
+.reveal .slides div.quarto-figure-left {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+}
+
+
+.reveal .slide figure {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+}
+
+.reveal .slide img {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+}
+
+.reveal .r-stack {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+  text-align:left;
+}
+
+.reveal .slides section .fragment {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+  text-align:left;
+  left: 0; 
+}
+
+.reveal .slides section .fragment.step-fade-in-then-out {
+	opacity: 0;
+	display: none;
+  margin: 0px;
+  margin-top:0px;
+  text-align:left;
+
+  left:0;
+  padding: 0px;
+  border : 0px; }
+.reveal .slides section .fragment.step-fade-in-then-out.current-fragment {
+	opacity: 1;
+	display: inline; 
+  margin: 0px;
+  left:0;
+  margin-top:0px;
+  text-align:left;
+
+  padding: 0px;
+  border : 0px;}
+
+
+  .theorem {
+    display: block;
+    font-style: italic;
+    font-family: "Times New Roman";
+  }
+  .theorem::before {
+    content: "Theorem. ";
+    font-weight: bold;
+    font-style: normal;
+  }
+  .theorem[text]::before {
+    content: "Theorem (" attr(text) ") ";
+  }
+  .theorem p {
+    display: inline;
+  }
+
+  .reveal .slides section .fragment { 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: all 0.1s jump; }
