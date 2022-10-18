@@ -611,14 +611,14 @@ s_E = \underbrace{\theta\vphantom{\gamma_E}}_{\text{Average Return}} + \underbra
 <section id="our-farmers-posterior" class="title-slide slide level1">
 <h1>Our Farmer’s Posterior</h1>
 <p>Using information from all sources, farmer updates his belief.</p>
-<p><span class="math display">\[
-\tilde{\theta_i} \sim \mathcal{N}\left(\tilde{\mu}, \tilde{\sigma}_0^2\right)
-\]</span></p>
+<p><br></p>
 <div class="fragment">
 <p><span style="display:block; margin-top:-50px;"></span></p>
-<p>where <span class="math display">\[
-\tilde{\mu} = \tilde{\sigma}_0^2 \left(\frac{0}{\tilde{\sigma}_0^2} + \frac{s_E^A}{\sigma_E^2 + (\sigma_E^\gamma)^2} +  \sum_{j \in {1, \ldots, n}} \frac{s^A_j}{\sigma_j^2 + (\sigma_j^\gamma)^2}\right)
-\]</span> </p>
+<span class="math display">\[\begin{align*}
+\text{Mean} &amp;\propto \frac{0}{\text{Prior Var}}  + \frac{\text{Ext Adj Signal}}{\text{Ext Sample Var} + \text{Ext Context Var}} \\
+&amp; \ \ \ \ + \sum \frac{\text{Peer Adj Signal}}{\text{Peer Sample Var} + \text{Peer Context Var}}
+\end{align*}\]</span>
+<p></p>
 </div>
 <div class="fragment">
 <p><span class="math display">\[
@@ -911,7 +911,6 @@ s_E = \underbrace{\theta\vphantom{\gamma_E}}_{\text{Average Return}} + \underbra
 <p><br></p>
 <div class="fragment">
 <p>Mapped to Likert Scale</p>
-<p><br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="adoption_choice.png"></p>
@@ -985,7 +984,25 @@ AdoptionLevel_{it} = \beta_1 \cdot \mathbb{1}_{t = \text{High \% Gray}} + \eta_i
 <section id="farmers-prefer-more-context" class="title-slide slide level1">
 <h1>Farmers Prefer More Context</h1>
 <div class="cell">
-
+<div class="cell-output cell-output-stdout">
+<pre><code>\begingroup
+\centering
+\begin{tabular}{lcc}
+   \toprule
+    &amp; \multicolumn{2}{c}{Decision}\\
+                        &amp; (1)             &amp; (2)\\  
+   \midrule 
+   HighGrayMapTRUE      &amp; -0.2929$^{***}$ &amp; -0.3529$^{***}$\\   
+                        &amp; (0.0461)        &amp; (0.0456)\\   
+    \\
+   R$^2$                &amp; 0.81466         &amp; 0.82333\\  
+   Observations         &amp; 3,168           &amp; 3,168\\  
+    \\
+   UserID fixed effects &amp; $\checkmark$    &amp; $\checkmark$\\   
+   \bottomrule
+\end{tabular}
+\par\endgroup</code></pre>
+</div>
 </div>
 <p><embed data-src="base_reg.tex"></p>
 </section>

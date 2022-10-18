@@ -389,17 +389,18 @@ How does the farmer adapt the signal to his own context?
 
 Using information from all sources, farmer updates his belief.
 
-$$
-\tilde{\theta_i} \sim \mathcal{N}\left(\tilde{\mu}, \tilde{\sigma}_0^2\right)
-$$
+<br/>
 
 ::: fragment
 <span style="display:block; margin-top:-50px;">
 
-where
-$$
-\tilde{\mu} = \tilde{\sigma}_0^2 \left(\frac{0}{\tilde{\sigma}_0^2} + \frac{s_E^A}{\sigma_E^2 + (\sigma_E^\gamma)^2} +  \sum_{j \in {1, \ldots, n}} \frac{s^A_j}{\sigma_j^2 + (\sigma_j^\gamma)^2}\right) 
-$$ 
+```{=tex}
+\begin{align*}
+\text{Mean} &\propto \frac{0}{\text{Prior Var}}  + \frac{\text{Ext Adj Signal}}{\text{Ext Sample Var} + \text{Ext Context Var}} \\
+ & \ \ \ \ + \sum \frac{\text{Peer Adj Signal}}{\text{Peer Sample Var} + \text{Peer Context Var}} 
+\end{align*}
+```
+
 </span>
 
 :::
@@ -810,7 +811,8 @@ base_reg_table_tex <- etable(base_reg_L, base_reg_H, tex = T, style.tex = style.
 # \\usepackage{amsfonts}
 # \\begin{document}\n", base_reg_table_tex, "\n\\end{document}")
 
-write(base_reg_table_tex, file='base_reg.tex')
+#write(base_reg_table_tex, file='base_reg.tex')
+base_reg_table_tex
 
 ```
 
