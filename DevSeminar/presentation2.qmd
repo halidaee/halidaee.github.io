@@ -402,14 +402,7 @@ Using information from all sources, farmer updates his belief.
 ```
 
 </span>
-
 :::
-::: fragment
-$$
-\tilde{\sigma}_0^2 = \left(\frac{1}{\tilde{\sigma}_0^2} + \frac{1}{\sigma_E^2 + (\sigma_E^\gamma)^2} + \sum_{j \in {1, \ldots, n}} \frac{1}{\sigma_j^2 + (\sigma_j^\gamma)^2}\right)^{-1}.
-$$ 
-:::
-
 
 # Less Context &rarr; Less Investment
 
