@@ -1,0 +1,976 @@
+---
+title: "How Heterogeneity Impacts Learning"
+author: |
+ | Hossein Alidaee
+ | Northwestern University
+format: 
+  revealjs: 
+    margin-top: 0em
+    center: false
+    center-title-slide: false
+    auto-animate-easing: none
+    auto-animate-duration: 1
+    progress: false
+    #theme: solarized
+    navigation-mode: vertical
+    theme: [solarized, custom.scss]
+editor: visual
+toc: false 
+toc-depth: 1
+toc-title: Roadmap
+backgroundcolor: "#D2D7D9"
+---
+
+
+
+# Motivation
+
+
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=2, strip.white=TRUE, fig.asp=0.2,fig.align='left'}
+
+library(latex2exp)
+library(tidyverse)
+library(ggbrace)
+library(gganimate)
+library(lubridate)
+library(fixest)
+library(broom)
+library(purrr)
+library(furrr)
+library(broom)
+library(gtsummary)
+library(gt)
+
+
+knitr::opts_chunk$set(
+      dev = "svglite",
+      fig.ext = "svg"
+)
+```
+
+# Social Learning Is Oddly Effective
+
+::: fragment
+Peers have limited experience
+
+<br/>
+
+:::
+
+::: fragment
+Authorities test recommendations extensively
+
+<br/>
+
+:::
+
+::: fragment
+Yet, both induce adoption at equal rates
+
+-  Krishnan and Patnam (2013)
+-  Takahashi, Mano, and Otsuka (2019)
+
+<br/>
+
+:::
+
+::: fragment
+Implies social learning is more effective *per data point*
+<br/>
+
+:::
+
+
+# What's the mechanism?
+
+::: fragment
+Natural questions:
+:::
+::: incremental
+- **Why?**
+- **Is social learning special?**
+- **How can authorities improve?**
+:::
+
+
+# My Proposal: Context Uncertainty
+
+::: fragment
+Peer information comes with rich context
+:::
+
+<br/>
+
+
+::: fragment
+Information from authorities comes with little context
+:::
+
+<br/>
+
+
+::: fragment
+When weighing signals, we place weight on total uncertainty
+:::
+
+<br/>
+
+
+::: fragment
+Total Uncertainty = Context Uncertainty + Sampling Error
+:::
+
+
+# Related Literature
+<font size = 5>
+
+- Decision makers as statisticians
+  - Steiner and Stewart (2008), Olea et al. (2021), Salant and Cherry (2020), etc.. 
+- Social learning theory
+  - Sethi and Yildiz (2016), Dasaratha et al (2022), Bala and Goyal (1998), etc...
+- Information provision experiments
+  - Jensen (2010), Chetty and Saez (2013), Binder (2020), etc...
+- Role of heterogeneity in agents' responses to information
+  - Armour (2018), 
+- Role of trust in agents' responses to information
+  - asdf
+- Agricultural technology adoption
+  - asdf
+- Agricultural extension design
+  - asdf
+
+</font>
+
+
+# Roadmap
+
+::: incremental
+Today:
+
+-   Relate question to agricultural technology adoption
+-   Propose a foundation for mechanism
+-   Provide experimental design
+-   Present results
+-   Discuss external validity
+-   Implications for farmers and policymakers
+-   Upcoming extensions
+:::
+
+# Setting 
+
+# Low AgTech Adoption Is A Major Issue
+
+::: columns
+
+
+
+::: {.column width="55%"}
+::: fragment
+
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=1,fig.align='right'}
+df <- read_csv('/users/halidaee/Dropbox/Ongoing Research/Context/HYVdata.csv')
+
+
+plot <- df %>% 
+  pivot_longer(adv_gdp:first_gdp, names_to='gdp',names_pattern = '(.*)_gdp') %>%
+  rename('Type' = 'gdp', 'GDP' = 'value') %>%
+  ggplot(aes(x=year, y=GDP, color=Type)) +
+    geom_line(size=2) + 
+    xlab(element_blank()) +
+    ylab('Real GDP per capita') +
+    annotate('text',label="Western",x=1977, y=30,size=8) +
+    annotate('text',label='High HYV \n Adoption  ', x=2008, y=19,size=8) +
+    annotate('text',label='Low HYV \n Adoption  ', x=2008, y=3,size=8) +
+    theme(axis.line=element_line(colour = 'black'),
+          plot.title = element_text(size=15,face='bold'),
+          axis.text.x=element_text(size=25),
+          axis.text.y=element_blank(),
+          axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25)) +
+    scale_colour_manual(values=c('#D99066', '#402110', '#166B8C'))
+plot(plot)
+```
+:::
+:::
+
+
+::: {.column width="35%"}
+::: incremental
+
+<font size=6>
+
+-   $2^{\text{nd}}$ divergence via Green Revolution (Huang, 2020)
+
+<br/>
+
+- Key friction for AgTech (Magruder, 2018)
+
+<br/>
+
+
+- Governments spend huge sums on extension (Akroyd and Smith, 2007)
+
+ 
+</font>
+
+:::
+:::
+
+:::
+
+# Traditional Extension Design
+
+::: incremental
+- R&D at university or national research institute 
+- Pick a winning technology
+- Agricultural ministry teaches extension staff
+- Extension staff advocate in villages
+- Villagers have no clue about test conditions
+:::
+
+
+
+::: fragment
+
+::: {layout-ncol=5}
+![](generic_extension.png){#id .class width=300px height=300px}
+
+![](redsoil_extension.png){#id .class width=300px height=300px}
+
+![](riverbed_extension.png){#id .class width=300px height=300px}
+
+![](hillside_extension.png){#id .class width=300px height=300px}
+
+![](drylands_extension.png){#id .class width=300px height=300px}
+
+:::
+:::
+
+
+
+
+
+<!--# Heterogeneous Returns to Technology         Returns are often heterogeneous:     Education - comparative advantage (Heckman and Li, 2004), gender (Dougherty, 2005)   Microfinance - credit constraints (Banerjee et al, 2020), business experience (Meager, 2019) Skills training - baseline profits (Lopez-Pena, 2020)   Health - age (Dupas, 2009)   Whose data do I trust? -->
+
+
+# Microfoundation
+
+
+# The Farmer's Problem
+
+
+::: fragment
+**Problem:** 
+<span style="display:block; margin-top:-90px;">
+
+$$ 
+\operatorname*{argmax}_\alpha E[U(\alpha \cdot \theta_i ) | s_1, \ldots s_n, s_E]
+$$
+</span>
+
+:::
+
+::: fragment
+**Decision:** Fraction of investment $\alpha \in [0, 1]$
+:::
+
+<br/>
+
+::: fragment
+**Heterogeneity:** 
+<span style="display:block; margin-top:-90px;">
+
+$$
+\ \ \ \ \ \ \ \ \ \ \ \ \theta_i = \underbrace{\theta \vphantom{\gamma_i}  }_{\text{average return}} + \underbrace{\gamma_i}_{\text{context adjustment}}
+$$
+</span>
+:::
+
+::: fragment
+**Belief:** Posterior $\tilde{\theta}_i$
+:::
+
+<br/>
+
+::: fragment
+**Preferences:** Risk averse so 
+<span style="display:block; margin-top:-90px;">
+
+$$
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \operatorname{E}[U(\alpha \theta_i)] \leq U(\alpha  \operatorname{E}[\theta_i]).
+$$
+
+</span>
+
+:::
+
+# Interpreting Signals from peers
+
+
+::: fragment
+Friend $j$ shares signal 
+$$
+s_j = \underbrace{\theta\vphantom{\gamma_j}}_{\text{Average Return}} + \underbrace{\gamma_j}_{\text{Agent $j$'s Context}} + \underbrace{\epsilon_j}_{\text{Agent $j$'s Sampling Error}}.
+$$ 
+:::
+
+
+::: fragment
+Farmer's belief about $\gamma_j$ is
+$$
+\gamma_j \sim \mathcal{N}\left(0, (\sigma_j^\gamma)^2\right).
+$$
+:::
+
+::: fragment
+Farmer knows friend $j$ well, so context uncertainty $\sigma_j^\gamma$ is low. 
+:::
+
+# Interpreting Signals from Authorities
+
+::: fragment
+Extension agent $E$ shares signal 
+$$
+s_E = \underbrace{\theta\vphantom{\gamma_E}}_{\text{Average Return}} + \underbrace{\gamma_E}_{\text{Agent's Context}} + \underbrace{\epsilon_E}_{\text{Agent's Sampling Error}}.
+$$ 
+:::
+
+
+::: fragment
+Farmer's belief about $\gamma_E$ is
+$$
+\gamma_E \sim \mathcal{N}\left(0, (\sigma_E^\gamma)^2\right).
+$$
+:::
+
+::: fragment
+Farmer doesn't know any context, so  $\sigma_E^\gamma$ is high.
+:::
+
+# Adjusting Signals for Context
+
+How does the farmer adapt the signal to his own context?
+
+<br/>
+
+::: fragment
+
+```{=tex}
+\begin{align*}
+\text{Adjusted Signal} &= \text{Original Signal} \\
+& \ \ \  + \text{Own Context Adjustment} \\
+& \ \ \  - \text{Friend's Context Adjustment}
+\end{align*}
+```
+
+:::
+
+<br/>
+
+
+::: fragment
+
+**Implication:** 
+<center>
+&uarr; context uncertainty &rArr; &uarr; variance in adjusted signal
+</center>
+
+:::
+
+
+
+# Our Farmer's Posterior
+
+Using information from all sources, farmer updates his belief.
+
+$$
+\tilde{\theta_i} \sim \mathcal{N}\left(\tilde{\mu}, \tilde{\sigma}_0^2\right)
+$$
+
+::: fragment
+<span style="display:block; margin-top:-50px;">
+
+where
+$$
+\tilde{\mu} = \tilde{\sigma}_0^2 \left(\frac{0}{\tilde{\sigma}_0^2} + \frac{s_E^A}{\sigma_E^2 + (\sigma_E^\gamma)^2} +  \sum_{j \in {1, \ldots, n}} \frac{s^A_j}{\sigma_j^2 + (\sigma_j^\gamma)^2}\right) 
+$$ 
+</span>
+
+:::
+::: fragment
+$$
+\tilde{\sigma}_0^2 = \left(\frac{1}{\tilde{\sigma}_0^2} + \frac{1}{\sigma_E^2 + (\sigma_E^\gamma)^2} + \sum_{j \in {1, \ldots, n}} \frac{1}{\sigma_j^2 + (\sigma_j^\gamma)^2}\right)^{-1}.
+$$ 
+:::
+
+
+# Less Context &rarr; Less Investment
+
+<br/>
+
+::: {.theorem text="Maximizing Adoption"}
+Consider a strictly risk averse agent with utility $U$  solving 
+$$ 
+\operatorname*{argmax}_\alpha E[U(\alpha \cdot \theta_i ) | s_1, \ldots s_n, s_E].
+$$ 
+The agent's optimal level of adoption $\alpha^*$ is decreasing in context uncertainty from any signal.
+:::
+
+<br/>
+
+
+# Sampling and Context Precision Are Complements
+
+<br/>
+
+::: {.theorem}
+Consider a strictly risk averse agent with DARA utility $U$  solving 
+$$ 
+\operatorname*{argmax}_\alpha E[U(\alpha \cdot \theta_i ) | s_1, \ldots s_n, s_E].
+$$ 
+For any signal $s_j$, the agent's optimal level of adoption $\alpha^*$, given a level of sampling precision $1/\sigma_j^2$, is increasing in context precision $(1/\sigma_j^\gamma)^2$ from that signal.
+:::
+
+<br/>
+
+# Model Recap
+
+::: incremental
+- Heterogeneity can cause uncertainty about context
+- Context uncertainty adds to signal noise
+- Context certainty can be adjusted for
+- **Hypothesis 1**: Higher context uncertainty reduces adoption if risk averse
+- **Hypothesis 2**: Sampling and context precision are complements under DARA
+:::
+
+
+# Lab Experiment Design
+
+# Overview
+
+::: incremental
+- Lab-in-the-field experiment in rural Odissa
+- 1,600 small and marginal farmers
+- Decide whether to adopt a hypothetical technology
+- Receive noisy signals from fictional characters
+- Vary only context uncertainty
+- Choose adoption level
+:::
+
+# Signals As Likert Scales
+
+::: fragment
+Everyone is learning about their $\theta_j$
+
+<br/><br/>
+
+:::
+
+::: fragment
+Report experience using an emoji Likert scale
+
+<br/>
+
+::: {layout-ncol=7}
+
+![](emoji1.png){#id .class width=100px height=100px}
+
+![](emoji2.png){#id .class width=100px height=100px}
+
+![](emoji3.png){#id .class width=100px height=100px}
+
+![](emoji4.png){#id .class width=100px height=100px}
+
+![](emoji5.png){#id .class width=100px height=100px}
+
+![](emoji6.png){#id .class width=100px height=100px}
+
+![](emoji7.png){#id .class width=100px height=100px}
+
+:::
+
+:::
+
+<br/><br/>
+
+
+::: fragment
+
+Each signal $s_j$ is shared only with the participant
+
+:::
+
+
+# Contexts As Types
+
+
+::: fragment
+Characters are one of two *types*: orange or blue
+
+
+
+::: {layout-ncol=2 layout-align="center" layout-valign="center"}
+
+![](orange_type.png){#id .class width=200px height=200px}
+
+![](blue_type.png){#id .class width=200px height=200px}
+
+:::
+
+:::
+
+
+
+::: fragment
+The participant is the orange type
+:::
+
+<br/>
+
+
+::: fragment
+Type is a summary of all dimensions of context
+:::
+
+<br/>
+
+
+::: fragment
+$\theta_O$ and $\theta_B$ are homogenous
+:::
+
+
+# Introducing Sampling Error
+
+::: fragment
+Even within type, $s_j$ are not identical
+:::
+
+<br/><br/>
+
+::: fragment
+Reflects idiosyncratic risk
+:::
+
+<br/><br/>
+
+
+::: fragment
+Drawn from $\theta_O + \epsilon$ or $\theta_B + \epsilon$
+:::
+
+<br/><br/>
+
+
+::: fragment
+Error $\epsilon$ is identical and independent
+:::
+
+# Learning From Blue Types
+
+::: fragment
+Blue type always does worse
+:::
+
+<br/>
+
+
+::: fragment
+Provide story about rainwater catchment
+:::
+
+<br/>
+
+
+::: fragment
+Difference of two Emoji
+:::
+
+
+::: fragment
+::: {layout-ncol=7}
+
+![](emoji1.png){#id .class width=100px height=100px}
+
+![](emoji2.png){#id .class width=100px height=100px}
+
+![](emoji3.png){#id .class width=100px height=100px}
+
+![](emoji4.png){#id .class width=100px height=100px}
+
+![](emoji5.png){#id .class width=100px height=100px}
+
+![](emoji6.png){#id .class width=100px height=100px}
+
+![](emoji7.png){#id .class width=100px height=100px}
+
+:::
+
+:::
+
+
+
+::: fragment
+::: {layout-ncol=7 layout-nrow=2}
+
+![](EmptySpace.png){#id .class width=100px height=100px}
+
+![](EmptySpace.png){#id .class width=100px height=100px}
+
+
+![](orange_1.png){#id .class width=100px height=100px}
+
+![](orange_2.png){#id .class width=100px height=100px}
+
+![](orange_3.png){#id .class width=100px height=100px}
+
+![](orange_4.png){#id .class width=100px height=100px}
+
+![](orange_5.png){#id .class width=100px height=100px}
+
+
+![](EmptySpace.png){#id .class width=100px height=100px}
+
+![](EmptySpace.png){#id .class width=100px height=100px}
+
+![](blue_1.png){#id .class width=100px height=100px}
+
+![](blue_2.png){#id .class width=100px height=100px}
+
+![](blue_3.png){#id .class width=100px height=100px}
+
+![](blue_4.png){#id .class width=100px height=100px}
+
+![](blue_5.png){#id .class width=100px height=100px}
+
+:::
+
+
+
+:::
+
+
+# What We Have So Far
+
+::: fragment
+So far, our game looks like this:
+
+<br/>
+
+![](game_halfway.png)
+:::
+
+
+::: fragment
+Where's the context uncertainty?
+:::
+
+<br/>
+
+::: fragment
+Where's the decision making?
+:::
+
+# Adding Context Uncertainty
+::: fragment
+Some characters have unknown type
+:::
+
+<br/>
+
+::: fragment
+They appear as gray
+:::
+
+<br/>
+
+::: fragment
+Could be either type
+:::
+
+
+::: fragment
+
+![](gray_uncertainty.png){fig-align="center" width=550px height=300px}
+
+
+:::
+
+# Deciding Adoption Intensity
+
+::: fragment
+Land divided into 10 rows
+:::
+
+<br/>
+
+
+::: fragment
+Must decide adoption maximizing yield
+:::
+
+<br/>
+
+
+::: fragment
+Mapped to Likert Scale
+
+
+![](adoption_choice.png){fig-align="center"}
+
+:::
+
+# Bringing it all together
+
+Player sees information and decides adoption level
+
+<br/><br/>
+
+::: {layout-ncol=2}
+
+![](game_5.png){width=500px}
+
+
+![](game_13.png){width=500px}
+
+:::
+
+# Process and Randomization
+
+::: incremental
+(@)   Survey participant
+(@)   Read game script
+(@)   Practice module
+(@)   Game modules
+    * Randomize round order via matched quartets
+    * Randomize technology order
+    * Randomize village name order
+(@)   Payout
+:::
+
+
+# Results
+
+# How Context Uncertainty Aversion Is Tested
+
+::: fragment
+**Identification:** Two game rounds. Only change % gray
+
+<br/>
+
+::: {layout-ncol=2}
+
+![](game_5.png){width=500px}
+
+
+![](game_13.png){width=500px}
+
+:::
+:::
+
+::: fragment
+**Specification:** 
+$$
+AdoptionLevel_{it} = \beta_1 \cdot \mathbb{1}_{t = \text{High \% Gray}} + \eta_i + \epsilon_{it}
+$$
+:::
+
+# Farmers Prefer More Context
+
+```{r echo=FALSE}
+
+library(kableExtra)
+
+df_long <- read_csv('/users/halidaee/Dropbox/Ongoing Research/Context/DataSync/current_choicedata_clean_long.csv')
+
+base_reg_L <- df_long %>%
+  filter(Module == 4) %>%
+  arrange(Module) %>%
+  mutate(HighGrayMap = (Map == 13)) %>%
+  feols(Decision ~ HighGrayMap | UserID, data=., cluster='UserID')
+
+base_reg_H <- df_long %>%
+  filter(Module == 5) %>%
+  arrange(Module) %>%
+  mutate(HighGrayMap = (Map == 15)) %>%
+  feols(Decision ~ HighGrayMap | UserID, data=., cluster='UserID') 
+
+base_reg_table_tex <- etable(base_reg_L, base_reg_H, tex = T, style.tex = style.tex("aer"), fitstat = ~ r2 + n)
+
+## Include latex preamble before base_reg_table_tex output via paste command
+
+# base_reg_table_tex <- paste0"\\documentclass[crop]{standalone}
+# \\usepackage{booktabs}
+# \\usepackage{amsfonts}
+# \\begin{document}\n", base_reg_table_tex, "\n\\end{document}")
+
+write(base_reg_table_tex, file='base_reg.tex')
+
+```
+
+![](base_reg.tex)
+
+
+
+# External Validity 
+
+
+# Other Potential Mechanisms
+
+::: fragment
+Some potential mechanisms:
+:::
+
+::: incremental
+
+- Sample size
+- Centrality
+- Social influence
+- Homophily
+:::
+
+::: fragment
+**None are broadly consistent with the literature**
+:::
+
+:::incremental
+- Program design more effective when mechanism is known
+- RCTs have difficulty isolating mechanisms
+:::
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | | | | | |
+|  Field Days| | | | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | | | | |
+| Opinion Leader Superiority| | | | | |
+| Demonstration Plot Centrality| | | | | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | | |
+|  Field Days| | | | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | | | | |
+| Opinion Leader Superiority| | | | | |
+| Demonstration Plot Centrality| | | | | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+
+
+
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | | |
+|  Field Days| | | | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | &check; | | | |
+| Opinion Leader Superiority| | | | | |
+| Demonstration Plot Centrality| | &cross; | | | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context  |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | | |
+|  Field Days| | | &cross; | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | &check; | &check; | | |
+| Opinion Leader Superiority| | | &cross; | | |
+| Demonstration Plot Centrality| | &cross; | &cross;| | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context  |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | &check; | |
+|  Field Days| | | &cross; | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | &check; | &check; | &cross; | |
+| Opinion Leader Superiority| | | &cross; | &check; | |
+| Demonstration Plot Centrality| | &cross; | &cross;| | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context  |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | &check; | &check;|
+|  Field Days| | | &cross; | | &check;|
+|Season-long Demonstration Plots| | | | | &check;|
+| Seed Centrality| | &check; | &check; | &cross; | &check;|
+| Opinion Leader Superiority| | | &cross; | &check; | &check;|
+| Demonstration Plot Centrality| | &cross; | &cross;| |&check; |
+| Direct Contact Farmer Training| | | | | &check;|
+| ICT to Reduce Temporal Lag| | | | | &check; |
+
+
+</font>
+
+
+# Possible Extensions
+
+# Conclusion
+
+# Potential Implications
+
+Potential lessons:
+
+-   Info campaigns should provide specific returns
+-   Information campaigns should disaggregate returns
+-   Distributed, local experimentation could increase trust
+-   Insurance with low basis-risk, when tied to experimentation, can have high positive externalities
+-   Reinforces Oates (1972, 1999) argument in favor of decentralization
+
+# Future area of study
+
+-   Barriers to signal translation
+-   Specific vs disaggregated signals
+
+# Thank You
