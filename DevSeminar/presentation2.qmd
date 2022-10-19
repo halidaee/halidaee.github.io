@@ -10,6 +10,7 @@ format:
     center-title-slide: false
     auto-animate-easing: none
     auto-animate-duration: 1
+    controls: false
     progress: false
     #theme: solarized
     navigation-mode: vertical
@@ -19,6 +20,8 @@ toc: false
 toc-depth: 1
 toc-title: Roadmap
 backgroundcolor: "#D2D7D9"
+filters:
+  - parse-latex
 ---
 
 
@@ -771,13 +774,13 @@ Player sees information and decides adoption level
 ::: fragment
 **Specification:** 
 $$
-AdoptionLevel_{it} = \beta_1 \cdot \mathbb{1}_{t = \text{High \% Gray}} + \eta_i + \epsilon_{it}
+AdoptionLevel_{it} = \beta_1 \cdot \mathbb{1}_{t = \text{High } \% \text{ Gray}} + \eta_i + \epsilon_{it}
 $$
 :::
 
 # Farmers Prefer More Context
 
-```{r echo=FALSE}
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
 
 library(kableExtra)
 
@@ -795,7 +798,15 @@ base_reg_H <- df_long %>%
   mutate(HighGrayMap = (Map == 15)) %>%
   feols(Decision ~ HighGrayMap | UserID, data=., cluster='UserID') 
 
-base_reg_table_tex <- etable(base_reg_L, base_reg_H, tex = T, style.tex = style.tex("aer"), fitstat = ~ r2 + n)
+base_reg_HL <- df_long %>%
+  filter(Module == 5 | Module == 4) %>%
+  arrange(Module) %>%
+  mutate(HighGrayMap = (Map == 15 | Map == 13)) %>%
+  feols(Decision ~ HighGrayMap | UserID, data=., cluster='UserID') 
+
+base_reg_table_tex <- etable(base_reg_L, base_reg_H, base_reg_HL, tex = T, style.tex = style.tex("aer"), fitstat = ~ r2 + n)
+
+
 
 ## Include latex preamble before base_reg_table_tex output via paste command
 
@@ -805,16 +816,352 @@ base_reg_table_tex <- etable(base_reg_L, base_reg_H, tex = T, style.tex = style.
 # \\begin{document}\n", base_reg_table_tex, "\n\\end{document}")
 
 #write(base_reg_table_tex, file='base_reg.tex')
-base_reg_table_tex
+
+reg_order <- c('Low Sampling\n Error', 'High Sampling\n Error', 'Combined')
+
+bind_rows(lapply(list(base_reg_L, base_reg_H, base_reg_HL), tidy)) %>% 
+  mutate(conf.low = estimate - 1.96*std.error, 
+         conf.high = estimate + 1.96*std.error) %>%
+         ggplot(aes(factor(reg_order, level = reg_order), estimate)) + 
+         geom_point(color='#0a3b4c') +
+         geom_pointrange(aes(ymin=conf.low, ymax=conf.high),color='#0a3b4c') + 
+         geom_hline(yintercept=0, linetype='dashed', color='#d99066', size=1.2) +
+         ylim(-0.5, 0.05) +
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(colour = '#0a3b4c'),
+          plot.title = element_text(size=15,face='bold', color='#0a3b4c'),
+          axis.text.x=element_text(size=25, color='#0a3b4c'),
+          axis.text.y=element_text(size=25, color='#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25))
 
 ```
 
-![](base_reg.tex)
 
 
 
-# External Validity 
+## Shifts in Adoption
 
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+#'#D99066', '#402110', '#166B8C'
+
+ks_test_4 <- df_long %>%
+  filter(Module == 4) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  ks.test(Decision ~ HighGrayMap, data=., alternative='less')
+
+ks_test_4.pval <- ks_test_4$p.value %>% round(., digits=5) %>% format(scientific=F)
+
+ks_test_5 <- df_long %>%
+  filter(Module == 5) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  ks.test(Decision ~ HighGrayMap, data=., alternative='less')
+
+ks_test_5.pval <- ks_test_5$p.value %>% round(., digits=5) %>% format(scientific=F)
+
+facet_titles <- c(paste0('Low Sampling\n Error\n\nKS Test: ',ks_test_4.pval), paste0('High Sampling\n Error\n\nKS Test: ', ks_test_5.pval))
+
+df_long %>%
+  filter(Module == 4 | Module == 5) %>%
+  mutate(Module = ifelse(Module == 4, facet_titles[1], facet_titles[2])) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  ggplot(aes(x=Decision, fill=HighGrayMap)) +
+    geom_histogram(data = . %>% filter(HighGrayMap == TRUE), bins=10, fill='#166B8C', alpha=0.5)  +
+    geom_histogram(data = . %>% filter(HighGrayMap == FALSE), bins=10, fill='#D99066', alpha=0.5)  +
+    facet_grid(cols = vars(factor(Module, levels = facet_titles))) +
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(color='#0a3b4c'),
+          plot.title = element_text(size=15,face='bold', color='#0a3b4c'),
+          axis.text.x=element_text(size=25, color='#0a3b4c'),
+          axis.text.y=element_text(size=25, color='#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          strip.background=element_blank(),
+          strip.text=element_text(size=25, color='#0a3b4c'),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25)) + 
+          scale_x_continuous(breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+
+
+
+```
+
+# How Complementarity Is Tested
+
+::: fragment
+**Identification:** Two modules. Low vs high sampling error. 
+
+
+
+::: {layout-ncol=2}
+
+![](game_5.png){width=400px}
+
+
+![](game_14.png){width=400px}
+
+:::
+:::
+
+
+::: fragment
+Change % gray within each.
+
+::: {layout-ncol=2}
+
+![](game_13.png){width=400px}
+
+
+![](game_15.png){width=400px}
+
+
+:::
+:::
+
+# How Complementarity Is Tested
+
+::: fragment
+**Specification:** Use diff-in-diff (i.e. Athey and Stern, 1998)
+
+<br/>
+
+:::
+
+::: fragment
+
+![](diffindifftab.png){width=1500px}
+
+:::
+
+::: fragment
+
+<font size=6>
+$$
+AdoptionLevel_{it} = \\
+ \beta_1 \cdot \left[
+  \left(
+  \mathbb{1}_{t = \text{High } \% \text{ Gray}}\cdot \mathbb{1}_{t = \text{Wide} \text{ Emoji}} 
+- \mathbb{1}_{t = \text{High } \% \text{ Gray}}\cdot  \mathbb{1}_{t \neq \text{Wide} \text{ Emoji}} 
+\right) \\ -  \left(
+  \mathbb{1}_{t \neq \text{High } \% \text{ Gray}}\cdot \mathbb{1}_{t = \text{Wide} \text{ Emoji}} 
+- \mathbb{1}_{t \neq \text{High } \% \text{ Gray}}\cdot  \mathbb{1}_{t \neq \text{Wide} \text{ Emoji}} 
+\right)
+\right] \\ 
++ \eta_i + \epsilon_{it}
+$$
+
+</font>
+
+:::
+
+# Uncertainties May Be Complementary
+
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+
+
+reg_order <- c('Complementarity', 'Sampling\nError', 'Context\nUncertainty')
+
+df_reg_combined <- df_long %>%
+  filter(Module == 4 | Module == 5) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  mutate(HighVarMap = (Module == 5)) %>% 
+  mutate(CombinedHigh = 
+           (HighVarMap * HighGrayMap - HighVarMap*(!HighGrayMap)) - 
+           ((!HighVarMap)*HighGrayMap - (!HighVarMap)*(!HighGrayMap))) %>%
+  feols(Decision ~ CombinedHigh + HighVarMap + HighGrayMap | UserID, data=., cluster='UserID') %>%
+  tidy() %>% 
+  mutate(conf.low = estimate - 1.96*std.error, 
+         conf.high = estimate + 1.96*std.error)
+
+df_reg_combined %>%
+         ggplot(aes(factor(reg_order, level = reg_order), estimate)) + 
+         geom_point(color='#0a3b4c') +
+         geom_pointrange(aes(ymin=conf.low, ymax=conf.high), color='#0a3b4c') + 
+         geom_hline(yintercept=0, linetype='dashed', color='#d99066') +
+         ylim(-0.5, 0.2) +
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(colour = '#0a3b4c'),
+          plot.title = element_text(size=15,face='bold'),
+          axis.text.x=element_text(size=25, color = '#0a3b4c'),
+          axis.text.y=element_text(size=25, color = '#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25))
+
+
+
+
+```
+
+
+## Dropped Enumerators Improve Significance
+
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+
+
+reg_order <- c('Complementarity', 'Sampling\nError', 'Context\nUncertainty')
+
+df_reg_combined <- df_long %>%
+  filter(Module == 4 | Module == 5) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  mutate(HighVarMap = (Module == 5)) %>% 
+  mutate(CombinedHigh = 
+           (HighVarMap * HighGrayMap - HighVarMap*(!HighGrayMap)) - 
+           ((!HighVarMap)*HighGrayMap - (!HighVarMap)*(!HighGrayMap))) %>%
+  filter(EnumeratorID != 'jpal606917' & EnumeratorID != 'jpal506190' & EnumeratorID != 'jpal170698') %>%
+  feols(Decision ~ CombinedHigh + HighVarMap + HighGrayMap | UserID, data=., cluster='UserID') %>%
+  tidy() %>% 
+  mutate(conf.low = estimate - 1.96*std.error, 
+         conf.high = estimate + 1.96*std.error)
+
+df_reg_combined %>%
+         ggplot(aes(factor(reg_order, level = reg_order), estimate)) + 
+         geom_point(color='#0a3b4c') +
+         geom_pointrange(aes(ymin=conf.low, ymax=conf.high), color='#0a3b4c') + 
+         geom_hline(yintercept=0, linetype='dashed', color='#d99066') +
+         ylim(-0.5, 0.2) +
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(colour = '#0a3b4c'),
+          plot.title = element_text(size=15,face='bold'),
+          axis.text.x=element_text(size=25, color = '#0a3b4c'),
+          axis.text.y=element_text(size=25, color = '#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25))
+
+
+
+
+```
+
+
+
+# External Validity: Survey Evidence
+
+# Farmers Strongly Prefer Similar Test Plots
+
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+library(haven)
+library(multidplyr)
+
+boxcrypt <- "/Volumes/Secomba/halidaee/Boxcryptor/Dropbox/OFTAD_encrypted/dta/"
+
+survey_df <- read_dta(paste0(boxcrypt, "phase_2_main_v2.dta")) %>%
+  rename(farmer_availability = farmer_avalibility) %>%
+  filter(consent == 1 & farmer_availability == 1) %>%
+  select(-c(consent, farmer_availability))
+
+cluster <- new_cluster(parallel::detectCores() - 2)
+cluster_library(cluster, c('tidyverse', 'furrr'))
+cluster_copy(cluster, 'survey_df')
+
+
+survey_df |> rowwise() %>%
+  partition(cluster) %>% 
+  mutate(d02 = as.factor(max(c_across(starts_with('d02_near_diff_ord')), na.rm=T))) %>%
+  mutate(d03 = as.factor(max(c_across(starts_with('d03_near_simi_ord')), na.rm=T))) %>%
+  mutate(d04 = as.factor(max(c_across(starts_with('d04_far_simi_ord')), na.rm=T))) %>%
+  mutate(d05 = as.factor(max(c_across(starts_with('d05_far_diff_ord')), na.rm=T))) %>%
+  collect() %>%
+  ungroup() %>%
+  mutate(d02 = factor(d02, level=c(5,4,3,2,1))) %>%
+  mutate(d02 = fct_recode(d02, 
+                          'Trust Completely'='5', 
+                          'Very Much More Influential'='4', 
+                          'Somewhat More Influential'='3', 
+                          'Slightly More Influential'='2',
+                          'Not At All More Influential'='1')) %>%
+  mutate(d03 = factor(d03, level=c(5,4,3,2,1))) %>%
+  mutate(d03 = fct_recode(d03, 
+                          'Trust Completely'='5', 
+                          'Very Much More Influential'='4', 
+                          'Somewhat More Influential'='3', 
+                          'Slightly More Influential'='2',
+                          'Not At All More Influential'='1')) %>%
+  mutate(d04 = factor(d04, level=c(5,4,3,2,1))) %>%
+  mutate(d04 = fct_recode(d04, 
+                          'Trust Completely'='5', 
+                          'Very Much More Influential'='4', 
+                          'Somewhat More Influential'='3', 
+                          'Slightly More Influential'='2',
+                          'Not At All More Influential'='1')) %>%
+  mutate(d05 = factor(d05, level=c(5,4,3,2,1))) %>%
+  mutate(d05 = fct_recode(d05, 
+                          'Trust Completely'='5', 
+                          'Very Much More Influential'='4', 
+                          'Somewhat More Influential'='3', 
+                          'Slightly More Influential'='2',
+                          'Not At All More Influential'='1')) %>%
+  select(farmer_id, d02, d03, d04, d05) %>%
+  pivot_longer(cols=starts_with('d0'), 
+              names_to='Question', 
+              values_to = 'Response') %>%
+  mutate(Question = fct_relevel(Question, 'd03', 'd04', 'd02', 'd05')) %>%
+  mutate(Question = fct_recode(Question, 
+                               'Nearby &\nDifferent'='d02', 
+                               'Nearby &\nSimilar'='d03', 
+                               'Far away &\nSimilar'='d04', 
+                               'Far away &\nDifferent'='d05')) %>%
+  ggplot(aes(y=Question, fill=Response)) + 
+  geom_bar(position = "fill")  +
+         scale_fill_manual(values=rev(c('#01415B', '#005148', '#019587', '#A6BC09', '#CCEA8D')),
+                          breaks = 
+                            c('Trust Completely', 
+                          'Very Much More Influential',
+                          'Somewhat More Influential', 
+                          'Slightly More Influential',
+                          'Not At All More Influential')) +
+         scale_x_continuous(labels = scales::label_percent(accuracy = 1)) + 
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(colour = '#0a3b4c'),
+          plot.title = element_text(size=15,face='bold'),
+          axis.text.x=element_text(size=25, color = '#0a3b4c'),
+          axis.text.y=element_text(size=25, color = '#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="right",
+          legend.background=element_blank(),
+          legend.title=element_blank(),
+          legend.text=element_text(size=15),
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25))
+
+
+```
+
+
+# External Validity: Existing Field Experiments
 
 # Other Potential Mechanisms
 

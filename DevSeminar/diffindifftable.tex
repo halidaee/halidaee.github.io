@@ -1,0 +1,37 @@
+\documentclass[crop]{standalone}
+\usepackage{multicol}
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{xcolor}
+\usepackage{bm}
+\usepackage{adjustbox}
+\usepackage{ocg-p}
+\usepackage{transparent}
+\usepackage{subcaption}
+\usepackage{appendixnumberbeamer}
+\newcommand{\globalcolor}[1]{%
+  \color[HTML]{#1}\global\let\default@color\current@color
+}
+\makeatother
+
+\AtBeginDocument{\globalcolor{0A3B4C}}
+\usepackage[font=small,labelfont=bf]{caption}
+\begin{document}
+\begin{table}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{cc|c|c|c}
+        \multicolumn{2}{c}{} & \multicolumn{2}{c}{Context Uncertainty} & \\
+        & & Low  & High  & Difference  \\ \cline{2-5}
+        \multirow{2}{*}{\shortstack[l]{Sampling Error}} & Low & $\beta_{LL}$ & $\beta_{LH}$ & $\beta_{LH} - \beta_{LL}$  \\ \cline{2-5}
+        & High & $\beta_{HL}$ & $\beta_{HH}$ & $\beta_{HH} - \beta_{HL}$ \\ \cline{2-5}
+        & Difference & $\beta_{HL} - \beta_{LL}$ & $\beta_{HH} - \beta_{LH}$ & $(\beta_{HH} - \beta_{HL}) - (\beta_{HL} - \beta_{LL})$  \\ 
+        \end{tabular}
+    }
+\end{table}
+
+\end{document}

@@ -593,11 +593,11 @@ s_E = \underbrace{\theta\vphantom{\gamma_E}}_{\text{Average Return}} + \underbra
 <p>How does the farmer adapt the signal to his own context?</p>
 <p><br></p>
 <div class="fragment">
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[\begin{aligned}
 \text{Adjusted Signal} &amp;= \text{Original Signal} \\
 &amp; \ \ \  + \text{Own Context Adjustment} \\
 &amp; \ \ \  - \text{Friend's Context Adjustment}
-\end{align*}\]</span>
+\end{aligned}\]</span></p>
 </div>
 <p><br></p>
 <div class="fragment">
@@ -614,10 +614,10 @@ s_E = \underbrace{\theta\vphantom{\gamma_E}}_{\text{Average Return}} + \underbra
 <p><br></p>
 <div class="fragment">
 <p><span style="display:block; margin-top:-50px;"></span></p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[\begin{aligned}
 \text{Mean} &amp;\propto \frac{0}{\text{Prior Var}}  + \frac{\text{Ext Adj Signal}}{\text{Ext Sample Var} + \text{Ext Context Var}} \\
 &amp; \ \ \ \ + \sum \frac{\text{Peer Adj Signal}}{\text{Peer Sample Var} + \text{Peer Context Var}}
-\end{align*}\]</span>
+\end{aligned}\]</span></p>
 <p></p>
 </div>
 </section>
@@ -971,39 +971,93 @@ s_E = \underbrace{\theta\vphantom{\gamma_E}}_{\text{Average Return}} + \underbra
 </div>
 <div class="fragment">
 <p><strong>Specification:</strong> <span class="math display">\[
-AdoptionLevel_{it} = \beta_1 \cdot \mathbb{1}_{t = \text{High \% Gray}} + \eta_i + \epsilon_{it}
+AdoptionLevel_{it} = \beta_1 \cdot \mathbb{1}_{t = \text{High } \% \text{ Gray}} + \eta_i + \epsilon_{it}
 \]</span></p>
 </div>
 </section>
 
+<section>
 <section id="farmers-prefer-more-context" class="title-slide slide level1">
 <h1>Farmers Prefer More Context</h1>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>\begingroup
-\centering
-\begin{tabular}{lcc}
-   \toprule
-    &amp; \multicolumn{2}{c}{Decision}\\
-                        &amp; (1)             &amp; (2)\\  
-   \midrule 
-   HighGrayMapTRUE      &amp; -0.2929$^{***}$ &amp; -0.3529$^{***}$\\   
-                        &amp; (0.0461)        &amp; (0.0456)\\   
-    \\
-   R$^2$                &amp; 0.81466         &amp; 0.82333\\  
-   Observations         &amp; 3,168           &amp; 3,168\\  
-    \\
-   UserID fixed effects &amp; $\checkmark$    &amp; $\checkmark$\\   
-   \bottomrule
-\end{tabular}
-\par\endgroup</code></pre>
+
+<img data-src="presentation2_files/figure-revealjs/unnamed-chunk-3-1.svg" class="r-stretch quarto-figure-center"></section>
+<section id="shifts-in-adoption" class="slide level2">
+<h2>Shifts in Adoption</h2>
+
+<img data-src="presentation2_files/figure-revealjs/unnamed-chunk-4-1.svg" class="r-stretch quarto-figure-center"></section></section>
+<section id="how-complementarity-is-tested" class="title-slide slide level1">
+<h1>How Complementarity Is Tested</h1>
+<div class="fragment">
+<p><strong>Identification:</strong> Two modules. Low vs high sampling error.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="game_5.png" width="400"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="game_14.png" width="400"></p>
 </div>
 </div>
-<p><embed data-src="base_reg.tex"></p>
+</div>
+</div>
+<div class="fragment">
+<p>Change % gray within each.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="game_13.png" width="400"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="game_15.png" width="400"></p>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="external-validity" class="title-slide slide level1">
-<h1>External Validity</h1>
+<section id="how-complementarity-is-tested-1" class="title-slide slide level1">
+<h1>How Complementarity Is Tested</h1>
+<div class="fragment">
+<p><strong>Specification:</strong> Use diff-in-diff (i.e.&nbsp;Athey and Stern, 1998)</p>
+<p><br></p>
+</div>
+<div class="fragment">
+<p><img data-src="diffindifftab.png" width="1500"></p>
+</div>
+<div class="fragment">
+<p><font size="6"> <span class="math display">\[
+AdoptionLevel_{it} = \\
+\beta_1 \cdot \left[
+  \left(
+  \mathbb{1}_{t = \text{High } \% \text{ Gray}}\cdot \mathbb{1}_{t = \text{Wide} \text{ Emoji}}
+- \mathbb{1}_{t = \text{High } \% \text{ Gray}}\cdot  \mathbb{1}_{t \neq \text{Wide} \text{ Emoji}}
+\right) \\ -  \left(
+  \mathbb{1}_{t \neq \text{High } \% \text{ Gray}}\cdot \mathbb{1}_{t = \text{Wide} \text{ Emoji}}
+- \mathbb{1}_{t \neq \text{High } \% \text{ Gray}}\cdot  \mathbb{1}_{t \neq \text{Wide} \text{ Emoji}}
+\right)
+\right] \\
++ \eta_i + \epsilon_{it}
+\]</span></font></p><font size="6">
+</font><p><font size="6"></font></p>
+</div>
+</section>
+
+<section>
+<section id="uncertainties-may-be-complementary" class="title-slide slide level1">
+<h1>Uncertainties May Be Complementary</h1>
+
+<img data-src="presentation2_files/figure-revealjs/unnamed-chunk-5-1.svg" class="r-stretch quarto-figure-center"></section>
+<section id="dropped-enumerators-improve-significance" class="slide level2">
+<h2>Dropped Enumerators Improve Significance</h2>
+
+<img data-src="presentation2_files/figure-revealjs/unnamed-chunk-6-1.svg" class="r-stretch quarto-figure-center"></section></section>
+<section id="external-validity-survey-evidence" class="title-slide slide level1">
+<h1>External Validity: Survey Evidence</h1>
+
+<img data-src="presentation2_files/figure-revealjs/unnamed-chunk-7-1.svg" class="r-stretch quarto-figure-center"></section>
+
+<section id="external-validity-existing-field-experiments" class="title-slide slide level1">
+<h1>External Validity: Existing Field Experiments</h1>
 
 </section>
 
@@ -1643,7 +1697,7 @@ AdoptionLevel_{it} = \beta_1 \cdot \mathbb{1}_{t = \text{High \% Gray}} + \eta_i
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': true,
+'controlsAuto': false,
 'previewLinksAuto': false,
 'smaller': false,
 'pdfSeparateFragments': false,
