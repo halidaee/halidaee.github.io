@@ -1064,7 +1064,33 @@ df_reg_combined %>%
 
 # External Validity: Survey Evidence
 
-# Farmers Strongly Prefer Similar Test Plots
+# Farmers Consider Extension Agents Less Than Peers
+
+::: fragment
+59% of farmers consider a peer more useful.
+:::
+<br/>
+
+::: fragment
+**Why?**
+:::
+
+
+::: incremental
+- $97\%$ cite less experience
+- $> 40\%$ cite more heterogeneity (budget, land, resources)
+- Only $5\%$ suspect ulterior motives (i.e. corruption)
+:::
+
+
+# Extension's Previous Influence
+
+::: fragment
+*"How much did the extension agent's last recommendation influence your decision?"*
+:::
+
+
+::: fragment
 
 ``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
 
@@ -1081,6 +1107,109 @@ survey_df <- read_dta(paste0(boxcrypt, "phase_2_main_v2.dta")) %>%
 cluster <- new_cluster(parallel::detectCores() - 2)
 cluster_library(cluster, c('tidyverse', 'furrr'))
 cluster_copy(cluster, 'survey_df')
+
+survey_df |>
+  mutate(c04_decisn = as.factor(c04_decisn)) |>
+  mutate(c04_decisn = factor(c04_decisn, level=rev(c(5,4,3,2,1)))) %>%
+  mutate(c04_decisn = fct_recode(c04_decisn, 
+                          'Not At All'='5', 
+                          'Very Little'='4', 
+                          'Moderately'='3', 
+                          'Very Much'='2',
+                          'Completely'='1')) %>%
+  ggplot(aes(y='c04', fill=c04_decisn)) + 
+  geom_bar(position = "fill") +
+  scale_fill_manual(values=rev(c('#01415B', '#005148', '#019587', '#A6BC09', '#CCEA8D'))) + 
+  scale_x_continuous(labels = scales::label_percent(accuracy = 1)) + 
+  xlab(element_blank()) +
+  ylab(element_blank()) +
+  theme(axis.line=element_line(colour = '#0a3b4c'),
+        plot.title = element_text(size=15,face='bold'),
+        axis.text.x=element_text(size=25, color = '#0a3b4c'),
+        axis.text.y=element_blank(),
+        #axis.ticks=element_blank(),
+        legend.position="right",
+        legend.background=element_blank(),
+        legend.title=element_blank(),
+        legend.text=element_text(size=15),
+        panel.background=element_blank(),
+        #panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank(),
+        axis.title.y = element_text(angle = 90, vjust=0.9,
+        size=25),
+        aspect.ratio=0.35)
+
+
+```
+:::
+
+
+# What reduces extension's impact?
+
+::: fragment
+*"What are the reasons you don’t trust the extension agent’s  technology recommendation more?"*
+:::
+
+::: fragment
+
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+survey_df |>
+  filter(!(is.na(c05_trust)) & c05_trust != "") |>
+  mutate(across(starts_with('c05_trust_'), as.logical)) |>
+  tidyr::pivot_longer(c05_trust_1:c05_trust_9) |>
+  mutate(value = as.logical(ifelse(value == TRUE, 1, 0))) |>
+  mutate(name = as.factor(name)) |>
+  mutate(name = fct_recode(name, 
+                           'Different Soil'='c05_trust_1', 
+                           'Different Access To Inputs'='c05_trust_2', 
+                           'Ulterior Motives'='c05_trust_3', 
+                           'Lack Knowledge'='c05_trust_4',
+                           'Not Enough Seasons'='c05_trust_5',
+                           'I Lack Training'='c05_trust_6',
+                           'Cannot Access'='c05_trust_7',
+                           'Poor Access'='c05_trust_8',
+                           'Lack Capital'='c05_trust_9')) |>
+  mutate(name = fct_relevel(name, rev(c('Different Soil', 'Different Access To Inputs', 'Poor Access', 'They Lack Knowledge', 'Not Enough Seasons', 'I Lack Training', 'Ulterior Motives',    'Cannot Access',  'Lack Capital')))) |>
+  group_by(name) |>
+  summarise(percent_true = sum(value)/n()) |>
+  ggplot(aes(y=name, x=percent_true)) + 
+  geom_col(aes(fill=name)) +
+  scale_x_continuous(labels = scales::label_percent(accuracy = 1)) + 
+  scale_fill_manual(values=rev(c('#A6BC09', '#A6BC09', '#A6BC09',
+                              '#A6BC09', '#166b8c', '#166b8c',
+                              '#166b8c', '#166b8c', '#166b8c'))) +
+  xlab(element_blank()) +
+  ylab(element_blank()) +
+  theme(axis.line=element_line(colour = '#0a3b4c'),
+        plot.title = element_text(size=15,face='bold'),
+        axis.text.x=element_text(size=25, color = '#0a3b4c'),
+        axis.text.y=element_text(size=25, color = '#0a3b4c'),
+        #axis.ticks=element_blank(),
+        legend.position="none",
+        legend.background=element_blank(),
+        legend.title=element_blank(),
+        legend.text=element_text(size=15),
+        panel.background=element_blank(),
+        #panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank(),
+        axis.title.y = element_text(angle = 90, vjust=0.9,
+        size=25),
+        aspect.ratio=0.8)
+```
+:::
+
+# Farmers Strongly Prefer Similar Test Plots
+
+
+::: fragment
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+
 
 
 survey_df |> rowwise() %>%
@@ -1159,7 +1288,7 @@ survey_df |> rowwise() %>%
 
 
 ```
-
+:::
 
 # External Validity: Existing Field Experiments
 
@@ -1181,9 +1310,16 @@ Some potential mechanisms:
 **None are broadly consistent with the literature**
 :::
 
-:::incremental
-- Program design more effective when mechanism is known
-- RCTs have difficulty isolating mechanisms
+# An example: centrality
+
+::: fragment
+Maybe centrality is important (e.g. Banerjee et al. 2013; Shikiku, 2019)
+:::
+
+<br/> 
+
+::: fragment
+But the effect goes away once a demonstration plot is available (Dar et al. 2020)
 :::
 
 # What works and why?
@@ -1298,6 +1434,31 @@ Some potential mechanisms:
 
 # Possible Extensions
 
+::: fragment
+
+**This Project:**
+:::
+
+::: incremental
+- Experimental heterogeneity by traits, i.e. education or age 
+- Link experimental data to survey responses
+- Explore survey data in greater depth
+- Is aversion to context uncertainty neoclassical?
+:::
+
+<br/>
+
+::: fragment
+**Future Work:**
+:::
+
+
+::: incremental
+- Comparing real world influence under different amounts of context uncertainty
+- What are the barriers to learning from other contexts?
+- Do these barriers influence homophily?
+:::
+
 # Conclusion
 
 # Potential Implications
@@ -1309,10 +1470,5 @@ Potential lessons:
 -   Distributed, local experimentation could increase trust
 -   Insurance with low basis-risk, when tied to experimentation, can have high positive externalities
 -   Reinforces Oates (1972, 1999) argument in favor of decentralization
-
-# Future area of study
-
--   Barriers to signal translation
--   Specific vs disaggregated signals
 
 # Thank You
