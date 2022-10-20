@@ -115,7 +115,7 @@ Peer information comes with rich context
 
 
 ::: fragment
-Information from authorities comes with little context
+Information from authorities can come with little context
 :::
 
 <br/>
@@ -153,6 +153,9 @@ When weighing signals, we place weight on total uncertainty
 
 
 # Related Literature
+
+
+::: fragment
 <font size = 5>
 
 - Decision makers as statisticians
@@ -169,6 +172,7 @@ When weighing signals, we place weight on total uncertainty
   - Oates (1972) and Oates (1993)
 
 </font>
+:::
 
 
 # Roadmap
@@ -234,7 +238,7 @@ plot(plot)
 
 <font size=6>
 
--   $2^{\text{nd}}$ divergence via Green Revolution (Huang, 2020)
+- $2^{\text{nd}}$ divergence via Green Revolution (Huang, 2020)
 
 <br/>
 
@@ -1090,7 +1094,7 @@ df_reg_combined %>%
 
 # External Validity: Survey Evidence
 
-# Farmers Consider Extension Agents Less Than Peers
+# Farmers Consider Extension Agents Less Useful Than Peers
 
 ::: fragment
 59% of farmers consider a peer more useful.
@@ -1195,10 +1199,10 @@ survey_df |>
                            'Lack Knowledge'='c05_trust_4',
                            'Not Enough Seasons'='c05_trust_5',
                            'I Lack Training'='c05_trust_6',
-                           'Cannot Access'='c05_trust_7',
-                           'Poor Access'='c05_trust_8',
+                           'Technology Unavailable'='c05_trust_7',
+                           'Poor Tech QC'='c05_trust_8',
                            'Lack Capital'='c05_trust_9')) |>
-  mutate(name = fct_relevel(name, rev(c('Different Soil', 'Different Access To Inputs', 'Poor Access', 'They Lack Knowledge', 'Not Enough Seasons', 'I Lack Training', 'Ulterior Motives',    'Cannot Access',  'Lack Capital')))) |>
+  mutate(name = fct_relevel(name, rev(c('Different Soil', 'Different Access To Inputs', 'Poor Tech QC', 'They Lack Knowledge', 'Not Enough Seasons', 'I Lack Training', 'Ulterior Motives',    'Technology Unavailable',  'Lack Capital')))) |>
   group_by(name) |>
   summarise(percent_true = sum(value)/n()) |>
   ggplot(aes(y=name, x=percent_true)) + 
