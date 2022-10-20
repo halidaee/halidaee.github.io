@@ -937,10 +937,10 @@ df_long %>%
 
 ::: {layout-ncol=2}
 
-![](game_5.png){width=400px}
+![](game_5.png){width=350px}
 
 
-![](game_14.png){width=400px}
+![](game_14.png){width=350px}
 
 :::
 :::
@@ -951,10 +951,10 @@ Change % gray within each.
 
 ::: {layout-ncol=2}
 
-![](game_13.png){width=400px}
+![](game_13.png){width=350px}
 
 
-![](game_15.png){width=400px}
+![](game_15.png){width=350px}
 
 
 :::
@@ -1182,7 +1182,10 @@ survey_df |>
 *"What are the reasons you don’t trust the extension agent’s  technology recommendation more?"*
 :::
 
+
 ::: fragment
+
+<span style="display:block; margin-top:-90px;">
 
 ``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
 
@@ -1231,7 +1234,11 @@ survey_df |>
         size=25),
         aspect.ratio=0.8)
 ```
+</span>
+
+
 :::
+
 
 # Farmers Strongly Prefer Similar Test Plots
 
