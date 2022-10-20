@@ -89,10 +89,19 @@ Implies social learning is more influential *per data point*
 ::: fragment
 Natural questions:
 :::
+
+
 ::: incremental
 - **Why?**
+
+<br/>
+
 - **Is social learning special?**
+
+<br/>
+
 - **How can authorities improve?**
+
 :::
 
 
@@ -120,8 +129,27 @@ When weighing signals, we place weight on total uncertainty
 
 
 ::: fragment
-Total Uncertainty = Context Uncertainty + Sampling Error
+**Total Uncertainty = Context Uncertainty + Sampling Error**
 :::
+
+# Preview of Results
+
+::: fragment
+- Farmers reduce adoption when context uncertainty increases in the lab
+:::
+
+<br/>
+
+::: fragment
+- $> 40\%$ of farmers cite heterogeneity as the reason peers are more influential than their extension agent
+:::
+
+<br/>
+
+::: fragment
+- Mechanism is consistent with a wide range of past RCTs
+:::
+
 
 
 # Related Literature
@@ -133,14 +161,12 @@ Total Uncertainty = Context Uncertainty + Sampling Error
   - Sethi and Yildiz (2016), Dasaratha et al (2022), Bala and Goyal (1998), etc...
 - Information provision experiments
   - Jensen (2010), Chetty and Saez (2013), Binder (2020), etc...
-- Role of heterogeneity in agents' responses to information
-  - Armour (2018), 
-- Role of trust in agents' responses to information
-  - asdf
-- Agricultural technology adoption
-  - asdf
+- Role of heterogeneity in agricultural
+  - Giné et al. (2018), Suri (2011), Munshi (2004), etc...
 - Agricultural extension design
-  - asdf
+  - Dar et al. (2020), Kondylis et al. (2020), Cole and Fernando (2021), etc...
+- Decentralization of public goods
+  - Oates (1972) and Oates (1993)
 
 </font>
 
@@ -1461,14 +1487,11 @@ But the effect goes away once a demonstration plot is available (Dar et al. 2020
 
 # Conclusion
 
-# Potential Implications
-
-Potential lessons:
-
--   Info campaigns should provide specific returns
+::: incremental
+- **Total Uncertainty = Context Uncertainty + Sampling Error**
 -   Information campaigns should disaggregate returns
--   Distributed, local experimentation could increase trust
+-   Distributed, local experimentation could increase influence
 -   Insurance with low basis-risk, when tied to experimentation, can have high positive externalities
--   Reinforces Oates (1972, 1999) argument in favor of decentralization
+:::
 
 # Thank You
