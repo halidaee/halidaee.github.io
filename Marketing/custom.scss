@@ -1,0 +1,185 @@
+/*-- scss:defaults --*/
+
+/* $body-bg: #4F2582;
+$body-color: #EAEAEA;
+$link-color: #CACACA; 
+$presentation-heading-color: $body-color; */
+$body-bg: #D2D7D9;
+$body-color: #0a3b4c; 
+$presentation-heading-color: $body-color; 
+$blue: #0a3b4c;
+$link-color: #0a3b4c;
+$linkColor: #0a3b4c;
+$content-padding-top: 0;
+$presentation-block-margin: 0px;
+$callout-margin-top: 0;
+$enable-negative-margins: true;
+
+/* $presentation-font-smaller: 5;
+*/
+/*-- scss:rules --*/
+
+.reveal .aside-footnotes {
+  color: #0a3b4c;
+  position: absolute;
+  bottom: 0px;
+  left: 60px;
+  height: 100%;
+  width: 800px;
+  top: 100px;
+  padding: 0;
+  margin: 0;
+}
+
+.reveal .slide blockquote {
+  border-left: 3px solid $text-muted;
+  padding-left: 0.5em;
+}
+
+.reveal .slides section .fragment {
+   transition-duration: 2s;
+}
+
+.reveal .slide p { 
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+  /*border-color: coral;
+  border-style: solid;*/
+}
+
+.reveal .slide div.cell-output-display {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+}
+
+.reveal .slide div.cell {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+    /* border : 2px;
+    border-color: coral;
+  border-style: solid; */
+}
+
+.reveal .quarto-figure {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border: 0px;
+}
+
+.reveal .slides div.quarto-figure-left {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+}
+
+
+
+.reveal .slide figure {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+}
+
+.reveal .slide img {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+}
+
+.reveal .r-stack {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+  text-align:left;
+}
+
+.reveal .slides section .fragment {
+  margin: 0px;
+  margin-top:0px;
+  padding: 0px;
+  border : 0px;
+  text-align:left;
+  left: 0; 
+}
+
+.reveal .slides section .fragment.step-fade-in-then-out {
+	opacity: 0;
+	display: none;
+  margin: 0px;
+  margin-top:0px;
+  text-align:left;
+
+  left:0;
+  padding: 0px;
+  border : 0px; }
+.reveal .slides section .fragment.step-fade-in-then-out.current-fragment {
+	opacity: 1;
+	display: inline; 
+  margin: 0px;
+  left:0;
+  margin-top:0px;
+  text-align:left;
+
+  padding: 0px;
+  border : 0px;}
+
+
+  .theorem {
+    display: block;
+    font-style: italic;
+    font-family: "Times New Roman";
+  }
+  .theorem::before {
+    content: "Theorem. ";
+    font-weight: bold;
+    font-style: normal;
+  }
+  .theorem[text]::before {
+    content: "Theorem (" attr(text) ") ";
+  }
+  .theorem p {
+    display: inline;
+  }
+
+  .reveal .slides section .fragment { 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: all 0.1s jump; }
+
+    .math.inline {
+      font-family: MathJax_SansSerif, sans-serif;
+    }
+    
+    .math.display .MathJax {
+      font-family: MathJax_SansSerif, sans-serif;
+    }
+
+    .MathJax_Display {
+      font-family: MathJax_SansSerif, sans-serif;
+    }
+
+    .mn {
+      font-family: MathJax_SansSerif, sans-serif;
+    }
+
+    .mtext {
+      font-family: MathJax_SansSerif, sans-serif;
+    }
+
+     .mi {
+      font-family: MathJax_SansSerif, sans-serif;
+    }
+
+    .mo{
+      font-family: MathJax_SansSerif, sans-serif;
+    }
