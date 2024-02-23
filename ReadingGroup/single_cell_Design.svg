@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 137.7 151.7" style="enable-background:new 0 0 137.7 151.7;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#808080;}
+	.st1{fill:none;stroke:#000000;stroke-width:0.3985;stroke-miterlimit:10;}
+	.st2{fill:#DFDFDF;}
+	.st3{fill:none;stroke:#000000;stroke-width:1.594;stroke-miterlimit:10;}
+	.st4{fill:none;stroke:#000000;stroke-width:1.594;stroke-miterlimit:10;stroke-dasharray:2.9888,2.9888;}
+	.st5{font-family:'URWPalladioL-Ital';}
+	.st6{font-size:11.9552px;}
+	.st7{font-family:'CMR10';}
+	.st8{font-size:12.4573px;}
+	.st9{font-family:'URWPalladioL-Roma';}
+</style>
+<polyline class="st0" points="0.8,14.8 68.8,14.8 68.8,82.8 0.8,82.8 "/>
+<polyline class="st1" points="0.8,14.8 68.8,14.8 68.8,82.8 0.8,82.8 "/>
+<polyline class="st2" points="0.8,82.8 68.8,82.8 68.8,150.9 0.8,150.9 "/>
+<polyline class="st1" points="0.8,82.8 68.8,82.8 68.8,150.9 0.8,150.9 "/>
+<line class="st3" x1="0.8" y1="14.8" x2="136.9" y2="14.8"/>
+<line class="st4" x1="0.8" y1="82.8" x2="68.8" y2="82.8"/>
+<line class="st3" x1="0.8" y1="150.9" x2="136.9" y2="150.9"/>
+<line class="st3" x1="0.8" y1="14.8" x2="0.8" y2="150.9"/>
+<line class="st3" x1="68.8" y1="14.8" x2="68.8" y2="150.9"/>
+<line class="st3" x1="136.9" y1="14.8" x2="136.9" y2="150.9"/>
+<text transform="matrix(1 0 0 1 19.5561 10.5452)" class="st5 st6">Z</text>
+<text transform="matrix(1 0 0 1 31.269 10.5452)" class="st7 st8">=</text>
+<text transform="matrix(1 0 0 1 44.4228 10.5452)" class="st9 st6">1</text>
+<text transform="matrix(1 0 0 1 18.9218 52.9534)" class="st5 st6">D</text>
+<text transform="matrix(1 0 0 1 31.9629 52.9534)" class="st7 st8">=</text>
+<text transform="matrix(1 0 0 1 45.1171 52.9534)" class="st9 st6">1</text>
+<text transform="matrix(1 0 0 1 18.9218 120.8875)" class="st5 st6">D</text>
+<text transform="matrix(1 0 0 1 31.9629 120.8875)" class="st7 st8">=</text>
+<text transform="matrix(1 0 0 1 45.1171 120.8875)" class="st9 st6">0</text>
+<text transform="matrix(1 0 0 1 86.9541 86.8709)" class="st5 st6">D</text>
+<text transform="matrix(1 0 0 1 99.9951 86.8709)" class="st7 st8">=</text>
+<text transform="matrix(1 0 0 1 113.1494 86.8709)" class="st9 st6">0</text>
+<text transform="matrix(1 0 0 1 87.5879 10.4265)" class="st5 st6">Z</text>
+<text transform="matrix(1 0 0 1 99.3007 10.4265)" class="st7 st8">=</text>
+<text transform="matrix(1 0 0 1 112.455 10.4265)" class="st9 st6">0</text>
+</svg>

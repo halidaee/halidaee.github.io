@@ -1,0 +1,352 @@
+---
+title: "Multi-cell experiments for marginal treatment effect estimation of digital ads"
+subtitle: "by Caio Waisman and Brett Gordon" 
+author: "Presented by Hossein Alidaee"
+format: 
+  revealjs:
+    navigation-mode: vertical
+editor: visual
+---
+
+# Background
+
+# Motivation
+
+Traditional experimental design: treatment versus control.
+
+::: incremental
+-   [**Can recover Average Treatment Effect on the Treated (ATT)!**]{style="color:green"}
+-   [**Cannot recover Marginal Treatment Effect (MTE)**]{style="color:red"}
+    -   Less effective for decisions on the intensive margin.
+    -   "How many people should I reach with my intervention?"
+    -   "How large should my budget be for this intervention?"
+    -   **Natural questions for policymakers, not just firms!**
+:::
+
+# This paper
+
+::: incremental
+-   Experiments with one-sided noncompliance.
+-   What fraction of users should be treated among target audience?
+-   Use multi-armed experiments to create necessary variation
+-   Empirical application: digital ads.
+:::
+
+# Firm's Problem
+
+Wants to choose fraction of customers from a target population to treat to maximize profit. Within a segment, customers are observationally equivalent
+
+::: incremental
+-   Dual to choosing budget to reach given number of customers.
+-   Observational equivalence can be also interpreted as "conditioned on X".
+-   Profit can be substituted with cost-effectiveness in development context.
+:::
+
+# Firm's Problem - Formalized
+
+For treatment indicator $D$, observed outcome is $$ Y = D Y_1 + (1-D)Y_0.$$
+
+. . .
+
+Profit maximization problem is: $$ \max_{v\in[0,1]} \left( \delta \cdot \left[ v \mathbb{E}[Y\vert D =1] + (1-v)\mathbb{E}[Y\vert D=0]\right] - k(v)\right)$$
+
+# Firm's Problem - Explained
+
+$$ \max_{v\in[0,1]} \left( \delta \cdot \left[ v \mathbb{E}[Y\vert D =1] + (1-v)\mathbb{E}[Y\vert D=0]\right] - k(v)\right)$$
+
+::: incremental
+-   $v$ is fraction of customers exposed to treatment
+-   $k(v)$ is (expected) cost of treatment. Likely convex and increasing.
+-   $\delta$ is constant converting outcomes to monetary terms (i.e. welfare)
+-   Expect $k(v)$ and $\delta$ to be known.
+-   Need to learn conditional expectations.
+:::
+
+# Why do we need MTE?
+
+Recall that MTE($u$) defined as
+
+$$
+\mathbb{E}[Y_1 - Y_0 \vert U = u] = \mathbb{E}[Y_1 \vert U = u] - \mathbb{E}[Y_0 \vert U = u]
+$$
+
+. . .
+
+So firm problem equal to
+
+$$ \max_{v\in[0,1]} \left( \delta\int_0^v \text{MTE}(u)du  - k(v)\right)$$
+
+# How to Recover Conditional Expectations?
+
+::: incremental
+-   Björkman and Moffitt (1987) and Heckman and Vytlacil (2005) identify MTE from observational data using a continuous IV.
+-   Brinch et al. (2017): Instrument is usually discrete! Showed how to recover polynomial approximation of MTE.
+-   Mogstad et al. (2018): Partial identification of MTE.
+-   **This paper**: How to design experiments to exploit Mogstad et al. (2018).
+:::
+
+# Experimental Design
+
+# Defining Our Instrument
+
+Let $Z$ indicate whether unit is *eligible* for (randomly assigned) treatment. Then:
+
+$$
+D = \unicode{x1D7D9} \{m(Z) \geq U\}.
+$$
+
+::: incremental
+-   $m(Z)$ governs selection into treatment.
+-   $m(Z)$ common conditional on $Z$
+-   $U$ is unobservable and heterogeneous
+-   Model in line with Heckman et al. (2006)
+:::
+
+# Adding Some Structure
+
+Via Mogstad et al. (2018),
+
+**Assumption 1**:
+
+(i) $U \perp\!\!\!\perp Z$ (statistical independence)
+
+(ii) $\mathbb{E}[Y_d \vert Z, U] = \mathbb{E}[Y_d \vert U]$ and $\mathbb{E}[Y_d^2] < \infty$ for $d \in \{0, 1\}$.
+
+(iii) $U$ is continuously distributed
+
+(i)-(ii) imply $Z$ exogenous and valid instrument.
+
+\(iii\) allows normalizing $U \sim U(0, 1)$.
+
+## What about monotonicity?
+
+Vytlacil (2002) shows:
+
+Given **statistical independence** $(U \perp\!\!\!\perp Z)$,
+
+Monotonicity assumption of Imbens and Angrist (1994)
+
+$$
+\Longleftrightarrow
+$$
+
+Index of selection is additively separable as in $$
+D = \unicode{x1D7D9} \{m(Z) - U \geq 0\}.
+$$
+
+# Defining a Propensity Score
+
+With Assumption 1, we can define probability of treatment given eligibility:
+
+$$
+m(Z) = \Pr (D=1 \vert Z).
+$$
+
+$D$ and $Z$ are observed, so $m(\cdot)$ can be straightforwardly estimated.
+
+# Single-Cell Experimental Design Insufficient
+
+![](single_cell_Design.svg){fig-align="center" width="180" height="180"}
+
+. . .
+
+One-sided noncompliance $\Rightarrow$
+
+LATE = ATT $\equiv$ $\mathbb{E}[Y_1 - Y_0 \vert D = 1]$
+
+. . .
+
+But ATT doesn't help with our intensive margin decision!
+
+# An Alternative Design
+
+::: incremental
+-   Randomly assign each individual to one of $C$ cells
+
+-   Split each cell individually into treatment versus control
+
+-   $Z_c$ is now indicator for treatment eligibility of an individual in cell $C$
+
+-   One-sided non-compliance: $\Pr(D=1 \vert Z_c = 0) = 0$ for all $c$
+
+-   Equivalent to randomly allocating some to single control cell and others to one of $C$ cells where all of latter eligible for treatment.
+:::
+
+# A few more assumptions
+
+**Assumption 2**:
+
+(i) $\Pr(Z_c = z \vert \mathcal{C} = c) \in (0, 1) \forall c, z$
+
+(ii) $m(Z_c = 1) \equiv \Pr(D = 1 \vert Z_c = 1) \in (0, 1) \forall c$
+
+(iii) $m(Z_c = 1) \neq m(Z_{c'})$ for all $c \neq c'$
+
+. . .
+
+\(i\) and (ii) innocuous.
+
+. . .
+
+\(iii\) ensures variation in treatment probabilities across cells.
+
+# How do we ensure variation?
+
+::: incremental
+-   Change per capita budget for outreach across cells
+-   Vary incentives for enrollment across cells
+-   Example: for online ads, vary bid price for ad space across cells
+-   Example: for development, vary number of SMS reminders across cells
+:::
+
+# What do we learn?
+
+Data about MTE function captured in $2C + 1$ moments:
+
+$$\phi_{dzc} \equiv \mathbb{E}[Y \vert D = d, Z_c = z_c, \mathcal{C} = c]$$
+
+::: incremental
+-   Each non-parametrically identified
+-   Each moment equal to $\mathbb{E}[Y_d \vert U \geq m(z_c), Z_c = z_c]$
+-   Each instrument $Z$ has $C$ values, one per propensity score
+-   Can recover MTE using polynomial approximation
+-   Assume polynomial with degree $C - 1$
+-   Lots of notation. Read paper for details.
+:::
+
+## Why not $3C$ moments?
+
+Recall $m(Z_c = 0) = 0$ for all $c$.
+
+. . .
+
+Thus,
+
+$$
+\begin{aligned}
+\phi_{00c} &= \mathbb{E}[Y \vert D = 0, Z_c = 0, \mathcal{C} = c] \\
+&= \mathbb{E}[Y_0 \vert U > 0, Z_c = 0] \\
+&\equiv \phi_{00}
+\end{aligned}
+$$
+
+. . .
+
+Only one moment for all unexposed!
+
+## What is being approximated?
+
+Define marginal treatment response (MTR) $r_d(u)$ as 
+$$
+\begin{aligned}
+\mathbb{E}[Y_1 \vert U \leq v] &= \int_0^v \mathbb{E}[Y_1 \vert U = u] \cdot \frac{1}{v} du \\
+&\equiv \int_0^v r_1(u) \frac{1}{v} du \\
+\mathbb{E}[Y_0 \vert U > v] &= \int_v^1 r_0(u) \cdot \frac{1}{1-v} du \\
+\end{aligned}
+$$
+So $\text{MTE}(u) = r_1(u) - r_0(u)$ and can define $\phi_{dzc}$ via $r_d(u)$.
+
+$r_d(u)$ can be approximated by order $C$ polynomials with experimental moments. 
+
+# Evaluation
+
+::: incremental
+- No actual multi-cell experiment done
+- Create synthetic data to calibrated to single-cell experiment in Gordon et al. (2019)
+- Evaluate how well they can recover synthetic DGP
+- Assume DGP is cubic but only use two-cell experiment
+- Evaluate MTE estimation using variety of norms
+- Perform very well! 
+
+::: 
+
+
+## Empirical Performance
+
+![](synthetic_performance.svg){fig-align="center" width="1000"}
+
+## Empirical Performance
+
+![](synthetic_complex.svg){fig-align="center" width="1000"}
+
+# Extensions
+
+::: incremental
+- Bayesian approach to solving firm problem incorporating estimation uncertainty
+- Comparison to BMW with single-cell design. (Underspecified!)
+- Addressing repeated treatment exposure.
+- Trade-offs when selecting $C$ with fixed $N$.
+- **WIP! Authors want feedback!**
+:::
+
+# Thank you!
+
+
+<!-- # Empirical Performance -->
+
+<!-- # Approach and Shortcomings -->
+
+<!-- ::: incremental -->
+
+<!-- - Retailer hoping to drive web purchases via (random) ads -->
+<!-- - Data from single-cell experiment in Gordon et al. (2019) -->
+<!-- - Single cell design $\rightarrow$ calibrate parameters from data -->
+<!-- - **Shortcoming 1**: DGP only partially identified; selection arbitrary -->
+<!-- - **Shortcoming 2**: Multiple ad exposure allowed; single exposure in model.  -->
+
+<!-- ::: -->
+
+<!-- # Data -->
+
+<!-- ::: incremental -->
+
+<!-- - 25 million users -->
+<!-- - Non-compliance: limited FB use on vacation, outbid for specific user, etc... -->
+<!-- - Share allocated to test group: $\Pr(Z = 1) = 0.7$ -->
+<!-- - Exposure propensity in test group is $m(Z = 1) = 0.37$. -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- \phi_{11} = \mathbb{E}[Y_1 \vert Z_c = 1] &= 0.00079 \\ -->
+<!-- \phi_{01} = \mathbb{E}[Y_0 \vert Z_c = 1] &= 0.00025 \\ -->
+<!-- \phi_{00} = \mathbb{E}[Y_0 \vert Z_c = 0] &= 0.00033 \\ -->
+
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- ::: -->
+
+<!-- # Creating Synthetic Data -->
+
+<!-- ::: incremental -->
+
+<!-- - Assume true MTR functions are DGP of the form -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- r_1(u) = r_{10} + r_{11}u + r_{12}u^2 \\ -->
+<!-- r_0(u) = r_{00} + r_{01}u + r_{02}u^2 + r_{03}u^3 \\ -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- - Only have two cells, so cannot be perfectly recovered from experiment.  -->
+<!-- - Pick two DGPs using sets of $r_{dc}$ values satisfying moments $\phi_{dz}$.  -->
+<!-- - Create behavioral micro-data from these DGPs. -->
+
+<!-- ::: -->
+
+<!-- # Experimental Design -->
+
+<!-- ::: incremental -->
+
+<!-- - Two cell experiment -->
+<!-- - Limited to linear approximation of $r_1(u)$  -->
+<!-- - Limited to quadratic approximation of $r_0(u)$.  -->
+<!-- - Keep treatment probability at $0.7$ and $m(Z_1 = 1) = 0.37$ in one cell. -->
+<!-- - Other cell gets treatment probability $0.3$ with $m(Z_2 = 1) = 0.86$. -->
+<!-- ::: -->
+
+<!-- # Evaluation -->
+
+
+
+<!-- # Results -->
+
+
+
