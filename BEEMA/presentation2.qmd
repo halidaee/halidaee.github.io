@@ -285,7 +285,7 @@ How does the farmer adapt the signal to his own context?
 \begin{align*}
 \text{Adjusted Signal} &= \text{Original Signal} \\
 & \ \ \  + \text{Own Context Adjustment} \\
-& \ \ \  - \text{Context Adjustment}
+& \ \ \  - \text{Person $j$'s Context Adjustment}
 \end{align*}
 ```
 
