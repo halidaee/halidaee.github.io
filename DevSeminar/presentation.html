@@ -7,7 +7,7 @@
 <link href="presentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="presentation_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="presentation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.1.189">
+  <meta name="generator" content="quarto-1.2.313">
 
   <title>How Heterogeneity Impacts Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -322,16 +322,51 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide">
+<section id="title-slide" class="quarto-title-block">
   <h1 class="title">How Heterogeneity Impacts Learning</h1>
-  <p class="author"></p><p>Hossein Alidaee<br>
-Northwestern University</p><p></p>
-</section>
 
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+ 
+</div>
+</div>
+</div>
+
+</section>
 <section id="motivation" class="title-slide slide level1">
 <h1>Motivation</h1>
 <div class="cell" data-layout-align="left" data-fig.asp="0.2">
 
+</div>
+</section>
+
+<section id="social-learning-is-oddly-effective" class="title-slide slide level1">
+<h1>Social Learning Is Oddly Effective</h1>
+<div class="fragment">
+<p>Peers have limited experience</p>
+<p><br><br></p>
+</div>
+<div class="fragment">
+<p>Authorities test recommendations extensively</p>
+<p><br><br></p>
+</div>
+<div class="fragment">
+<p>Yet, both induce adoption at equal rates - Krishnan and Patnam (2013) - Takahashi, Mano, and Otsuka (2019)</p>
+</div>
+</section>
+
+<section id="is-social-learning-special" class="title-slide slide level1">
+<h1>Is social learning special?</h1>
+<div class="fragment">
+<p>Natural questions:</p>
+</div>
+<div>
+<ul>
+<li class="fragment"><strong>Why?</strong></li>
+<li class="fragment"><strong>Is social learning special?</strong></li>
+<li class="fragment"><strong>How can authorities improve?</strong></li>
+</ul>
 </div>
 </section>
 
@@ -2242,12 +2277,15 @@ Does **knowledge about context** drive learning?
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
       (function () {
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          // dispatch for htmlwidgets
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
           const event = window.document.createEvent("Event");
           event.initEvent("slideenter", true, true);
           window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
 
           // dispatch for shiny
           if (window.jQuery) {
@@ -2258,13 +2296,6 @@ Does **knowledge about context** drive learning?
               window.jQuery(currentSlide).trigger("shown");
             }
           }
-        }
-
-        // hookup for reveal
-        if (window.Reveal) {
-          window.Reveal.addEventListener("slidechanged", function(event) {
-            fireSlideChanged(event.previousSlide, event.currentSlide);
-          });
         }
 
         // hookup for slidy
@@ -2316,7 +2347,24 @@ Does **knowledge about context** drive learning?
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
         button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
         setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');
         }, 1000);
@@ -2354,24 +2402,42 @@ Does **knowledge about context** drive learning?
           return note.innerHTML;
         });
       }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
       var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
       for (var i=0; i<bibliorefs.length; i++) {
         const ref = bibliorefs[i];
-        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-        tippyHover(ref, function() {
-          var popup = window.document.createElement('div');
-          cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
           });
-          return popup.innerHTML;
-        });
+        }
       }
     });
     </script>

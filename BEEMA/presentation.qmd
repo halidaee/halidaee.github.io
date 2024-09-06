@@ -1,0 +1,1552 @@
+---
+title: "How Heterogeneity Impacts Learning"
+author: |
+ | Hossein Alidaee
+ | Northwestern University
+format: 
+  revealjs: 
+    margin-top: 0em
+    center: false
+    center-title-slide: false
+    auto-animate-easing: none
+    auto-animate-duration: 1
+    progress: false
+    #theme: solarized
+    navigation-mode: vertical
+    theme: [solarized, custom.scss]
+editor: visual
+toc: false 
+toc-depth: 1
+toc-title: Roadmap
+backgroundcolor: "#D2D7D9"
+---
+
+
+
+# Motivation
+
+
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=2, strip.white=TRUE, fig.asp=0.2,fig.align='left'}
+
+library(latex2exp)
+library(tidyverse)
+library(ggbrace)
+library(gganimate)
+
+
+knitr::opts_chunk$set(
+      dev = "svglite",
+      fig.ext = "svg"
+)
+```
+
+# Social Learning Is Oddly Effective
+
+::: fragment
+Peers have limited experience
+
+<br/><br/>
+
+:::
+
+::: fragment
+Authorities test recommendations extensively
+
+<br/><br/>
+
+:::
+
+::: fragment
+Yet, both induce adoption at equal rates
+-  Krishnan and Patnam (2013)
+-  Takahashi, Mano, and Otsuka (2019)
+
+:::
+
+
+# Is social learning special?
+
+::: fragment
+Natural questions:
+:::
+::: incremental
+- **Why?**
+- **Is social learning special?**
+- **How can authorities improve?**
+:::
+
+
+
+
+# Where do we get info about new technologies?
+
+
+::: fragment
+Information critical for adoption (Rogers, 1962; Jensen, 2010)
+
+<br/><br/>
+
+:::
+
+::: fragment
+Where do we get this information?
+
+<br/><br/>
+
+:::
+
+::: fragment
+
+Two common sources: **authorities** and **peers**
+:::
+
+
+# Authorities spend a lot on data
+
+::: fragment
+India spends $1.3B on public Ag R&D (IFPRI ASTI, 2022)
+:::
+
+<br/><br/>
+
+::: fragment
+2014 Maputo Declaration: 10% of total national spending
+:::
+
+<br/><br/>
+
+::: fragment
+Tested rigorously
+:::
+
+<br/><br/>
+
+::: fragment
+Often tested centrally, i.e. university, research center, etc..
+:::
+
+::: {.notes}
+Total India Ag R&D: $4.2 Billion (IFPRI ASTI)  <br/>
+:::
+
+
+# Peers have sparse data
+
+::: fragment
+Conduct limited testing
+:::
+
+<br/><br/>
+
+::: fragment
+Testing vulnerable to shocks
+:::
+
+<br/><br/>
+
+::: fragment
+*Context* is well known
+:::
+
+
+# Social Learning: Less Data, Same Results
+
+::: fragment
+Despite data gap, peers are just as influential <br/>
+:::
+::: fragment
+-  Krishnan and Patnam (2013)
+-  Takahashi, Mano, and Otsuka (2019)
+:::
+
+<br/><br/>
+
+::: fragment
+Implies social learning is more effective *per data point* 
+:::
+
+<br/><br/>
+
+
+::: fragment
+Natural questions:
+:::
+::: incremental
+- **Why?**
+- **Is social learning special?**
+- **How can authorities improve?**
+:::
+
+
+# Setting: Agricultural Technology Adoption
+
+::: columns
+
+
+
+::: {.column width="55%"}
+::: fragment
+
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=1,fig.align='right'}
+df <- read_csv('/users/halidaee/Dropbox/Ongoing Research/Context/HYVdata.csv')
+
+
+plot <- df %>% 
+  pivot_longer(adv_gdp:first_gdp, names_to='gdp',names_pattern = '(.*)_gdp') %>%
+  rename('Type' = 'gdp', 'GDP' = 'value') %>%
+  ggplot(aes(x=year, y=GDP, color=Type)) +
+    geom_line(size=2) + 
+    xlab(element_blank()) +
+    ylab('Real GDP per capita') +
+    annotate('text',label="Western",x=1977, y=30,size=8) +
+    annotate('text',label='High HYV \n Adoption  ', x=2008, y=19,size=8) +
+    annotate('text',label='Low HYV \n Adoption  ', x=2008, y=3,size=8) +
+    theme(axis.line=element_line(colour = 'black'),
+          plot.title = element_text(size=15,face='bold'),
+          axis.text.x=element_text(size=25),
+          axis.text.y=element_blank(),
+          axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25)) +
+    scale_colour_manual(values=c('#D99066', '#402110', '#166B8C'))
+plot(plot)
+```
+:::
+:::
+
+
+::: {.column width="35%"}
+::: incremental
+
+<font size=6>
+
+-   $2^{\text{nd}}$ divergence via Green Revolution (Huang, 2020)
+
+<br/>
+
+- Key friction for AgTech (Magruder, 2018)
+
+<br/>
+
+
+- Optimizing social learning is expensive (Breza et al., 2021) 
+
+<br/>
+
+- Maybe even futile (Akbarpour et al., 2020)
+
+
+ 
+</font>
+
+:::
+:::
+
+:::
+
+
+
+# Today: Uncertainty About Context
+
+::: columns
+
+
+
+::: {.column width="55%"}
+::: fragment
+
+Standard view of these signals:
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.align='center'}
+#| layout-nrow: 2
+#| fig-width: 5
+#| fig-height: 3
+#| fig-align: "left"
+
+
+par(mar = c(0, 0, 0, 0))
+certainty_text <- TeX("$Pr(k_i) = 1$")
+#certainty_text <- "hello"
+par(mar = c(0, 0, 0, 0))
+
+ggplot(data = data.frame(x1 = 0, y1 = 0), aes(x=x1, y=y1) ) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 0, sd = 2.5)) + 
+  #geom_text(label=c(certainty_text), nudge_y=0.7) + 
+  theme_minimal() + 
+  labs(x = TeX("$\\theta$"),
+       y = TeX("$Pr(\\theta)$")) + 
+  xlim(-10, 10) + 
+  ylim(0, 0.8) + 
+  theme(axis.line=element_line(colour = 'black'),
+        plot.title = element_text(size=25,face='bold', hjust=0.5, color='#0a3b4c'),
+      axis.text.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks=element_blank(),
+      legend.position="none",
+      panel.background=element_blank(),
+      #panel.border=element_blank(),
+      panel.grid.major=element_blank(),
+      panel.grid.minor=element_blank(),
+      plot.background=element_blank(),
+      axis.title.y = element_text(angle = 0, vjust=0.9),
+      text = element_text(size=25)) +
+      ggtitle("Peer")
+
+
+ggplot(data = data.frame(x1 = 0, y1 = 0), aes(x=x1, y=y1) ) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 0, sd = 0.7)) + 
+  #geom_text(label=c(certainty_text), nudge_y=0.7) + 
+  theme_minimal() + 
+  labs(x = TeX("$\\theta$"),
+       y = TeX("$Pr(\\theta)$")) + 
+  xlim(-10, 10) + 
+  ylim(0, 0.8) + 
+  theme(axis.line=element_line(colour = 'black'),
+        plot.title = element_text(size=25,face='bold', hjust=0.5, color='#0a3b4c'),
+      axis.text.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks=element_blank(),
+      legend.position="none",
+      panel.background=element_blank(),
+      #panel.border=element_blank(),
+      panel.grid.major=element_blank(),
+      panel.grid.minor=element_blank(),
+      plot.background=element_blank(),
+      axis.title.y = element_text(angle = 0, vjust=0.9),
+      text = element_text(size=25)) +
+      ggtitle("Extension Agent")
+
+``` 
+:::
+
+:::
+
+::: {.column width="35%"}
+
+::: fragment
+::: {layout-nrow=2}
+
+![](generic3_friend.png){#id .class width=300px height=300px}
+
+
+
+![](generic_extension.png){#id .class width=300px height=300px}
+
+:::
+:::
+
+:::
+:::
+
+# Today: Uncertainty About Context
+::: columns
+
+
+
+::: {.column width="55%"}
+::: fragment
+Proposed view:
+```{r echo=FALSE, dev.args = list(bg = 'transparent')}
+#| layout-nrow: 2
+#| fig-width: 5
+#| fig-height: 3
+#| fig-align: "left"
+
+ggplot(data = data.frame(x1 = 0, y1 = 0), aes(x=x1, y=y1) ) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 0, sd = 2.5)) + 
+  #geom_text(label=c(certainty_text), nudge_y=0.7) + 
+  theme_minimal() + 
+  labs(x = TeX("$\\theta_i$"),
+       y = TeX("$Pr(\\theta_i)\\phantom{|\\gamma_k}$")) + 
+  xlim(-10, 10) + 
+  ylim(0, 0.8) + 
+  theme(axis.line=element_line(colour = 'black'),
+        plot.title = element_text(size=25,face='bold',hjust=0.5, color='#0a3b4c'),
+      axis.text.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks=element_blank(),
+      legend.position="none",
+      panel.background=element_blank(),
+      #panel.border=element_blank(),
+      panel.grid.major=element_blank(),
+      panel.grid.minor=element_blank(),
+      plot.background=element_blank(),
+      axis.title.y = element_text(angle = 0, vjust=0.9),
+      text = element_text(size=25)) +
+      ggtitle("Peer")
+
+
+ggplot(data = data.frame(x1 = 0, y1 = 0), aes(x=x1, y=y1) ) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = -6, sd = 0.7)) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = -3, sd = 0.7)) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 0, sd = 0.7)) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 3, sd = 0.7)) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 6, sd = 0.7)) + 
+  #geom_text(label=c(certainty_text), nudge_y=0.7) + 
+  theme_minimal() + 
+  labs(x = TeX("$\\theta_i$"),
+       y = TeX("$Pr(\\theta_i|\\gamma_k)$")) + 
+  xlim(-10, 10) + 
+  ylim(0, 0.8) + 
+  theme(axis.line=element_line(colour = 'black'),
+        plot.title = element_text(size=25,face='bold', hjust=0.5, color='#0a3b4c'),
+      axis.text.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks=element_blank(),
+      legend.position="none",
+      panel.background=element_blank(),
+      #panel.border=element_blank(),
+      panel.grid.major=element_blank(),
+      panel.grid.minor=element_blank(),
+      plot.background=element_blank(),
+      axis.title.y = element_text(angle = 0, vjust=0.9),
+      text = element_text(size=25)) +
+      ggtitle("Extension Agent")
+
+```
+
+:::
+:::
+
+::: {.column width="45%"}
+::: fragment
+::: {layout="[[1], [1,1,1,1,1]]"}
+
+![](generic3_friend.png){#id .class width=300px height=300px}
+
+
+
+
+:::
+:::
+
+:::
+:::
+
+::: fragment
+
+::: {layout-ncol=5}
+![](generic_extension.png){#id .class width=300px height=300px}
+
+![](redsoil_extension.png){#id .class width=300px height=300px}
+
+![](riverbed_extension.png){#id .class width=300px height=300px}
+
+![](hillside_extension.png){#id .class width=300px height=300px}
+
+![](drylands_extension.png){#id .class width=300px height=300px}
+
+:::
+:::
+
+# Related Literature
+<font size = 5>
+
+- Decision makers as statisticians
+  - Steiner and Stewart (2008), Olea et al. (2021), Salant and Cherry (2020), etc.. 
+- Social learning theory
+  - Sethi and Yildiz (2016), Dasaratha et al (2022), Bala and Goyal (1998), etc...
+- Information provision experiments
+  - Jensen (2010), Chetty and Saez (2013), Binder (2020), etc...
+- Role of heterogeneity in agents' responses to information
+  - Armour (2018), 
+- Role of trust in agents' responses to information
+  - asdf
+- Agricultural technology adoption
+  - asdf
+- Agricultural extension design
+  - asdf
+
+</font>
+
+# Roadmap
+
+::: incremental
+Today:
+
+-   Propose a foundation for mechanism
+-   Provide experimental design
+-   Present results
+-   Discuss external validity
+-   Implications for farmers and policymakers
+-   Upcoming extensions
+:::
+
+
+<!--# Heterogeneous Returns to Technology         Returns are often heterogeneous:     Education - comparative advantage (Heckman and Li, 2004), gender (Dougherty, 2005)   Microfinance - credit constraints (Banerjee et al, 2020), business experience (Meager, 2019) Skills training - baseline profits (Lopez-Pena, 2020)   Health - age (Dupas, 2009)   Whose data do I trust? -->
+
+
+# Microfoundation
+
+# A Stylized Model
+
+A farmer is:
+
+-   risk-averse
+-   Bayesian
+-   deciding between a traditional vs high-yield seed
+
+::: fragment
+The unknown gain from the high yield seed is heterogeneous: $$\theta_i = \underbrace{\theta \vphantom{\gamma_i}  }_{\text{average return}} + \underbrace{\gamma_i}_{\text{context adjustment}}$$
+:::
+
+# Sources of Context Heterogeneity
+
+Why is context $\gamma_j$ heterogeneous?:
+
+::: incremental
+-   **Agriculture** 
+    - Soil composition
+    - Climate
+    - Opportunity costs
+
+-   **Microfinance** 
+    - Credit constraints, business experience, baseline profits
+
+-   **Health** 
+    - Age, comorbidities, genetic profile
+:::
+
+
+# Context Impacts Signals
+
+
+::: fragment
+With homogeneity, a friend $j$ shares a noisy signal: $\theta + \epsilon_j$.
+
+<br/><br/>
+:::
+
+::: fragment
+But, we have heterogeneity. 
+
+<br/><br/>
+:::
+
+::: fragment
+Instead, friend $j$ shares signal $s_j = \theta + \gamma_j + \epsilon_j$. 
+
+<br/><br/>
+
+:::
+
+::: fragment
+Without more info, this is a signal about $\theta_j$. 
+
+<br/><br/>
+
+:::
+
+::: fragment
+Agent cares about $\theta_i = \theta + \gamma_i$. 
+
+<br/><br/>
+
+:::
+
+
+
+# What is known about context?
+
+Each farmer $j$ has their own $\gamma_j \sim \mathcal{N}\left(0, (\sigma_j^\gamma)^2\right).$
+
+<br/><br/>
+
+::: fragment
+$\gamma_j$ is farmer $j$'s **context**.
+:::
+
+<br/><br/>
+
+::: fragment
+$\sigma_j^\gamma$ is the **context uncertainty**.
+:::
+
+
+# How an Agent Adjusts for Context
+
+How does sharing context $\gamma_j$ impact learning?
+
+<br/><br/>
+
+::: fragment
+Consider estimating $\theta_i$ with context uncertainty:
+:::
+
+::: fragment
+```{=tex}
+\begin{align}
+
+\operatorname{E}[\theta_i | s_j, \sigma_j, \sigma_j^\gamma, \gamma_i] &= \operatorname{E}[s_j - \epsilon_j - \gamma_j + \gamma_i  | s_j, \sigma_j, \sigma_j^\gamma, \gamma_i] \\
+&= s_j + \gamma_i - \operatorname{E}[ \epsilon_j + \gamma_j | s_j, \sigma_j, \sigma_j^\gamma, \gamma_i] \\
+
+
+\end{align}
+```
+:::
+
+
+::: fragment
+Knowing $\gamma_j$ allows perfect adjustment:
+
+::: {style="margin-top:-80px;"}
+```{=tex}
+\begin{align}
+
+
+\hphantom{\operatorname{E}[\theta_i | s_j, \sigma_j, \sigma_j^\gamma, \gamma_i]} &\hphantom{=} \hphantom{\operatorname{E}[s_j - \epsilon_j - \gamma_j + \gamma_i  | s_j, \sigma_j, \sigma_j^\gamma, \gamma_i]} \\
+
+&= s_j + \underbrace{\left(\gamma_i - \gamma_j\right)}_{\text{Adjustment}} +  \operatorname{E}[ \epsilon_j | s_j, \sigma_j, \sigma_j^\gamma, \gamma_i] 
+
+
+\end{align}
+```
+:::
+:::
+
+# Adjusted Signal Structure 
+
+::: fragment
+We can think of context adjustment as signal adjustment.
+:::
+
+<br/><br/>
+
+::: fragment
+Let $\hat{\gamma}_j$ denote belief about $\gamma_j$.
+:::
+
+<br/>
+
+::: fragment
+::: {style="margin-top:-80px;"}
+```{=tex}
+\begin{align*}
+s_j^A &= s_j + \gamma_i - \gamma_j \\
+&= \theta + \gamma_j + \epsilon_j + \gamma_i - \hat{\gamma}_j \\
+&= \underbrace{\theta + \gamma_j + \gamma_i}_{\text{Scalars}} + \underbrace{\hphantom{\gamma_j +}\epsilon_j \hphantom{\theta +}}_{\mathcal{N}(0, \sigma_j^2)} - \underbrace{\hphantom{\gamma_j +}\hat{\gamma}_j \hphantom{\gamma_j +}}_{\mathcal{N}(0, (\sigma_j^\gamma)^2)} 
+\end{align*}
+```
+:::
+:::
+
+<br/>
+
+::: fragment
+Because $\epsilon_j$ and $\hat{\gamma}_j$ are independent Gaussians,
+$$
+s_j^A \sim \mathcal{N}(\theta + \gamma_i, \sigma_j^2 + (\sigma_j^\gamma)^2)
+$$
+:::
+
+# Our Agent's Posterior
+
+Using information from all sources, farmer $i$ believes
+
+$$
+\tilde{\theta_i} \sim \mathcal{N}\left(\tilde{\mu}, \tilde{\sigma}_0^2\right)
+$$
+
+::: fragment
+
+where
+$$
+\tilde{\mu} = \tilde{\sigma}_0^2 \left(\frac{0}{\tilde{\sigma}_0^2} + \frac{s_E^A}{\sigma_E^2 + (\sigma_E^\gamma)^2} +  \sum_{j_\in {1, \ldots, n}} \frac{s^A_j}{\sigma_j^2 + (\sigma_j^\gamma)^2}\right) 
+$$ 
+:::
+
+::: fragment
+
+and 
+$$
+\tilde{\sigma}_0^2 = \left(\frac{1}{\tilde{\sigma}_0^2} + \frac{1}{\sigma_E^2 + (\sigma_E^\gamma)^2} + \sum_{j_\in {1, \ldots, n}} \frac{1}{\sigma_j^2 + (\sigma_j^\gamma)^2}\right)^{-1}.
+$$ 
+:::
+
+# The Farmer's Decision
+
+
+::: fragment
+**Problem:** 
+$$ 
+\operatorname*{argmax}_\alpha E[U(\alpha \cdot \theta_i ) | s_1, \ldots s_n, s_E]
+$$
+:::
+
+<br/>
+
+::: fragment
+**Decision:** Fraction of investment $\alpha$
+:::
+
+<br/><br/>
+
+::: fragment
+**Belief:** Posterior $\tilde{\theta}_j$
+:::
+
+<br/><br/>
+
+::: fragment
+**Preferences:** Risk averse so 
+$$
+\operatorname{E}[U(\alpha \theta_i)] \leq U(\alpha  \operatorname{E}[\theta_i]).
+$$
+:::
+
+
+
+# Less Context &rarr; Less Investment
+
+<br/>
+
+::: {.theorem text="Maximizing Adoption"}
+Consider a strictly risk averse agent with utility $U$  solving 
+$$ 
+\operatorname*{argmax}_\alpha E[U(\alpha \cdot \theta_i ) | s_1, \ldots s_n, s_E].
+$$ 
+The agent's optimal level of adoption $\alpha^*$ is decreasing in context uncertainty from any signal.
+:::
+
+<br/>
+
+
+# Sampling and Context Precision Are Complements
+
+<br/>
+
+::: {.theorem}
+Consider a strictly risk averse agent with DARA utility $U$  solving 
+$$ 
+\operatorname*{argmax}_\alpha E[U(\alpha \cdot \theta_i ) | s_1, \ldots s_n, s_E].
+$$ 
+For any signal $s_j$, the agent's optimal level of adoption $\alpha^*$, given a level of sampling precision $1/\sigma_j^2$, is increasing in context precision $(1/\sigma_j^\gamma)^2$ from that signal.
+:::
+
+<br/>
+
+# Model Recap
+
+::: incremental
+- Heterogeneity can cause uncertainty about context
+- Context uncertainty adds to signal noise
+- Context certainty can be adjusted for
+- **Hypothesis 1**: Higher context uncertainty reduces adoption if risk averse
+- **Hypothesis 2**: Sampling and context precision are complements under DARA
+:::
+
+
+# Lab Experiment Design
+
+# Overview
+
+::: incremental
+- Lab-in-the-field experiment in rural Odissa
+- 1,600 small and marginal farmers
+- Decide whether to adopt a hypothetical technology
+- Receive noisy signals from fictional characters
+- Vary only context uncertainty
+- Choose adoption level
+:::
+
+# Signals As Likert Scales
+
+::: fragment
+Everyone is learning about their $\theta_j$
+
+<br/><br/>
+
+:::
+
+::: fragment
+Report experience using an emoji Likert scale
+
+<br/>
+
+::: {layout-ncol=7}
+
+![](emoji1.png){#id .class width=100px height=100px}
+
+![](emoji2.png){#id .class width=100px height=100px}
+
+![](emoji3.png){#id .class width=100px height=100px}
+
+![](emoji4.png){#id .class width=100px height=100px}
+
+![](emoji5.png){#id .class width=100px height=100px}
+
+![](emoji6.png){#id .class width=100px height=100px}
+
+![](emoji7.png){#id .class width=100px height=100px}
+
+:::
+
+:::
+
+<br/><br/>
+
+
+::: fragment
+
+Each signal $s_j$ is shared only with the participant
+
+:::
+
+
+# Contexts As Types
+
+
+::: fragment
+Characters are one of two *types*: orange or blue
+
+<br/>
+
+::: {layout-ncol=2 layout-align="center" layout-valign="center"}
+
+![](orange_type.png){#id .class width=200px height=200px}
+
+![](blue_type.png){#id .class width=200px height=200px}
+
+:::
+
+:::
+
+<br/>
+
+
+::: fragment
+The participant is the orange type
+:::
+
+<br/><br/>
+
+
+::: fragment
+Type is a summary of all dimensions of context
+:::
+
+<br/><br/>
+
+
+::: fragment
+$\theta_O$ and $\theta_B$ are homogenous
+:::
+
+
+# Introducing Sampling Error
+
+::: fragment
+Even within type, $s_j$ are not identical
+:::
+
+<br/><br/>
+
+::: fragment
+Reflects idiosyncratic risk
+:::
+
+<br/><br/>
+
+
+::: fragment
+Drawn from $\theta_O + \epsilon$ or $\theta_B + \epsilon$
+:::
+
+<br/><br/>
+
+
+::: fragment
+Error $\epsilon$ is identical and independent
+:::
+
+# Learning From Blue Types
+
+::: fragment
+Blue type always does worse
+:::
+
+<br/><br/>
+
+
+::: fragment
+Provide story about rainwater catchment
+:::
+
+<br/><br/>
+
+
+::: fragment
+Difference of two Emoji
+:::
+
+<br/>
+
+::: fragment
+::: {layout-ncol=7}
+
+![](emoji1.png){#id .class width=100px height=100px}
+
+![](emoji2.png){#id .class width=100px height=100px}
+
+![](emoji3.png){#id .class width=100px height=100px}
+
+![](emoji4.png){#id .class width=100px height=100px}
+
+![](emoji5.png){#id .class width=100px height=100px}
+
+![](emoji6.png){#id .class width=100px height=100px}
+
+![](emoji7.png){#id .class width=100px height=100px}
+
+:::
+
+:::
+
+
+
+::: fragment
+::: {layout-ncol=7 layout-nrow=2}
+
+![](EmptySpace.png){#id .class width=100px height=100px}
+
+![](EmptySpace.png){#id .class width=100px height=100px}
+
+
+![](orange_1.png){#id .class width=100px height=100px}
+
+![](orange_2.png){#id .class width=100px height=100px}
+
+![](orange_3.png){#id .class width=100px height=100px}
+
+![](orange_4.png){#id .class width=100px height=100px}
+
+![](orange_5.png){#id .class width=100px height=100px}
+
+
+![](EmptySpace.png){#id .class width=100px height=100px}
+
+![](EmptySpace.png){#id .class width=100px height=100px}
+
+![](blue_1.png){#id .class width=100px height=100px}
+
+![](blue_2.png){#id .class width=100px height=100px}
+
+![](blue_3.png){#id .class width=100px height=100px}
+
+![](blue_4.png){#id .class width=100px height=100px}
+
+![](blue_5.png){#id .class width=100px height=100px}
+
+:::
+
+
+
+:::
+
+
+# What We Have So Far
+
+::: fragment
+So far, our game looks like this:
+
+<br/>
+
+![](game_halfway.png)
+:::
+
+<br/>
+
+::: fragment
+Where's the context uncertainty?
+:::
+
+<br/><br/>
+
+::: fragment
+Where's the decision making?
+:::
+
+# Adding Context Uncertainty
+::: fragment
+Some characters have unknown type
+:::
+
+<br/><br/>
+
+::: fragment
+They appear as gray
+:::
+
+<br/><br/>
+
+::: fragment
+Could be either type
+:::
+
+
+::: fragment
+
+![](gray_uncertainty.png){fig-align="center" width=850px height=500px}
+
+
+:::
+
+# Deciding Adoption Intensity
+
+::: fragment
+Land divided into 10 rows
+:::
+
+<br/><br/>
+
+
+::: fragment
+Must decide adoption maximizing yield
+:::
+
+<br/><br/>
+
+
+::: fragment
+Mapped to Likert Scale
+
+<br/>
+
+![](adoption_choice.png){fig-align="center"}
+
+:::
+
+# Bringing it all together
+
+Player sees information and decides adoption level
+
+<br/><br/>
+
+::: {layout-ncol=2}
+
+![](game_5.png){width=500px}
+
+
+![](game_13.png){width=500px}
+
+:::
+
+# Process and Randomization
+
+::: incremental
+(@)   Survey participant
+(@)   Read game script
+(@)   Practice module
+(@)   Game modules
+    * Randomize round order via matched quartets
+    * Randomize technology order
+    * Randomize village name order
+(@)   Payout
+:::
+
+
+# Results
+
+# Testing Context Uncertainty Aversion
+
+
+
+
+# Overviewing Agricultural Extension
+
+
+
+# Traditional Extension Design Is Centralized
+
+::: incremental
+-   Big % of govermment ag budget  (Akroyd and Smith, 2007)
+
+-   Centralized testing of technologies
+
+-   Centralized training of extension agents
+
+-   Extension agents relay knowledge to farmers
+:::
+
+# We Know What Works Better
+
+
+::: fragment
+<font size="6px">
+
+-   Decentralized Learning (Krishnan and Patnam, 2013; Takahashi, Mano, and Otsuka, 2019)
+
+-   Farmer Field Days (Dar and Emerick, 2021)
+
+-   Season-long Demonstration Plots (Maertens, Michelson, and Nourani, 2020)
+
+-   Seed Centrality (Banerjee, Chandrasekhar, Duflo, and Jackson, 2013; Shikuku, 2019)
+
+-   Opinion Leader Superiority (Feder and Savastano, 2006)
+
+-   Demonstration Plot Centrality (Dar, Emerick, de Janvry, Kelley, and Sadoulet, 2020)
+
+-   Direct Contact Farmer Training (Kondylis, Mueller, and Zhu, 2017)
+
+-   ICT Reduction of Temporal Lag (Cole and Fernando, 2021)
+
+-   Many more!
+
+</font>
+:::
+
+# It's Unclear We Know Why
+
+::: fragment
+Some potential mechanisms:
+:::
+
+::: incremental
+
+- Sample size
+- Centrality
+- Social influence
+- Homophily
+:::
+
+::: fragment
+**None are broadly consistent with the literature**
+:::
+
+:::incremental
+- Program design more effective when mechanism is known
+- RCTs have difficulty isolating mechanisms
+:::
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | | | | | |
+|  Field Days| | | | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | | | | |
+| Opinion Leader Superiority| | | | | |
+| Demonstration Plot Centrality| | | | | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | | |
+|  Field Days| | | | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | | | | |
+| Opinion Leader Superiority| | | | | |
+| Demonstration Plot Centrality| | | | | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+
+
+
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | | |
+|  Field Days| | | | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | &check; | | | |
+| Opinion Leader Superiority| | | | | |
+| Demonstration Plot Centrality| | &cross; | | | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context  |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | | |
+|  Field Days| | | &cross; | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | &check; | &check; | | |
+| Opinion Leader Superiority| | | &cross; | | |
+| Demonstration Plot Centrality| | &cross; | &cross;| | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context  |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | &check; | |
+|  Field Days| | | &cross; | | |
+|Season-long Demonstration Plots| | | | | |
+| Seed Centrality| | &check; | &check; | &cross; | |
+| Opinion Leader Superiority| | | &cross; | &check; | |
+| Demonstration Plot Centrality| | &cross; | &cross;| | |
+| Direct Contact Farmer Training| | | | | |
+| ICT to Reduce Temporal Lag| | | | | |
+
+
+</font>
+
+# What works and why?
+
+<font size="5">
+
+| | Sample Size | Centrality | Social Power | Homophily | Context  |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Decentralized Learning | &cross;| | | &check; | &check;|
+|  Field Days| | | &cross; | | &check;|
+|Season-long Demonstration Plots| | | | | &check;|
+| Seed Centrality| | &check; | &check; | &cross; | &check;|
+| Opinion Leader Superiority| | | &cross; | &check; | &check;|
+| Demonstration Plot Centrality| | &cross; | &cross;| |&check; |
+| Direct Contact Farmer Training| | | | | &check;|
+| ICT to Reduce Temporal Lag| | | | | &check; |
+
+
+</font>
+
+
+<!-- 
+<font size="5">
+
+-   Decentralized Learning 
+
+-   <font style="opacity:.6"> Farmer Field Days  </font>
+
+-   <font style="opacity:.6"> Season-long Demonstration Plots  </font>
+
+-   <font style="opacity:.6">Seed Centrality  </font>
+
+-   <font style="opacity:.6">Opinion Leader Superiority  </font>
+
+-   <font style="opacity:.6"> Demonstration Plot Centrality  </font>
+
+-   <font style="opacity:.6"> Direct Contact Farmer Training  </font>
+
+-   <font style="opacity:.6"> ICT Reduction of Temporal Lag  </font>
+
+</font> 
+
+# What works and why?
+
+Does **centrality** drive learning?
+
+<font size="5">
+
+-   <font style="opacity:.6">Decentralized Learning (Krishnan and Patnam, 2013; Takahashi, Mano, and Otsuka, 2019) </font>
+
+-   <font style="opacity:.6"> Farmer Field Days (Dar and Emerick, 2021) </font>
+
+-   <font style="opacity:.6"> Season-long Demonstration Plots (Maertens, Michelson, and Nourani, 2020) </font>
+
+-   **Seed Centrality (Banerjee, Chandrasekhar, Duflo, and Jackson, 2013; Shikuku, 2019)**
+
+-   <font style="opacity:.6"> Opinion Leader Superiority (Feder and Savastano, 2006) </font>
+
+-   ~~Demonstration Plot Centrality (Dar, Emerick, de Janvry, Kelley, and Sadoulet, 2020)~~
+
+-   <font style="opacity:.6"> Direct Contact Farmer Training (Kondylis, Mueller, and Zhu, 2017) </font>
+
+-   <font style="opacity:.6"> ICT Reduction of Temporal Lag (Cole and Fernando, 2021) </font>
+
+</font>
+
+# What works and why?
+
+Does **social influence** drive learning?
+
+<font size="5">
+
+-   <font style="opacity:.6">Decentralized Learning (Krishnan and Patnam, 2013; Takahashi, Mano, and Otsuka, 2019) </font>
+
+-   ~~Farmer Field Days (Dar and Emerick, 2021)~~
+
+-   <font style="opacity:.6"> Season-long Demonstration Plots (Maertens, Michelson, and Nourani, 2020) </font>
+
+-   **Seed Centrality (Banerjee, Chandrasekhar, Duflo, and Jackson, 2013; Shikuku, 2019)**
+
+-   ~~Opinion Leader Superiority (Feder and Savastano, 2006)~~
+
+-   ~~Demonstration Plot Centrality (Dar, Emerick, de Janvry, Kelley, and Sadoulet, 2020)~~
+
+-   <font style="opacity:.6"> Direct Contact Farmer Training (Kondylis, Mueller, and Zhu, 2017) </font>
+
+-   <font style="opacity:.6"> ICT Reduction of Temporal Lag (Cole and Fernando, 2021) </font>
+
+</font>
+
+# What works and why?
+
+Does **homophily** drive learning?
+
+<font size="5">
+
+-   **Decentralized Learning (Krishnan and Patnam, 2013; Takahashi, Mano, and Otsuka, 2019)**
+
+-   <font style="opacity:.6"> Farmer Field Days (Dar and Emerick, 2021) </font>
+
+-   <font style="opacity:.6"> Season-long Demonstration Plots (Maertens, Michelson, and Nourani, 2020) </font>
+
+-   ~~Seed Centrality (Banerjee, Chandrasekhar, Duflo, and Jackson, 2013; Shikuku, 2019)~~
+
+-   **Opinion Leader Superiority (Feder and Savastano, 2006)**
+
+-   <font style="opacity:.6"> Demonstration Plot Centrality (Dar, Emerick, de Janvry, Kelley, and Sadoulet, 2020) </font>
+
+-   <font style="opacity:.6"> Direct Contact Farmer Training (Kondylis, Mueller, and Zhu, 2017) </font>
+
+-   <font style="opacity:.6"> ICT Reduction of Temporal Lag (Cole and Fernando, 2021) </font>
+
+</font>
+
+# What works and why?
+
+Does **knowledge about context** drive learning?
+
+<font size="5">
+
+-   **Decentralized Learning (Krishnan and Patnam, 2013; Takahashi, Mano, and Otsuka, 2019)**
+
+-   **Farmer Field Days (Dar and Emerick, 2021)**
+
+-   **Season-long Demonstration Plots (Maertens, Michelson, and Nourani, 2020)**
+
+-   **Seed Centrality (Banerjee, Chandrasekhar, Duflo, and Jackson, 2013; Shikuku, 2019)**
+
+-   **Opinion Leader Superiority (Feder and Savastano, 2006)**
+
+-   **Demonstration Plot Centrality (Dar, Emerick, de Janvry, Kelley, and Sadoulet, 2020)**
+
+-   **Direct Contact Farmer Training (Kondylis, Mueller, and Zhu, 2017)**
+
+-   **ICT Reduction of Temporal Lag (Cole and Fernando, 2021)**
+
+</font> -->
+
+
+# Recap
+
+::: incremental
+- Growth requires higher agtech adoption
+- Traditional extension design is centralized
+- Many RCTs improving extension design
+- Mechanisms aren't yet well identified
+- Context certainty explains a broad set of results
+:::
+
+
+
+# Experimental Variation
+
+::: columns
+::: {.column width="35%"}
+<font size=5>
+
+**Within Variation**:
+
+-   \% of Gray Tiles
+
+<br/>
+
+**Across Variation**:
+
+-   Round Order
+-   Village, Tech
+
+<br/>
+
+**Constant**:
+
+-   Blue/Orange Ratio
+-   Signal distribution
+
+</font>
+:::
+
+::: {.column width="65%"}
+![](game_5.png){fig-align="center" width="500"}
+
+![](game_13.png){fig-align="center" width="500"}
+:::
+:::
+
+# Estimation
+
+```{=tex}
+\begin{align}
+
+\text{Adoption Level}_{ij}=\beta_H \mathbb{1}(\text{High Type Uncertainty}) + \\
+\beta_G \text{Game Controls} + \beta_D \text{Demographic Controls}
+
+\end{align}
+```
+::: columns
+::: {.column width="50%"}
+**Game Controls**:
+
+-   Round Number
+-   Technology
+-   Village
+:::
+
+::: {.column width="50%"}
+**Demographic Controls**:
+
+-   Age
+-   Household Size
+-   Income
+-   Education
+-   Game Behavior
+:::
+:::
+
+# Testing Complementarity
+
+::: {.theorem text="Supermodular Updating"}
+The value of an additional observation by the sender of the signal (i.e. observing $M + 1$ instead of $M$ farms) is increasing in context precision $\left(1/\sigma_i^\gamma\right)^2$.
+:::
+
+![](DiffInDiffTable.png){fig-align="center" width="600"}
+
+# Control Modules
+
+**Additional modules for**:
+
+-   Practice rounds
+-   Ability to translate across types
+-   Bounding heuristic behavior
+
+
+
+
+
+# Context Reduces Risk
+
+::: {.fragment .fade-in}
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=2, strip.white=TRUE, fig.asp=0.35,fig.align='left'}
+
+colors <- rep('#D99066', 7)
+x_vals <- seq(-6, 6, 2)
+ggplot(data = data.frame(x1 = x_vals, y1 = c(0,0,0,0,0,0,0)), aes(x=x1, y=y1) ) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[1], sd = 0.4), colour = colors[1]) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[2], sd = 0.4), colour = colors[2]) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[3], sd = 0.4), colour = colors[3]) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[4], sd = 0.4), colour = colors[4]) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[5], sd = 0.4), colour = colors[5]) +
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[6], sd = 0.4), colour = colors[6]) +
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[7], sd = 0.4), colour = colors[7]) +
+  #stat_function(fun = dnorm, n = 1001, args = list(mean = 0, sd = 3), colour = '#166B8C') + 
+  #geom_text(aes(y=type_label_heights), label=type_labels) + 
+  theme_minimal() + 
+  geom_brace(aes(x=c(-7,7), y=c(1, 1.1)),inherit.data=F, inherit.aes=F) +
+  geom_text(aes(x=0, y=1.13), label=TeX("$Pr(k_j) = 0.14 \\ \\forall \\ j$")) +
+  #geom_curve(aes(x = 8, y= 0.4, xend=0, yend=0.2),arrow=arrow(length=unit(0.03,"npc"))) +
+  #geom_text(aes(x=8.5, y=0.35), label=TeX("$Pr(k_i) = 1$")) + 
+  labs(x = TeX("$U(f(s_i))$"),
+       y = TeX("$Pr(s_i | k_i)$")) + 
+  xlim(-10, 10) + 
+  ylim(0, 1.2) + 
+  theme(axis.line=element_line(colour = 'black'),
+        plot.title = element_text(size=15,face='bold'),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        legend.position="none",
+        panel.background=element_blank(),
+        #panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank(),
+        axis.title.y = element_text(angle = 0, vjust=0.9)) + 
+  ggtitle('Uncertain Context') 
+
+```
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=2, strip.white=TRUE, fig.asp=0.35,fig.align='left'}
+
+colors <- rep('#D99066', 7)
+x_vals <- seq(-6, 6, 2)
+ggplot(data = data.frame(x1 = x_vals, y1 = c(0,0,0,0,0,0,0)), aes(x=x1, y=y1) ) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[1], sd = 0.4), colour = colors[1], alpha=0.2) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[2], sd = 0.4), colour = colors[2], alpha=0.2) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[3], sd = 0.4), colour = colors[3], alpha=0.2) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[4], sd = 0.4), colour = colors[4], alpha=0.2) + 
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[5], sd = 0.4), colour = colors[5], alpha=0.2) +
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[6], sd = 0.4), colour = colors[6], alpha=1) +
+  stat_function(fun = dnorm, n = 1001, args = list(mean = x_vals[7], sd = 0.4), colour = colors[7], alpha=0.2) +
+  #stat_function(fun = dnorm, n = 1001, args = list(mean = 0, sd = 3), colour = '#166B8C') + 
+  #geom_text(aes(y=type_label_heights), label=type_labels) + 
+  theme_minimal() + 
+  geom_text(aes(x=x_vals[6], y=1.1), label=TeX("$Pr(k_6) = 1$")) +
+  #geom_brace(aes(x=c(-7,7), y=c(1, 1.1)),inherit.data=F, inherit.aes=F) +
+  #geom_text(aes(x=0, y=1.13), label=TeX("$Pr(k_j) = 0.14 \\ \\forall \\ j$")) +
+  #geom_curve(aes(x = 8, y= 0.4, xend=0, yend=0.2),arrow=arrow(length=unit(0.03,"npc"))) +
+  #geom_text(aes(x=8.5, y=0.35), label=TeX("$Pr(k_i) = 1$")) + 
+  labs(x = TeX("$U(f(s_i))$"),
+       y = TeX("$Pr(s_i | k_i)$")) + 
+  xlim(-10, 10) + 
+  ylim(0, 1.2) + 
+  theme(axis.line=element_line(colour = 'black'),
+        plot.title = element_text(size=15,face='bold'),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        legend.position="none",
+        panel.background=element_blank(),
+        #panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank(),
+        axis.title.y = element_text(angle = 0, vjust=0.9)) + 
+  ggtitle('Certain Context') 
+  
+```
+:::
+
+
+# Conclusion
+
+# Potential Implications
+
+Potential lessons:
+
+-   Info campaigns should provide specific returns
+-   Information campaigns should disaggregate returns
+-   Distributed, local experimentation could increase trust
+-   Insurance with low basis-risk, when tied to experimentation, can have high positive externalities
+-   Reinforces Oates (1972, 1999) argument in favor of decentralization
+
+# Future area of study
+
+-   Barriers to signal translation
+-   Specific vs disaggregated signals
+
+# Thank You

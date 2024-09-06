@@ -1,0 +1,794 @@
+---
+title: "How Heterogeneity Impacts Learning"
+author: 
+  name: Hossein Alidaee
+  affiliation: Postdoctoral Fellow, Harvard University
+format: 
+  revealjs: 
+    margin-top: 0em
+    center: false
+    center-title-slide: false
+    auto-animate-easing: none
+    auto-animate-duration: 1
+    controls: false
+    progress: false
+    #theme: solarized
+    navigation-mode: vertical
+    theme: [solarized, custom.scss]
+editor: visual
+toc: false 
+toc-depth: 1
+toc-title: Roadmap
+backgroundcolor: "#D2D7D9"
+filters:
+  - parse-latex
+---
+
+
+
+# Motivation
+
+
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=2, strip.white=TRUE, fig.asp=0.2,fig.align='left'}
+
+library(latex2exp)
+library(tidyverse)
+library(ggbrace)
+library(gganimate)
+library(lubridate)
+library(fixest)
+library(broom)
+library(purrr)
+library(furrr)
+library(broom)
+library(gtsummary)
+library(gt)
+
+
+knitr::opts_chunk$set(
+      dev = "svglite",
+      fig.ext = "svg"
+)
+```
+
+# Social Learning Is Oddly Influential
+
+::: fragment
+Peers have limited experience
+
+<br/>
+
+:::
+
+::: fragment
+Authorities test recommendations extensively
+
+<br/>
+
+:::
+
+::: fragment
+Yet, both induce adoption at equal rates
+
+-  Krishnan and Patnam (2013)
+-  Takahashi, Mano, and Otsuka (2019)
+
+<br/>
+
+:::
+
+::: fragment
+Implies social learning is more influential *per data point*
+<br/>
+
+:::
+
+
+# What's the mechanism?
+
+::: fragment
+Natural questions:
+:::
+
+
+::: incremental
+- **Why?**
+
+<br/>
+
+- **Is social learning special?**
+
+<br/>
+
+- **How can authorities improve?**
+
+:::
+
+
+# My Proposal: Context Uncertainty
+
+::: fragment
+Peer information comes with rich context
+:::
+
+<br/>
+
+
+::: fragment
+Information from authorities can come with little context
+:::
+
+<br/>
+
+
+::: fragment
+When weighing signals, we place weight on total uncertainty
+:::
+
+<br/>
+
+
+::: fragment
+**Total Uncertainty = Context Uncertainty + Sampling Error**
+:::
+
+<br/>
+
+::: fragment
+Related to transfer learning, more general than external validity
+:::
+
+# Preview of Evidence
+
+::: fragment
+- Farmers reduce adoption when context uncertainty increases in the lab
+:::
+
+<br/>
+
+::: fragment
+- Over 40% of farmers cite heterogeneity as the reason peers are more influential than their extension agent
+:::
+
+<br/>
+
+::: fragment
+- Mechanism is consistent with a wide range of past RCTs
+:::
+
+
+
+# Related Literature
+
+
+::: fragment
+<font size = 5>
+
+- Decision makers as statisticians
+  - Steiner and Stewart (2008), Olea et al. (2021), Salant and Cherry (2020), etc.. 
+- Social learning theory
+  - Sethi and Yildiz (2016), Dasaratha et al (2022), Bala and Goyal (1998), etc...
+- Information provision experiments
+  - Jensen (2010), Chetty and Saez (2013), Binder (2020), etc...
+- Role of heterogeneity in agricultural
+  - Giné et al. (2018), Suri (2011), Munshi (2004), etc...
+- Agricultural extension design
+  - Dar et al. (2020), Kondylis et al. (2020), Cole and Fernando (2021), etc...
+- Decentralization of public goods
+  - Oates (1972) and Oates (1993)
+
+</font>
+:::
+
+# Background: Traditional Extension Design
+
+::: incremental
+- R&D at university or national research institute 
+- Pick a winning technology
+- Agricultural ministry teaches extension staff
+- Extension staff advocate in villages
+- Villagers have no clue about test conditions
+:::
+
+
+
+::: fragment
+
+::: {layout-ncol=5}
+![](generic_extension.png){#id .class width=300px height=300px}
+
+![](redsoil_extension.png){#id .class width=300px height=300px}
+
+![](riverbed_extension.png){#id .class width=300px height=300px}
+
+![](hillside_extension.png){#id .class width=300px height=300px}
+
+![](drylands_extension.png){#id .class width=300px height=300px}
+
+:::
+:::
+
+
+
+
+
+<!--# Heterogeneous Returns to Technology         Returns are often heterogeneous:     Education - comparative advantage (Heckman and Li, 2004), gender (Dougherty, 2005)   Microfinance - credit constraints (Banerjee et al, 2020), business experience (Meager, 2019) Skills training - baseline profits (Lopez-Pena, 2020)   Health - age (Dupas, 2009)   Whose data do I trust? -->
+
+
+# Microfoundation
+
+
+# The Farmer's Problem
+
+
+::: fragment
+**Problem:**  Want to learn own return, $\theta_i$. 
+
+</span>
+
+:::
+
+
+
+<br/>
+
+::: fragment
+**Heterogeneity:** 
+<span style="display:block; margin-top:-90px;">
+
+$$
+\ \ \ \ \ \ \ \ \ \ \ \ \theta_i = \underbrace{\theta \vphantom{\gamma_i}  }_{\text{average return}} + \underbrace{\gamma_i}_{\text{context adjustment}}
+$$
+</span>
+:::
+
+
+::: fragment
+**Info:** Gets signals $s_1, \ldots, s_n$ from others' experiments. 
+
+
+:::
+
+# Interpreting Signals
+
+
+::: fragment
+Individual $j$ shares signal 
+$$
+s_j = \underbrace{\theta\vphantom{\gamma_j}}_{\text{Average Return}} + \underbrace{\gamma_j}_{\text{Agent $j$'s Context}} + \underbrace{\epsilon_j}_{\text{Agent $j$'s Sampling Error}}.
+$$ 
+:::
+
+
+::: fragment
+Farmer's belief about $\gamma_j$ is
+$$
+\gamma_j \sim \mathcal{N}\left(0, \sigma_j^\gamma\right).
+$$
+:::
+
+::: fragment
+For a friend, context uncertainty $\sigma_j^\gamma$ is low. 
+
+For an extension agent, $\sigma_j^\gamma$ is high. 
+:::
+
+# Adjusting Signals for Context
+
+How does the farmer adapt the signal to his own context?
+
+<br/>
+
+::: fragment
+
+```{=tex}
+\begin{align*}
+\text{Adjusted Signal} &= \text{Original Signal} \\
+& \ \ \  + \text{Own Context Adjustment} \\
+& \ \ \  - \text{Context Adjustment}
+\end{align*}
+```
+
+:::
+
+<br/>
+
+
+::: fragment
+
+**Implication:** 
+<center>
+&uarr; context uncertainty &rArr; &uarr; variance in adjusted signal
+</center>
+
+:::
+
+
+
+# Our Farmer's Posterior
+
+Using information from all sources, farmer updates his belief.
+
+<br/>
+
+::: fragment
+<span style="display:block; margin-top:-50px;">
+
+```{=tex}
+\begin{align*}
+\text{Mean} &\propto \frac{0}{\text{Prior Var}}  \\
+ & \ \ \ \ + \frac{\text{Ext Adj Signal}}{\text{Ext Sample Var} + \text{Ext Context Var}} \\
+ & \ \ \ \ + \sum \frac{\text{Peer Adj Signal}}{\text{Peer Sample Var} + \text{Peer Context Var}} 
+\end{align*}
+```
+
+</span>
+:::
+
+# Model Overview
+
+::: incremental
+- Heterogeneity can cause uncertainty about context
+- Context uncertainty adds to signal noise
+- Context can be adjusted for when certain
+- **Hypothesis 1**: Higher context uncertainty reduces adoption if risk averse
+- **Hypothesis 2**: Sampling and context precision are complements under DARA
+:::
+
+
+# Lab Experiment Setting
+
+::: incremental
+- Lab-in-the-field experiment in rural Odissa
+- 1,600 small and marginal farmers
+- Decide whether to adopt a hypothetical technology
+- Receive noisy signals from fictional characters
+- Vary only context uncertainty
+- Choose adoption level
+:::
+
+
+# Results
+
+# Farmers Prefer More Context
+
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+library(kableExtra)
+
+df_long <- read_csv('/users/halidaee/Dropbox/Ongoing Research/Context/DataSync/current_choicedata_clean_long.csv')
+
+base_reg_L <- df_long %>%
+  filter(Module == 4) %>%
+  arrange(Module) %>%
+  mutate(HighGrayMap = (Map == 13)) %>%
+  feols(Decision ~ HighGrayMap | UserID, data=., cluster='UserID')
+
+base_reg_H <- df_long %>%
+  filter(Module == 5) %>%
+  arrange(Module) %>%
+  mutate(HighGrayMap = (Map == 15)) %>%
+  feols(Decision ~ HighGrayMap | UserID, data=., cluster='UserID') 
+
+base_reg_HL <- df_long %>%
+  filter(Module == 5 | Module == 4) %>%
+  arrange(Module) %>%
+  mutate(HighGrayMap = (Map == 15 | Map == 13)) %>%
+  feols(Decision ~ HighGrayMap | UserID, data=., cluster='UserID') 
+
+base_reg_table_tex <- etable(base_reg_L, base_reg_H, base_reg_HL, tex = T, style.tex = style.tex("aer"), fitstat = ~ r2 + n)
+
+
+
+## Include latex preamble before base_reg_table_tex output via paste command
+
+# base_reg_table_tex <- paste0"\\documentclass[crop]{standalone}
+# \\usepackage{booktabs}
+# \\usepackage{amsfonts}
+# \\begin{document}\n", base_reg_table_tex, "\n\\end{document}")
+
+#write(base_reg_table_tex, file='base_reg.tex')
+
+reg_order <- c('Low Sampling\n Error', 'High Sampling\n Error', 'Combined')
+
+bind_rows(lapply(list(base_reg_L, base_reg_H, base_reg_HL), tidy)) %>% 
+  mutate(conf.low = estimate - 1.96*std.error, 
+         conf.high = estimate + 1.96*std.error) %>%
+         ggplot(aes(factor(reg_order, level = reg_order), estimate)) + 
+         geom_point(color='#0a3b4c') +
+         geom_pointrange(aes(ymin=conf.low, ymax=conf.high),color='#0a3b4c') + 
+         geom_hline(yintercept=0, linetype='dashed', color='#d99066', size=1.2) +
+         ylim(-0.5, 0.05) +
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(colour = '#0a3b4c'),
+          plot.title = element_text(size=15,face='bold', color='#0a3b4c'),
+          axis.text.x=element_text(size=25, color='#0a3b4c'),
+          axis.text.y=element_text(size=25, color='#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25))
+
+```
+
+
+
+
+## Shifts in Adoption
+
+```{r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+#'#D99066', '#402110', '#166B8C'
+
+ks_test_4 <- df_long %>%
+  filter(Module == 4) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  ks.test(Decision ~ HighGrayMap, data=., alternative='less')
+
+ks_test_4.pval <- ks_test_4$p.value %>% round(., digits=5) %>% format(scientific=F)
+
+ks_test_5 <- df_long %>%
+  filter(Module == 5) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  ks.test(Decision ~ HighGrayMap, data=., alternative='less')
+
+ks_test_5.pval <- ks_test_5$p.value %>% round(., digits=5) %>% format(scientific=F)
+
+facet_titles <- c(paste0('Low Sampling\n Error\n\nKS Test: ',ks_test_4.pval), paste0('High Sampling\n Error\n\nKS Test: ', ks_test_5.pval))
+
+df_long %>%
+  filter(Module == 4 | Module == 5) %>%
+  mutate(Module = ifelse(Module == 4, facet_titles[1], facet_titles[2])) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  ggplot(aes(x=Decision, fill=HighGrayMap)) +
+    geom_histogram(data = . %>% filter(HighGrayMap == TRUE), bins=10, fill='#166B8C', alpha=0.5)  +
+    geom_histogram(data = . %>% filter(HighGrayMap == FALSE), bins=10, fill='#D99066', alpha=0.5)  +
+    facet_grid(cols = vars(factor(Module, levels = facet_titles))) +
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(color='#0a3b4c'),
+          plot.title = element_text(size=15,face='bold', color='#0a3b4c'),
+          axis.text.x=element_text(size=25, color='#0a3b4c'),
+          axis.text.y=element_text(size=25, color='#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          strip.background=element_blank(),
+          strip.text=element_text(size=25, color='#0a3b4c'),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25)) + 
+          scale_x_continuous(breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+
+
+
+```
+
+
+
+# Uncertainties May Be Complementary
+
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+
+
+reg_order <- c('Complementarity', 'Sampling\nError', 'Context\nUncertainty')
+
+df_reg_combined <- df_long %>%
+  filter(Module == 4 | Module == 5) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  mutate(HighVarMap = (Module == 5)) %>% 
+  mutate(CombinedHigh = 
+           (HighVarMap * HighGrayMap - HighVarMap*(!HighGrayMap)) - 
+           ((!HighVarMap)*HighGrayMap - (!HighVarMap)*(!HighGrayMap))) %>%
+  feols(Decision ~ CombinedHigh + HighVarMap + HighGrayMap | UserID, data=., cluster='UserID') %>%
+  tidy() %>% 
+  mutate(conf.low = estimate - 1.96*std.error, 
+         conf.high = estimate + 1.96*std.error)
+
+df_reg_combined %>%
+         ggplot(aes(factor(reg_order, level = reg_order), estimate)) + 
+         geom_point(color='#0a3b4c') +
+         geom_pointrange(aes(ymin=conf.low, ymax=conf.high), color='#0a3b4c') + 
+         geom_hline(yintercept=0, linetype='dashed', color='#d99066') +
+         ylim(-0.5, 0.2) +
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(colour = '#0a3b4c'),
+          plot.title = element_text(size=15,face='bold'),
+          axis.text.x=element_text(size=25, color = '#0a3b4c'),
+          axis.text.y=element_text(size=25, color = '#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25))
+
+
+
+
+```
+
+
+## Dropped Enumerators Improve Significance
+
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+
+
+reg_order <- c('Complementarity', 'Sampling\nError', 'Context\nUncertainty')
+
+df_reg_combined <- df_long %>%
+  filter(Module == 4 | Module == 5) %>%
+  mutate(HighGrayMap = (Map == 13 | Map == 15)) %>%
+  mutate(HighVarMap = (Module == 5)) %>% 
+  mutate(CombinedHigh = 
+           (HighVarMap * HighGrayMap - HighVarMap*(!HighGrayMap)) - 
+           ((!HighVarMap)*HighGrayMap - (!HighVarMap)*(!HighGrayMap))) %>%
+  filter(EnumeratorID != 'jpal606917' & EnumeratorID != 'jpal506190' & EnumeratorID != 'jpal170698') %>%
+  feols(Decision ~ CombinedHigh + HighVarMap + HighGrayMap | UserID, data=., cluster='UserID') %>%
+  tidy() %>% 
+  mutate(conf.low = estimate - 1.96*std.error, 
+         conf.high = estimate + 1.96*std.error)
+
+df_reg_combined %>%
+         ggplot(aes(factor(reg_order, level = reg_order), estimate)) + 
+         geom_point(color='#0a3b4c') +
+         geom_pointrange(aes(ymin=conf.low, ymax=conf.high), color='#0a3b4c') + 
+         geom_hline(yintercept=0, linetype='dashed', color='#d99066') +
+         ylim(-0.5, 0.2) +
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(colour = '#0a3b4c'),
+          plot.title = element_text(size=15,face='bold'),
+          axis.text.x=element_text(size=25, color = '#0a3b4c'),
+          axis.text.y=element_text(size=25, color = '#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25))
+
+
+
+
+```
+
+
+
+# External Validity: Survey Evidence
+
+# Farmers Consider Extension Agents Less Useful Than Peers
+
+::: fragment
+59% of farmers consider a peer more useful.
+:::
+<br/>
+
+::: fragment
+**Why?**
+:::
+
+
+::: incremental
+- $> 40\%$ cite more heterogeneity (budget, land, resources)
+- Only $5\%$ suspect ulterior motives (i.e. corruption)
+:::
+
+
+# Extension's Previous Influence
+
+::: fragment
+*"How much did the extension agent's last recommendation influence your decision?"*
+:::
+
+
+::: fragment
+
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+library(haven)
+library(multidplyr)
+
+boxcrypt <- "/Users/halidaee/Dropbox/OFTAD_encrypted_decrypted/dta/"
+
+survey_df <- read_dta(paste0(boxcrypt, "phase_2_main_v2.dta")) %>%
+  rename(farmer_availability = farmer_avalibility) %>%
+  filter(consent == 1 & farmer_availability == 1) %>%
+  select(-c(consent, farmer_availability))
+
+cluster <- new_cluster(parallel::detectCores() - 2)
+cluster_library(cluster, c('tidyverse', 'furrr'))
+cluster_copy(cluster, 'survey_df')
+
+survey_df |>
+  mutate(c04_decisn = as.factor(c04_decisn)) |>
+  mutate(c04_decisn = factor(c04_decisn, level=rev(c(5,4,3,2,1)))) %>%
+  mutate(c04_decisn = fct_recode(c04_decisn, 
+                          'Not At All'='5', 
+                          'Very Little'='4', 
+                          'Moderately'='3', 
+                          'Very Much'='2',
+                          'Completely'='1')) %>%
+  ggplot(aes(y='c04', fill=c04_decisn)) + 
+  geom_bar(position = "fill") +
+  scale_fill_manual(values=rev(c('#01415B', '#005148', '#019587', '#A6BC09', '#CCEA8D'))) + 
+  scale_x_continuous(labels = scales::label_percent(accuracy = 1)) + 
+  xlab(element_blank()) +
+  ylab(element_blank()) +
+  theme(axis.line=element_line(colour = '#0a3b4c'),
+        plot.title = element_text(size=15,face='bold'),
+        axis.text.x=element_text(size=25, color = '#0a3b4c'),
+        axis.text.y=element_blank(),
+        #axis.ticks=element_blank(),
+        legend.position="right",
+        legend.background=element_blank(),
+        legend.title=element_blank(),
+        legend.text=element_text(size=15),
+        panel.background=element_blank(),
+        #panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank(),
+        axis.title.y = element_text(angle = 90, vjust=0.9,
+        size=25),
+        aspect.ratio=0.35)
+
+
+```
+:::
+
+
+# What reduces extension's impact?
+
+::: fragment
+*"What are the reasons you don’t trust the extension agent’s  technology recommendation more?"*
+:::
+
+
+::: fragment
+
+<span style="display:block; margin-top:-90px;">
+
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+survey_df |>
+  filter(!(is.na(c05_trust)) & c05_trust != "") |>
+  mutate(across(starts_with('c05_trust_'), as.logical)) |>
+  tidyr::pivot_longer(c05_trust_1:c05_trust_9) |>
+  mutate(value = as.logical(ifelse(value == TRUE, 1, 0))) |>
+  mutate(name = as.factor(name)) |>
+  mutate(name = fct_recode(name, 
+                           'Different Soil'='c05_trust_1', 
+                           'Different Access To Inputs'='c05_trust_2', 
+                           'Ulterior Motives'='c05_trust_3', 
+                           'They Lack Knowledge'='c05_trust_4',
+                           'Not Enough Seasons'='c05_trust_5',
+                           'I Lack Training'='c05_trust_6',
+                           'Technology Unavailable'='c05_trust_7',
+                           'Poor Tech QC'='c05_trust_8',
+                           'Lack Capital'='c05_trust_9')) |>
+  mutate(name = fct_relevel(name, rev(c('Different Soil', 'Different Access To Inputs', 'Poor Tech QC', 'They Lack Knowledge', 'Not Enough Seasons', 'I Lack Training', 'Ulterior Motives',    'Technology Unavailable',  'Lack Capital')))) |>
+  group_by(name) |>
+  summarise(percent_true = sum(value)/n()) |>
+  ggplot(aes(y=name, x=percent_true)) + 
+  geom_col(aes(fill=name)) +
+  scale_x_continuous(labels = scales::label_percent(accuracy = 1)) + 
+  scale_fill_manual(values=rev(c('#A6BC09', '#A6BC09', '#A6BC09',
+                              '#A6BC09', '#166b8c', '#166b8c',
+                              '#166b8c', '#166b8c', '#166b8c'))) +
+  xlab(element_blank()) +
+  ylab(element_blank()) +
+  theme(axis.line=element_line(colour = '#0a3b4c'),
+        plot.title = element_text(size=15,face='bold'),
+        axis.text.x=element_text(size=25, color = '#0a3b4c'),
+        axis.text.y=element_text(size=25, color = '#0a3b4c'),
+        #axis.ticks=element_blank(),
+        legend.position="none",
+        legend.background=element_blank(),
+        legend.title=element_blank(),
+        legend.text=element_text(size=15),
+        panel.background=element_blank(),
+        #panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank(),
+        axis.title.y = element_text(angle = 90, vjust=0.9,
+        size=25),
+        aspect.ratio=0.8)
+```
+</span>
+
+
+:::
+
+
+# Farmers Strongly Prefer Similar Test Plots
+
+
+::: fragment
+``` {r echo=FALSE, dev.args = list(bg = 'transparent'), fig.retina=1, strip.white=TRUE, fig.asp=0.7,fig.align='center'}
+
+library(forcats)
+
+survey_df |> rowwise() %>%
+  partition(cluster) %>% 
+  mutate(d02 = haven::as_factor(max(c_across(starts_with('d02_near_diff_ord')), na.rm=T))) %>%
+  mutate(d03 = haven::as_factor(max(c_across(starts_with('d03_near_simi_ord')), na.rm=T))) %>%
+  mutate(d04 = haven::as_factor(max(c_across(starts_with('d04_far_simi_ord')), na.rm=T))) %>%
+  mutate(d05 = haven::as_factor(max(c_across(starts_with('d05_far_diff_ord')), na.rm=T))) %>%
+  collect() %>%
+  ungroup() %>%
+  select(farmer_id, d02, d03, d04, d05) %>%
+  pivot_longer(cols=starts_with('d0'), 
+              names_to='Question', 
+              values_to = 'Response') %>%
+  mutate(Question = fct_relevel(Question, 'd03', 'd04', 'd02', 'd05')) %>%
+  mutate(Question = fct_recode(Question, 
+                               'Nearby &\nDifferent'='d02', 
+                               'Nearby &\nSimilar'='d03', 
+                               'Far away &\nSimilar'='d04', 
+                               'Far away &\nDifferent'='d05')) %>%
+  mutate(Response = fct_recode(Response,
+                               "Trust Completely" = "extremely influential. I would trust it completely",
+                               "Very Much More Influential" = "very much more influential.",
+                               "Somewhat More Influential" = "somewhat more influential.",
+                               "Slightly More Influential" = "slightly more influential.",
+                               'Not At All More Influential' = "not at all more influential.",
+                               "Don’t know"   = "Don’t know",
+                               "Refused to answer" = "Refused to answer" )) %>%
+  mutate(Response = fct_lump_min(Response, 5, other_level = "Refuse/Don't Know")) %>% 
+  ggplot(aes(y=Question, fill=Response)) + 
+  geom_bar(position = "fill")  +
+         scale_fill_manual(values=rev(c('black', '#01415B', '#005148', '#019587', '#A6BC09', '#CCEA8D')),
+                          breaks = 
+                            c('Trust Completely', 
+                          'Very Much More Influential',
+                          'Somewhat More Influential', 
+                          'Slightly More Influential',
+                          'Not At All More Influential', "Refuse/Don't Know")) +
+         scale_x_continuous(labels = scales::label_percent(accuracy = 1)) + 
+         xlab(element_blank()) +
+         ylab(element_blank()) +
+         theme(axis.line=element_line(colour = '#0a3b4c'),
+          plot.title = element_text(size=15,face='bold'),
+          axis.text.x=element_text(size=25, color = '#0a3b4c'),
+          axis.text.y=element_text(size=25, color = '#0a3b4c'),
+          #axis.ticks=element_blank(),
+          legend.position="right",
+          legend.background=element_blank(),
+          legend.title=element_blank(),
+          legend.text=element_text(size=15),
+          panel.background=element_blank(),
+          #panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          axis.title.y = element_text(angle = 90, vjust=0.9,size=25))
+
+
+```
+:::
+
+# Conclusion
+
+::: incremental
+- **Total Uncertainty = Context Uncertainty + Sampling Error**
+-   Information campaigns should disaggregate returns
+-   Distributed, local experimentation could increase influence
+-   Insurance with low basis-risk, when tied to experimentation, can have high positive externalities
+:::
+
+# Thank You

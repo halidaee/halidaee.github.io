@@ -1,0 +1,13 @@
+\documentclass[crop,tikz]{standalone}% 'crop' is the default for v1.0, before it was 'preview'
+\begin{document}
+\begin{tikzpicture}
+		\node [inner sep=0pt] (0) at (0, 0) 
+			{\includegraphics[width=.1\textwidth]{gray_mystery.eps}};
+		\node [inner sep=0pt] (1) at (-3, -3) 
+			{\includegraphics[width=.1\textwidth]{blue_4.eps}};
+		\node [inner sep=0pt] (2) at (3, -3) 
+			{\includegraphics[width=.1\textwidth]{orange_2.eps}};
+		\draw [->, thick, bend right=45, looseness=0.75] (0) to (1);
+		\draw [->, thick, bend left=45, looseness=0.75] (0) to (2);
+\end{tikzpicture}
+\end{document}
