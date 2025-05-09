@@ -1,0 +1,131 @@
+/* Harvard University Theme */
+
+:root {
+  --harvard-crimson: #a51c30;
+  --harvard-black: #000000;
+  --harvard-gray: #8c8c8c;
+  --harvard-slate: #4e4e4e;
+  --harvard-white: #ffffff;
+}
+
+/* Background override */
+.reveal,
+.reveal .slides,
+.reveal .slide-background,
+.reveal .slide-background-content,
+body {
+  background-color: #ffffff !important;
+}
+
+/* Menu button color override */
+.reveal .slide-menu-button .fa-bars::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(165, 28, 48)" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>') !important;
+}
+
+/* Title slide styling */
+.reveal .title {
+  color: var(--harvard-crimson) !important;
+  font-weight: 600;
+  font-family: trade-gothic-next, Arial, sans-serif;
+}
+
+.reveal .subtitle {
+  color: var(--harvard-crimson) !important;
+  font-family: trade-gothic-next, Arial, sans-serif;
+}
+
+.reveal {
+  font-family: trade-gothic-next, Arial, sans-serif;
+  color: var(--harvard-black);
+  font-size: 32px;
+}
+
+.reveal .slides {
+  background-color: var(--harvard-white);
+}
+
+/* Slide titles */
+.reveal .slides section h1,
+.reveal .slides section h2,
+.reveal .slides section h3,
+.reveal .slides section h4,
+.reveal .slides section h5,
+.reveal .slides section h6 {
+  color: var(--harvard-crimson) !important;
+  font-weight: 600;
+}
+
+.reveal h1 {
+  font-size: 2.2em;
+  margin-bottom: 0.5em;
+}
+
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  color: var(--harvard-crimson);
+  font-weight: 600;
+  margin: 0 0 0.5em 0;
+}
+
+.reveal p {
+  margin: 0.5em 0;
+  line-height: 1.3;
+}
+
+.reveal ul,
+.reveal ol {
+  margin: 0.5em 0;
+  line-height: 1.3;
+}
+
+.reveal li {
+  margin: 0.2em 0;
+}
+
+.reveal .slide-number {
+  color: var(--harvard-crimson);
+}
+
+.reveal strong {
+  color: var(--harvard-crimson);
+}
+
+.reveal a {
+  color: var(--harvard-crimson);
+}
+
+.reveal a:hover {
+  color: var(--harvard-slate);
+}
+
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.reveal .progress span {
+  background: var(--harvard-crimson);
+}
+
+.reveal blockquote {
+  border-left: 4px solid var(--harvard-crimson);
+  padding-left: 1em;
+  background: rgba(165, 28, 48, 0.05);
+  margin: 0.5em 0;
+}
+
+.reveal .slide-background {
+  background-color: var(--harvard-white);
+}
+
+/* Adjust spacing for bullet points */
+.reveal ul {
+  padding-left: 1.2em;
+}
+
+/* Reduce vertical spacing between slides */
+.reveal .slides section {
+  padding: 0;
+}

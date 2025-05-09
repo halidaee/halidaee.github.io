@@ -1,0 +1,93 @@
+---
+title: "Combining AI and Human Judgment to Improve Labor Market Matching"
+subtitle: "Tech For All Lab - D3 Research Day"
+author: "Hossein Alidaee, Tarun Khanna, and Rembrand Koning"
+format:
+  revealjs:
+    theme: [default]
+    slideNumber: true
+    transition: slide
+    css: custom.css
+    include-in-header:
+      text: |
+        <link rel="stylesheet" href="https://use.typekit.net/bvn5gsd.css">
+---
+
+
+# Motivation: Job Matching in LMICs
+
+- High job attrition is a significant problem in developing country labor markets. (Donovan, Lu, and Schoellman, 2023)
+- Job match quality is potentially a key driver. 
+- Skill assessments are gaining popularity as a remedy. (Carranza, Garlick, Orkin, and Rankin, 2022)
+
+
+# Limits of Skill Certifications 
+
+
+- **Problem:** Even if a candidate scores high on a trait like "grit," the interpretation of that trait can vary by job.
+- **Example:** Grit for a computer programmer (resolving bugs) differs from grit needed for a customer service role at a Marriott front desk (angry customer).
+- **Solution**: AI finds the best fit for firm (e.g. our partner, Apli)
+
+# Limits of AI
+
+- **Limitation:** Insufficient data on heterogeneity.
+- **Example 1:** The best Starbucks barista at an airport may differ significantly from the bestå at a rural drive-thru.
+- **Example 2:** A CPG looking for a truck driver needs a good fit with loading partner; stuck together for 8 hours a day!
+- **Example 3:** Diverse team needed. Normally Alice is best for the team, but we have many Alices! Need a new Bob to round out the team.
+
+# Potential Solution: Humans!
+
+- **Solution:** Combine AI with human judgment.
+- **Background:** Job needs framing, social network referrals
+- **Implementation:** Applicant skill assessment supplemented with score of closest and furthest match among manager's current employees.
+
+# Implication: Big Data's Limits
+
+- Alidaee (2023) introduces *context uncertainty* as friction to technology adoption. Rationalizes distrust of big data.
+- The issue extends beyond hiring to any application with heterogeneous treatment effects 
+- **Takeaway:** Human-in-the-loop is needed to supplement AI in order to improve adoption.
+
+
+# Literature Review
+- External Validity Approaches: Andrews et al (2022); Breza, Chandrasekhar and Viviano (2025); 
+- External Validity of Evaluations: Rosenzweig and Uddry (2020); Behejia, Pop-Eleches and Samii (2019)
+- Trust of Evidence: Michelson et al. (2021); Berazneva et al (2023); Alsan et al (2025)
+
+
+# Research Design
+
+- **Pilot Duration:** 3 months
+- **Control Group:** Standard AI-based applicant screening.
+- **Treatment Group:** Comparative report including:
+  - Applicant's score
+  - The closest match among current employees
+  - The most dissimilar match among current employees
+- **Hypothesis:** Treatment will (i) increase use of AI in final hiring decisions and (ii) improve match quality. 
+
+
+# Data and Empirical Strategy
+
+- **Data Source:** Apli platform records, covering applicant inputs and employee data.
+- **Approach:**
+  - Employ machine learning techniques to capture heterogeneous treatment effects.
+  - Incorporate survey data to shed light on hiring managers' beliefs.
+  - Utilize a randomized controlled trial (RCT) framework to derive causal estimates.
+
+
+# Discussion & Next Steps
+
+- **Current Status:** Preliminary pilot design phase; fundraising
+- **Key Open Questions:**
+  - Survey design: How to best capture beliefs?
+  - Which indicators will most accurately capture improvements in hiring matches?
+
+
+# Concluding Remarks
+
+- Addressing a critical gap: merge AI with human expertise
+- Our approach, inspired by social network referrals, aims to enhance AI interpretability.
+- Implications for other areas of technology adoption.
+- Concurrent work with Grab on A/B test external validity and Gates on credit risk modeling. 
+
+
+# Thank You!
